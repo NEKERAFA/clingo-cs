@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClingoSharpApp", "source\ClingoSharpApp\ClingoSharpApp.csproj", "{1A137938-8A13-48AB-A4C5-360EE31F7A37}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{441EC391-37C0-41FF-B472-618505E2AA7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClingoSharp", "source\ClingoSharp\ClingoSharp.csproj", "{CA41D45B-D389-4681-A36D-D9E7AF2E0217}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClingoSharp.Tests", "tests\ClingoSharp.Tests\ClingoSharp.Tests.csproj", "{0289A89E-85B0-471C-AB80-E5580C36F6D6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1A137938-8A13-48AB-A4C5-360EE31F7A37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A137938-8A13-48AB-A4C5-360EE31F7A37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A137938-8A13-48AB-A4C5-360EE31F7A37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A137938-8A13-48AB-A4C5-360EE31F7A37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA41D45B-D389-4681-A36D-D9E7AF2E0217}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA41D45B-D389-4681-A36D-D9E7AF2E0217}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA41D45B-D389-4681-A36D-D9E7AF2E0217}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA41D45B-D389-4681-A36D-D9E7AF2E0217}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0289A89E-85B0-471C-AB80-E5580C36F6D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0289A89E-85B0-471C-AB80-E5580C36F6D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0289A89E-85B0-471C-AB80-E5580C36F6D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0289A89E-85B0-471C-AB80-E5580C36F6D6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CA41D45B-D389-4681-A36D-D9E7AF2E0217} = {441EC391-37C0-41FF-B472-618505E2AA7B}
+		{0289A89E-85B0-471C-AB80-E5580C36F6D6} = {441EC391-37C0-41FF-B472-618505E2AA7B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8FD73ECA-F51C-4B18-8442-724187341EA4}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,39 @@
+name: ClingoSharp Workflow
+
+on:
+  push:
+    branches: 
+      - develop
+      - release/*
+  pull_request:
+    branches:
+      - master
+      - develop
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+      - name: Checkout submodules
+        run: |
+          git submodule init
+          git submodule update
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.100
+      - name: Build
+        run: dotnet build --configuration Release
+      - name: Test
+        run: |
+          dotnet test --configuration Debug /p:CollectCoverage=true /p:CoverletOutput=results/ /p:CoverletOutputFormat=lcov
+          powershell -Command "(gc 'tests\ClingoSharp.Tests\results\coverage.info') -replace [regex]::escape('D:\a\ClingoSharp\ClingoSharp'), '' | Out-File -encoding ASCII coverage.info"
+      - name: Reporting coverage result
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: coverage.info
