@@ -31,7 +31,7 @@ jobs:
       - name: Test
         run: |
           dotnet test --configuration Debug /p:CollectCoverage=true /p:CoverletOutput=results/ /p:CoverletOutputFormat=lcov
-          powershell -Command "(gc 'tests\ClingoSharp.Tests\results\coverage.info') -replace [regex]::escape('D:\a\ClingoSharp\ClingoSharp'), '' | Out-File -encoding ASCII coverage.info"
+          powershell -Command "(gc 'tests\ClingoSharp.Tests\results\coverage.info') -replace [regex]::escape('D:\a\ClingoSharp\ClingoSharp'), [regex]::escape('.\') | Out-File -encoding ASCII coverage.info"
       - name: Reporting coverage result
         uses: coverallsapp/github-action@master
         with:
