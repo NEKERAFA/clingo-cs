@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -67,12 +69,16 @@
   <ItemGroup>
     <Compile Include="Api\CClingo.cs" />
     <Compile Include="Api\CControl.cs" />
+    <Compile Include="Api\CModel.cs" />
+    <Compile Include="Api\CSolveHandle.cs" />
+    <Compile Include="Api\CSymbolicAtoms.cs" />
+    <Compile Include="Assumption.cs" />
     <Compile Include="Clingo.cs" />
     <Compile Include="ClingoException.cs" />
     <Compile Include="MessageCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Control.cs" />
-    <Compile Include="Prueba.cs" />
+    <Compile Include="Symbol.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

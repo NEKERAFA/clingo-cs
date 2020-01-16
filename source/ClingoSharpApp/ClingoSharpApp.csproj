@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Examples\file.lp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClingoSharp\ClingoSharp.csproj">
@@ -96,6 +97,8 @@ IF NOT EXIST "$(TargetDir)\lib32" mkdir "$(TargetDir)\lib32"
 xcopy /y "$(SolutionDir)Clingo\build\x86\bin\Release\clingo.dll" "$(TargetDir)\lib32"
 
 IF NOT EXIST "$(TargetDir)\lib" mkdir "$(TargetDir)\lib"
-xcopy /y "$(SolutionDir)Clingo\build\x64\bin\Release\clingo.dll" "$(TargetDir)\lib"</PostBuildEvent>
+xcopy /y "$(SolutionDir)Clingo\build\x64\bin\Release\clingo.dll" "$(TargetDir)\lib"
+
+xcopy /y /e "$(ProjectDir)Examples" "$(TargetDir)"</PostBuildEvent>
   </PropertyGroup>
 </Project>
