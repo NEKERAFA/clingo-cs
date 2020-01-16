@@ -1,4 +1,3 @@
-using ClingoSharp;
 using NUnit.Framework;
 
 namespace ClingoSharp.Tests

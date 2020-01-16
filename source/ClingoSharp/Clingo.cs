@@ -1,6 +1,5 @@
-﻿using ClingoSharp.API;
+﻿using ClingoSharp.Api;
 using System;
-using System.Runtime.InteropServices;
 
 namespace ClingoSharp
 {
