@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <StartupObject>ClingoSharpApp.Program</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\ClingoSharp\ClingoSharp.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="IF NOT EXIST &quot;$(SolutionDir)Clingo\build\x86\bin\Release\clingo.dll&quot; (&#xD;&#xA;   cmake &quot;$(SolutionDir)Clingo&quot; -B&quot;$(SolutionDir)Clingo\build\x86&quot; -DCLINGO_BUILD_SHARED=ON -DCLINGO_BUILD_WITH_PYTHON=OFF -DCLINGO_BUILD_WITH_LUA=OFF -DCLINGO_BUILD_APPS=OFF -G &quot;Visual Studio 16 2019&quot; -A Win32&#xD;&#xA;   cmake --build &quot;$(SolutionDir)Clingo\build\x86&quot; --config Release&#xD;&#xA;)&#xD;&#xA;&#xD;&#xA;IF NOT EXIST &quot;$(SolutionDir)Clingo\build\x64\bin\Release\clingo.dll&quot; (&#xD;&#xA;   cmake &quot;$(SolutionDir)Clingo&quot; -B&quot;$(SolutionDir)Clingo\build\x64&quot; -DCLINGO_BUILD_SHARED=ON -DCLINGO_BUILD_WITH_PYTHON=OFF -DCLINGO_BUILD_WITH_LUA=OFF -DCLINGO_BUILD_APPS=OFF -G &quot;Visual Studio 16 2019&quot; -A x64&#xD;&#xA;   cmake --build &quot;$(SolutionDir)Clingo\build\x64&quot; --config Release&#xD;&#xA;)&#xD;&#xA;&#xD;&#xA;IF NOT EXIST &quot;$(TargetDir)\lib32&quot; mkdir &quot;$(TargetDir)\lib32&quot;&#xD;&#xA;xcopy /y &quot;$(SolutionDir)Clingo\build\x86\bin\Release\clingo.dll&quot; &quot;$(TargetDir)\lib32&quot;&#xD;&#xA;&#xD;&#xA;IF NOT EXIST &quot;$(TargetDir)\lib&quot; mkdir &quot;$(TargetDir)\lib&quot;&#xD;&#xA;xcopy /y &quot;$(SolutionDir)Clingo\build\x64\bin\Release\clingo.dll&quot; &quot;$(TargetDir)\lib&quot;&#xD;&#xA;" />
+  </Target>
+
+</Project>
