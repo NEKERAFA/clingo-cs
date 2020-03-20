@@ -6,10 +6,19 @@ using System.Collections.Generic;
 
 namespace ClingoSharp
 {
+    /// <summary>
+    /// Handle for solve calls.
+    /// </summary>
     public class SolveHandle : IEnumerable<Model>
     {
-        private readonly IntPtr m_clingoSolveHandle;
+        #region Attributes
+
         private static readonly ISolveHandleModule m_module;
+        private readonly IntPtr m_clingoSolveHandle;
+
+        #endregion
+
+        #region Constructors
 
         static SolveHandle()
         {
@@ -20,6 +29,10 @@ namespace ClingoSharp
         {
             m_clingoSolveHandle = clingoSolveHandle;
         }
+
+        #endregion
+
+        #region Methods
 
         public void Cancel()
         {
@@ -64,23 +77,25 @@ namespace ClingoSharp
 
         public IEnumerator<Model> GetEnumerator()
         {
-            IntPtr model;
+            IntPtr modelPtr;
             do
             {
                 Clingo.HandleClingoError(m_module.Resume(m_clingoSolveHandle));
-                Clingo.HandleClingoError(m_module.Model(m_clingoSolveHandle, out model));
+                Clingo.HandleClingoError(m_module.Model(m_clingoSolveHandle, out modelPtr));
 
-                if (model != IntPtr.Zero)
+                if (modelPtr != IntPtr.Zero)
                 {
-                    yield return new Model();
+                    yield return new Model(modelPtr);
                 }
             }
-            while (model != IntPtr.Zero);
+            while (modelPtr != IntPtr.Zero);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
+
+        #endregion
     }
 }

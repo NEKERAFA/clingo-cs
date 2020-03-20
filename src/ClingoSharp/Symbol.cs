@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace ClingoSharp
+﻿namespace ClingoSharp
 {
+    /// <summary>
+    /// Represents a gringo symbol.
+    /// </summary>
     public class Symbol
     {
         internal ulong ClingoSymbol { get; set; }

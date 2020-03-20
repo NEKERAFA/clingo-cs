@@ -7,10 +7,20 @@ namespace ClingoSharp
     /// </summary>
     public class Assumption
     {
+        #region Enumerables
+
         private enum TypeValue { Literal }
+
+        #endregion
+
+        #region Attributes
 
         private TypeValue m_currentValue;
         private int m_intValue;
+
+        #endregion
+
+        #region Constructors
 
         /// <summary>
         /// Creates an assumption of a program literal
@@ -20,6 +30,10 @@ namespace ClingoSharp
         {
             SetValue(value);
         }
+
+        #endregion
+
+        #region Instance Methods
 
         /// <summary>
         /// Sets the assumptions as a program literal.
@@ -53,5 +67,7 @@ namespace ClingoSharp
         {
             return m_currentValue == TypeValue.Literal;
         }
+
+        #endregion
     }
 }

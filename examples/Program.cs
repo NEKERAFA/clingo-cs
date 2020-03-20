@@ -10,16 +10,18 @@ namespace ClingoSharpApp
         {
             Console.WriteLine($"Clingo {Clingo.Version}\n");
 
-            Control ctl = new Control();
-            ctl.Add("base", new List<string>(), "a.");
+            Control ctl = new Control(new List<string>() { "0" });
+            ctl.Add("base", new List<string>(), "{a; b}.");
             ctl.Ground(new List<Tuple<string, List<Symbol>>>() { new Tuple<string, List<Symbol>>("base", new List<Symbol>()) });
-            var solveResult = (SolveResult)ctl.Solve();
+            
+            var handle = (SolveHandle)ctl.Solve(yield: true);
+            var models = new List<Symbol>();
 
-            Console.WriteLine($"Satifiable: {solveResult.IsSatisfiable}");
-            Console.WriteLine($"Unsatisfiable: {solveResult.IsUnSatisfiable}");
-            Console.WriteLine($"Unknown: {solveResult.IsUnknown}");
-            Console.WriteLine($"Exhausted: {solveResult.IsExhausted}");
-            Console.WriteLine($"Interrupted: {solveResult.IsInterrupted}");
+            foreach (var model in handle)
+            {
+                var symbols = model.GetSymbols(atoms: true);
+                models.AddRange(symbols);
+            }
         }
     }
 }

@@ -17,8 +17,14 @@ namespace ClingoSharp
     /// </summary>
     public class Control
     {
-        private readonly IntPtr m_clingoControl;
+        #region Attributes
+
         private static readonly IControlModule m_module;
+        private readonly IntPtr m_clingoControl;
+
+        #endregion
+
+        #region Constructors
 
         static Control()
         {
@@ -37,7 +43,7 @@ namespace ClingoSharp
             {
                 if (logger != null)
                 {
-                    MessageCode messageCode = Enums.Enumeration.GetName((int)code) as MessageCode;
+                    MessageCode messageCode = Enums.Enumeration.GetValue((int)code) as MessageCode;
                     logger(messageCode, message);
                 }
             }
@@ -47,10 +53,18 @@ namespace ClingoSharp
             m_clingoControl = controlPtr;
         }
 
+        #endregion Constructors
+
+        #region Destructors
+
         ~Control()
         {
             m_module.Free(m_clingoControl);
         }
+
+        #endregion
+
+        #region Instance Methods
 
         /// <summary>
         /// Extend the logic program with the given non-ground logic program in string form.
@@ -139,7 +153,7 @@ namespace ClingoSharp
                     switch (type)
                     {
                         case SolveEventType.Model:
-                            var model = new Model();
+                            var model = new Model(eventPtr);
                             goon = onModel(model);
 
                             return true;
@@ -193,5 +207,7 @@ namespace ClingoSharp
 
             return handle;
         }
+
+        #endregion
     }
 }

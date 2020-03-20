@@ -4,7 +4,7 @@ using System;
 
 namespace ClingoSharp.CoreServices.Interfaces.Modules
 {
-    public interface IModelModule
+    public interface IModelModule : IModule
     {
         /// <summary>
         /// Constant time lookup to test whether an atom is in a model.

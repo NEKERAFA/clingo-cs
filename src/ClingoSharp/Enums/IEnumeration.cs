@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ClingoSharp.Enums
+﻿namespace ClingoSharp.Enums
 {
     public interface IEnumeration
     {

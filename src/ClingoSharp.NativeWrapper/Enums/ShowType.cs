@@ -1,7 +1,11 @@
-﻿namespace ClingoSharp.NativeWrapper.Enums
+﻿using System;
+
+namespace ClingoSharp.NativeWrapper.Enums
 {
+    [Flags]
     internal enum clingo_show_type
     {
+        clingo_show_type_none = 0,
         clingo_show_type_csp = 1,
         clingo_show_type_shown = 2,
         clingo_show_type_atoms = 4,
