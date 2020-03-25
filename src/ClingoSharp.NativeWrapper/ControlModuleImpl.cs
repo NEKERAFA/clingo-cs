@@ -55,74 +55,40 @@ namespace ClingoSharp.NativeWrapper
 
         #region Clingo C API Functions
 
-        /// <summary>
-        /// Create a new control object.
-        /// </summary>
-        /// <param name="arguments">C string array of command line arguments</param>
-        /// <param name="arguments_size">size of the arguments array</param>
-        /// <param name="logger">callback functions for warnings and info messages</param>
-        /// <param name="logger_data">user data for the logger callback</param>
-        /// <param name="message_limit">maximum number of times the logger callback is called</param>
-        /// <param name="control">resulting control object</param>
-        /// <returns>whether the call was successful; might set one of the following error codes: <see cref="clingo_error.clingo_error_bad_alloc"/>, <see cref="clingo_error.clingo_error_runtime"/> if argument parsing fails</returns>
+        #region Functions
+
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
         private static extern int clingo_control_new(string[] arguments, UIntPtr arguments_size, clingo_logger logger, IntPtr logger_data, uint message_limit, [Out] IntPtr[] control);
 
-        /// <summary>
-        /// Free a control object created with <see cref="clingo_control_new(string[], UIntPtr, clingo_logger, IntPtr, uint, IntPtr[])"/>.
-        /// </summary>
-        /// <param name="control">the target</param>
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
         private static extern void clingo_control_free(IntPtr control);
 
-        /// <summary>
-        /// Extend the logic program with the given non-ground logic program in string form.
-        /// </summary>
-        /// This function puts the given program into a block of form: #program name(parameters).
-        /// After extending the logic program, the corresponding program parts are typically grounded with <see cref="clingo_control_ground(IntPtr, clingo_part[], UIntPtr, clingo_ground_callback, IntPtr)"/>
-        /// <param name="control">the target</param>
-        /// <param name="name">name of the program block</param>
-        /// <param name="parameters">string array of parameters of the program block</param>
-        /// <param name="parameters_size">number of parameters</param>
-        /// <param name="program">string representation of the program</param>
-        /// <returns>whether the call was successful; might set one of the following error codes: <see cref="clingo_error.clingo_error_bad_alloc"/>, <see cref="clingo_error.clingo_error_runtime"/> if argument parsing fails</returns>
+        #endregion
+
+        #region Grounding Functions
+
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
         private static extern int clingo_control_add(IntPtr control, string name, string[] parameters, UIntPtr parameters_size, string program);
 
-        /// <summary>
-        /// Ground the selected parts of the current (non-ground) logic program.
-        /// </summary>
-        /// After grounding, logic programs can be solved with <see cref="clingo_control_solve(IntPtr, clingo_solve_mode, clingo_literal[], UIntPtr, clingo_solve_event_callback, IntPtr, IntPtr[])"/>.
-        /// <remarks>Parts of a logic program without an explicit <c>#program</c> specification are by default put into a program called base without arguments.</remarks>
-        /// </summary>
-        /// <param name="control">the target</param>
-        /// <param name="parts">array of parts to ground</param>
-        /// <param name="parts_size">size of the parts array</param>
-        /// <param name="ground_callback">callback to implement external functions</param>
-        /// <param name="ground_callback_data">user data for ground_callback</param>
-        /// <returns>whether the call was successful; might set one of the following error codes: <see cref="clingo_error.clingo_error_bad_alloc"/> or the erro code of the ground callback.</returns>
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
         private static extern int clingo_control_ground(IntPtr control, clingo_part[] parts, UIntPtr parts_size, clingo_ground_callback ground_callback, IntPtr ground_callback_data);
 
-        /// <summary>
-        /// Solve the currently grounded logic program enumerating its models.
-        /// </summary>
-        /// <param name="control">the target</param>
-        /// <param name="mode">configures the search mode</param>
-        /// <param name="assumptions">array of assumptions to solve under</param>
-        /// <param name="assumptions_size">number of assumptions</param>
-        /// <param name="notify">the event handler to register</param>
-        /// <param name="data">the user data for the event handler</param>
-        /// <param name="handle">handle to the current search to enumerate models</param>
-        /// <returns>whether the call was successful; might set one of the following error codes: <see cref="clingo_error.clingo_error_bad_alloc"/>, <see cref="clingo_error.clingo_error_runtime"/> if solving could not be started</returns>
+        #endregion
+
+        #region Solving Functions
+
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
         private static extern int clingo_control_solve(IntPtr control, clingo_solve_mode mode, clingo_literal[] assumptions, UIntPtr assumptions_size, clingo_solve_event_callback notify, IntPtr data, [Out] IntPtr[] handle);
 
         #endregion
 
+        #endregion
+
         #region Module implementation
 
-        public bool New(string[] arguments, LoggerCallback logger, uint messageLimit, out IntPtr control)
+        #region Functions
+
+        public bool New(string[] arguments, LoggerCallback logger, uint messageLimit, out Control control)
         {
             void clingoLoggerCallback(clingo_warning code, string message, IntPtr data)
             {
@@ -134,26 +100,30 @@ namespace ClingoSharp.NativeWrapper
             IntPtr[] controlPtr = new IntPtr[1];
 
             var success = clingo_control_new(arguments, argumentsSize, (logger == null) ? null : (clingo_logger)clingoLoggerCallback, IntPtr.Zero, messageLimit, controlPtr);
-            control = controlPtr[0];
+            control = new Control() { Object = controlPtr[0] };
 
             return success != 0;
         }
 
-        public void Free(IntPtr control)
+        public void Free(Control control)
         {
-            clingo_control_free(control);
+            clingo_control_free(control.Object);
         }
 
-        public bool Add(IntPtr control, string name, string[] parameters, string program)
+        #endregion
+
+        #region Grounding Functions
+
+        public bool Add(Control control, string name, string[] parameters, string program)
         {
             UIntPtr parametersSize = new UIntPtr(Convert.ToUInt32(parameters == null ? 0 : parameters.Length));
 
-            var success = clingo_control_add(control, name, parameters, parametersSize, program);
+            var success = clingo_control_add(control.Object, name, parameters, parametersSize, program);
             
             return success != 0;
         }
 
-        public bool Ground(IntPtr control, Part[] parts, GroundCallback callback)
+        public bool Ground(Control control, Part[] parts, GroundCallback callback)
         {
             int clingoGroundCallback(clingo_location[] clingoLocation, string name, clingo_symbol[] clingoArguments, UIntPtr arguments_size, IntPtr data, clingo_symbol_callback symbol_callback, IntPtr symbol_callback_data)
             {
@@ -179,12 +149,16 @@ namespace ClingoSharp.NativeWrapper
             clingo_part[] clingoParts = parts == null ? null : m_mapper.Map<Part[], clingo_part[]>(parts);
             UIntPtr clingoPartsSize = new UIntPtr(Convert.ToUInt32(parts == null ? 0 : parts.Length));
 
-            var success = clingo_control_ground(control, clingoParts, clingoPartsSize, (callback == null) ? null : (clingo_ground_callback)clingoGroundCallback, IntPtr.Zero);
+            var success = clingo_control_ground(control.Object, clingoParts, clingoPartsSize, (callback == null) ? null : (clingo_ground_callback)clingoGroundCallback, IntPtr.Zero);
 
             return success != 0;
         }
 
-        public bool Solve(IntPtr control, SolveMode mode, Literal[] assumptions, SolveEventHandler callback, out IntPtr handler)
+        #endregion
+
+        #region Solving Functions
+
+        public bool Solve(Control control, SolveMode mode, Literal[] assumptions, SolveEventHandler callback, out SolveHandle handler)
         {
             int clingoSolveEventCallback(clingo_solve_event_type type, IntPtr eventData, IntPtr data, out bool[] goon)
             {
@@ -204,12 +178,14 @@ namespace ClingoSharp.NativeWrapper
 
             IntPtr[] handlerPtr = new IntPtr[1];
 
-            var success = clingo_control_solve(control, cligoSolveMode, clingoAssumptions, clingoAssumptionsSize, (callback == null) ? null : (clingo_solve_event_callback)clingoSolveEventCallback, IntPtr.Zero, handlerPtr);
+            var success = clingo_control_solve(control.Object, cligoSolveMode, clingoAssumptions, clingoAssumptionsSize, (callback == null) ? null : (clingo_solve_event_callback)clingoSolveEventCallback, IntPtr.Zero, handlerPtr);
 
-            handler = handlerPtr[0];
+            handler = new SolveHandle() { Object = handlerPtr[0] };
 
             return success != 0;
         }
+
+        #endregion
 
         #endregion
     }

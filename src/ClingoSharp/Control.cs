@@ -15,12 +15,14 @@ namespace ClingoSharp
     /// <summary>
     /// Control object for the grounding/solving process.
     /// </summary>
-    public class Control
+    public class Control : IDisposable
     {
         #region Attributes
 
         private static readonly IControlModule m_module;
-        private readonly IntPtr m_clingoControl;
+        private CoreServices.Types.Control m_clingoControl;
+        // Track whether Dispose has been called.
+        private bool disposed = false;
 
         #endregion
 
@@ -48,7 +50,7 @@ namespace ClingoSharp
                 }
             }
 
-            Clingo.HandleClingoError(m_module.New(args?.ToArray(), loggerCallback, Convert.ToUInt32(messageLimit), out IntPtr controlPtr));
+            Clingo.HandleClingoError(m_module.New(args?.ToArray(), loggerCallback, Convert.ToUInt32(messageLimit), out CoreServices.Types.Control controlPtr));
 
             m_clingoControl = controlPtr;
         }
@@ -59,12 +61,29 @@ namespace ClingoSharp
 
         ~Control()
         {
-            m_module.Free(m_clingoControl);
+            Dispose(false);
         }
 
         #endregion
 
         #region Instance Methods
+
+        /// <inheritdoc/>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if(!disposed)
+            {
+                m_module.Free(m_clingoControl);
+                m_clingoControl = null;
+                disposed = true;
+            }
+        }
 
         /// <summary>
         /// Extend the logic program with the given non-ground logic program in string form.
@@ -90,19 +109,20 @@ namespace ClingoSharp
                 {
                     // Get the method
                     MethodInfo method = context.GetType().GetMethod(name);
-                    object ret = method.Invoke(context, arguments);
+                    object result = method.Invoke(context, arguments);
 
                     // Convert return value in symbol object
                     var newSymbols = new List<CoreServices.Types.Symbol>();
-                    if (ret is Symbol)
+                    if (result is Symbol)
                     {
-                        newSymbols.Add((ret as Symbol).ConvertTo());
+
+                        newSymbols.Add(((Symbol)result).m_clingoSymbol);
                     }
-                    else if (ret is IEnumerable<Symbol>)
+                    else if (result is IEnumerable<Symbol>)
                     {
-                        foreach (var symbol in (ret as IEnumerable<Symbol>))
+                        foreach (var symbol in (result as IEnumerable<Symbol>))
                         {
-                            newSymbols.Add(symbol.ConvertTo());
+                            newSymbols.Add(symbol.m_clingoSymbol);
                         }
                     }
                     else
@@ -122,10 +142,7 @@ namespace ClingoSharp
             Part[] partArray = parts == null ? null : parts.Select(p => new Part()
             {
                 Name = p.Item1,
-                Params = p.Item2.Select(s => new CoreServices.Types.Symbol()
-                {
-                    Value = s.ClingoSymbol
-                }).ToArray()
+                Params = p.Item2.Select(s => s.m_clingoSymbol).ToArray()
             }).ToArray();
 
             Clingo.HandleClingoError(m_module.Ground(m_clingoControl, partArray, (context != null) ? (GroundCallback)groundCallback : null));
@@ -141,36 +158,45 @@ namespace ClingoSharp
         /// <param name="yield">The resulting <see cref="SolveHandle"/> is iterable yielding <see cref="Model"/> objects.</param>
         /// <param name="async">The solve call and the method <see cref="SolveHandle.Resume"/> of the returned handle are non-blocking.</param>
         /// <returns>The return value depends on the parameters. If either yield or async is true, then a <see cref="SolveHandle"/> is returned. Otherwise, a <see cref="SolveResult"/> is returned.</returns>
-        public object Solve(List<Assumption> assumptions = null, Func<Model, bool> onModel = null, Action<StatisticsMap, StatisticsMap> onStatistics = null, Action<SolveResult> onFinish = null, bool yield = false, bool async = false)
+        public Union<SolveHandle, SolveResult> Solve(List<Union<Tuple<Symbol, bool>, int>> assumptions = null, Func<Model, bool> onModel = null, Action<StatisticsMap, StatisticsMap> onStatistics = null, Action<SolveResult> onFinish = null, bool yield = false, bool async = false)
         {
             // Creates a wrapper between the argument callbacks and the solve event notify callback
             bool notifyCallback(SolveEventType type, IntPtr eventPtr, out bool goon)
             {
-                goon = false;
+                goon = true;
 
                 try
                 {
                     switch (type)
                     {
                         case SolveEventType.Model:
-                            var model = new Model(eventPtr);
-                            goon = onModel(model);
+                            if (onModel != null)
+                            {
+                                var model = new Model(new CoreServices.Types.Model() { Object = eventPtr });
+                                goon = onModel(model);
+                            }
 
                             return true;
 
                         case SolveEventType.Statistics:
-                            IntPtr[] statistics = new IntPtr[2];
-                            Marshal.Copy(eventPtr, statistics, 0, 2);
+                            if (onStatistics != null)
+                            {
+                                IntPtr[] statistics = new IntPtr[2];
+                                Marshal.Copy(eventPtr, statistics, 0, 2);
 
-                            var stepStatistics = new StatisticsMap();
-                            var acumulatedStatistics = new StatisticsMap();
-                            onStatistics(stepStatistics, acumulatedStatistics);
+                                var stepStatistics = new StatisticsMap();
+                                var acumulatedStatistics = new StatisticsMap();
+                                onStatistics(stepStatistics, acumulatedStatistics);
+                            }
 
                             return true;
 
                         case SolveEventType.Finish:
-                            var solveResult = new SolveResult();
-                            onFinish(solveResult);
+                            if (onFinish != null)
+                            {
+                                var solveResult = new SolveResult();
+                                onFinish(solveResult);
+                            }
 
                             return true;
 
@@ -188,14 +214,14 @@ namespace ClingoSharp
             // Converts the asumptions into a Literal array
             Literal[] literalArray = assumptions == null ? null : assumptions.Select(a => new Literal()
             {
-                Value = a.GetLiteralValue()
+                ///Value = a.GetLiteralValue()
             }).ToArray();
 
             SolveMode mode = SolveMode.None;
             if (yield) { mode |= SolveMode.Yield; }
             if (async) { mode |= SolveMode.Async; }
 
-            Clingo.HandleClingoError(m_module.Solve(m_clingoControl, mode, literalArray, (onModel == null) && (onStatistics == null) && (onFinish == null) ? null : (SolveEventHandler)notifyCallback, out IntPtr handlePtr));
+            Clingo.HandleClingoError(m_module.Solve(m_clingoControl, mode, null, (onModel == null) && (onStatistics == null) && (onFinish == null) ? null : (SolveEventHandler)notifyCallback, out CoreServices.Types.SolveHandle handlePtr));
 
             var handle = new SolveHandle(handlePtr);
 

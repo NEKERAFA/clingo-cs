@@ -5,6 +5,7 @@ using ClingoSharp.CoreServices.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace ClingoSharp
 {
@@ -16,7 +17,7 @@ namespace ClingoSharp
         #region Attributes
 
         private static readonly IModelModule m_module;
-        private readonly IntPtr m_clingoModel;
+        private readonly CoreServices.Types.Model m_clingoModel;
 
         #endregion
 
@@ -29,8 +30,8 @@ namespace ClingoSharp
         {
             get
             {
-                Clingo.HandleClingoError(m_module.GetContext(m_clingoModel, out IntPtr context));
-                return new SolveControl();
+                Clingo.HandleClingoError(m_module.GetContext(m_clingoModel, out CoreServices.Types.SolveControl context));
+                return new SolveControl(context);
             }
         }
 
@@ -97,7 +98,7 @@ namespace ClingoSharp
                     CoreServices.Enums.ModelType.StableModel => ModelType.StableModel,
                     CoreServices.Enums.ModelType.BraveConsequences => ModelType.BraveConsequences,
                     CoreServices.Enums.ModelType.CautiousConsequences => ModelType.CautiousConsequences,
-                    _ => null,
+                    _ => null
                 };
             }
         }
@@ -111,7 +112,7 @@ namespace ClingoSharp
             m_module = Repository.GetModule<IModelModule>();
         }
 
-        internal Model(IntPtr clingoModel)
+        internal Model(CoreServices.Types.Model clingoModel)
         {
             m_clingoModel = clingoModel;
         }
@@ -128,7 +129,7 @@ namespace ClingoSharp
         /// <remarks>The atom must be represented using a function symbol.</remarks>
         public bool Contains(Symbol atom)
         {
-            Clingo.HandleClingoError(m_module.Contains(m_clingoModel, atom.ConvertTo(), out bool contained));
+            Clingo.HandleClingoError(m_module.Contains(m_clingoModel, atom.m_clingoSymbol, out bool contained));
             return contained;
         }
 
@@ -138,7 +139,7 @@ namespace ClingoSharp
         /// <param name="symbols">The symbols to add to the model.</param>
         public void Extend(List<Symbol> symbols)
         {
-            var atoms = symbols.Select(symbol => symbol.ConvertTo()).ToArray();
+            var atoms = symbols.Select(symbol => symbol.m_clingoSymbol).ToArray();
             Clingo.HandleClingoError(m_module.Extends(m_clingoModel, atoms));
         }
 
@@ -179,9 +180,46 @@ namespace ClingoSharp
 
             Clingo.HandleClingoError(m_module.GetSymbols(m_clingoModel, atomset, out var symbols));
 
-            return symbols.Select(symbol => {
-                return new Symbol() { ClingoSymbol = symbol.Value };
-            }).ToList();
+            return symbols.Select(symbol => new Symbol(symbol)).ToList();
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            List<Symbol> ret = GetSymbols(shown: true);
+
+            bool comma = false;
+            foreach (Symbol symbol in ret)
+            {
+                if (comma)
+                {
+                    sb.Append(" ");
+                }
+                else
+                {
+                    comma = true;
+                }
+
+                if (symbol.Type == SymbolType.Function)
+                {
+                    string name = symbol.Name;
+                    List<Symbol> args = symbol.Arguments;
+                    if (args.Count == 2 && name.Equals("$"))
+                    {
+                        sb.Append($"{args[0]}={args[1]}");
+                    }
+                    else
+                    {
+                        sb.Append($"{symbol}");
+                    }
+                }
+                else
+                {
+                    sb.Append($"{symbol}");
+                }
+            }
+
+            return sb.ToString();
         }
 
         #endregion

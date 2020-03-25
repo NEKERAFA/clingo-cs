@@ -10,7 +10,7 @@ namespace ClingoSharp
     {
         #region Class attributes
 
-        protected new static string[] m_names = new string[] 
+        protected static string[] MessageCodeNames = new string[] 
         { 
             "OperationUndefined",
             "RuntimeError",
@@ -35,18 +35,27 @@ namespace ClingoSharp
 
         #endregion
 
+        #region Instance Properties
+
+        public new string Name => MessageCodeNames[Value];
+
+        #endregion
+
         #region Constructors
 
-        private MessageCode(int value) : base(value) {}
+        private MessageCode(int value) : base(value) { }
 
         #endregion
 
         #region Class methods
 
-        /// <summary>
-        /// Gets a iterator of the constants in the enumeration
-        /// </summary>
-        /// <returns>A <see cref="Enumerable"/> iterator with the constants in the enumeration</returns>
+        /// <inheritdoc/>
+        public new static IEnumerable<string> GetNames()
+        {
+            return (string[])MessageCodeNames.Clone();
+        }
+
+        /// <inheritdoc/>
         public new static IEnumerable<Enumeration> GetValues()
         {
             return new MessageCode[] { OperationUndefined, RuntimeError, AtomUndefined, FileIncluded, VariableUnbounded, GlobalVariable, Other };

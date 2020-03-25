@@ -10,7 +10,7 @@ namespace ClingoSharp
     {
         #region Class attributes
 
-        protected new static string[] m_names => new string[]
+        private static string[] SymbolNames => new string[]
         {
             "Infimun",
             "Number",
@@ -23,11 +23,17 @@ namespace ClingoSharp
 
         #region Class Properties
 
-        public static SymbolType Infimun => new SymbolType(0);
+        public static SymbolType Infimum => new SymbolType(0);
         public static SymbolType Number => new SymbolType(1);
         public static SymbolType String => new SymbolType(2);
         public static SymbolType Function => new SymbolType(3);
-        public static SymbolType Supremun => new SymbolType(4);
+        public static SymbolType Supremum => new SymbolType(4);
+
+        #endregion
+
+        #region Instance Properties
+
+        public new string Name => SymbolNames[Value];
 
         #endregion
 
@@ -37,15 +43,18 @@ namespace ClingoSharp
 
         #endregion
 
-        #region
+        #region Class Methods
 
-        /// <summary>
-        /// Gets a iterator of the constants in the enumeration
-        /// </summary>
-        /// <returns>A <see cref="Enumerable"/> iterator with the constants in the enumeration</returns>
+        /// <inheritdoc/>
+        public new static IEnumerable<string> GetNames()
+        {
+            return (string[])SymbolNames.Clone();
+        }
+
+        /// <inheritdoc/>
         public new static IEnumerable<Enumeration> GetValues()
         {
-            return new SymbolType[] { Infimun, Number, String, Function, Supremun };
+            return new SymbolType[] { Infimum, Number, String, Function, Supremum };
         }
 
         #endregion

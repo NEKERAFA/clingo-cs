@@ -9,12 +9,6 @@ namespace ClingoSharp.Enums
     /// </summary>
     public abstract class Enumeration : IEnumeration, IComparable<Enumeration>, IEquatable<Enumeration>
     {
-        #region Class attributes
-
-        protected static string[] m_names;
-
-        #endregion
-
         #region Properties
 
         /// <summary>
@@ -25,7 +19,7 @@ namespace ClingoSharp.Enums
         /// <summary>
         /// The string value of the enumeration
         /// </summary>
-        public string Name => m_names[Value];
+        public string Name => throw new NotImplementedException();
 
         #endregion
 
@@ -46,7 +40,7 @@ namespace ClingoSharp.Enums
         /// <returns>A string iterator with the names of the constants in the enumeration</returns>
         public static IEnumerable<string> GetNames()
         {
-            return m_names;
+            throw new NotImplementedException();
         }
 
         /// <summary>

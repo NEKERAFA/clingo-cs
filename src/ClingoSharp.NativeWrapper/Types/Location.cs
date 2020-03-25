@@ -3,9 +3,6 @@ using System.Runtime.InteropServices;
 
 namespace ClingoSharp.NativeWrapper.Types
 {
-    /// <summary>
-    /// Represents a source code location marking its beginnig and end.
-    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct clingo_location
     {

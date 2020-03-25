@@ -14,7 +14,7 @@ namespace ClingoSharp
         #region Attributes
 
         private static readonly ISolveHandleModule m_module;
-        private readonly IntPtr m_clingoSolveHandle;
+        private readonly CoreServices.Types.SolveHandle m_clingoSolveHandle;
 
         #endregion
 
@@ -25,7 +25,7 @@ namespace ClingoSharp
             m_module = Repository.GetModule<ISolveHandleModule>();
         }
 
-        internal SolveHandle(IntPtr clingoSolveHandle)
+        internal SolveHandle(CoreServices.Types.SolveHandle clingoSolveHandle)
         {
             m_clingoSolveHandle = clingoSolveHandle;
         }
@@ -77,18 +77,18 @@ namespace ClingoSharp
 
         public IEnumerator<Model> GetEnumerator()
         {
-            IntPtr modelPtr;
+            CoreServices.Types.Model modelPtr;
             do
             {
                 Clingo.HandleClingoError(m_module.Resume(m_clingoSolveHandle));
                 Clingo.HandleClingoError(m_module.Model(m_clingoSolveHandle, out modelPtr));
 
-                if (modelPtr != IntPtr.Zero)
+                if (modelPtr.Object != IntPtr.Zero)
                 {
                     yield return new Model(modelPtr);
                 }
             }
-            while (modelPtr != IntPtr.Zero);
+            while (modelPtr.Object != IntPtr.Zero);
         }
 
         IEnumerator IEnumerable.GetEnumerator()

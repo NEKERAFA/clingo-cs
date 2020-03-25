@@ -10,7 +10,7 @@ namespace ClingoSharp
     {
         #region Class attributes
 
-        protected new static string[] m_names = new string[]
+        protected new static string[] ModelTypeNames = new string[]
         {
             "StableModel",
             "BraveConsequences",
@@ -38,6 +38,12 @@ namespace ClingoSharp
 
         #endregion
 
+        #region Instance Properties
+
+        public new string Name => ModelTypeNames[Value];
+
+        #endregion
+
         #region Constructors
 
         private ModelType(int value) : base(value) { }
@@ -46,10 +52,13 @@ namespace ClingoSharp
 
         #region Class methods
 
-        /// <summary>
-        /// Gets a iterator of the constants in the enumeration
-        /// </summary>
-        /// <returns>A <see cref="Enumerable"/> iterator with the constants in the enumeration</returns>
+        /// <inheritdoc/>
+        public new static IEnumerable<string> GetNames()
+        {
+            return (string[])ModelTypeNames.Clone();
+        }
+
+        /// <inheritdoc/>
         public new static IEnumerable<Enumeration> GetValues()
         {
             return new ModelType[] { StableModel, BraveConsequences, CautiousConsequences };

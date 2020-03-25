@@ -2,12 +2,15 @@
 
 namespace ClingoSharp.CoreServices.Interfaces.Modules
 {
+    /// <summary>
+    /// Functions used throughout all modules and version information
+    /// </summary>
     public interface IClingoModule : IModule
     {
         /// <summary>
         /// Obtains the clingo version as string
         /// </summary>
-        /// <returns>A string in format "mayor.minor.revision"</returns>
+        /// <returns>A string in format <c>mayor.minor.revision</c></returns>
         string GetVersion();
 
         /// <summary>
@@ -19,7 +22,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <summary>
         /// Gets the last error message set if an API call fails.
         /// </summary>
-        /// <returns>An error message or <see cref="null"/></returns>
+        /// <returns>An error message or <c>null</c></returns>
         string GetErrorMessage();
     }
 }

@@ -4,9 +4,6 @@ using clingo_symbol = System.UInt64;
 
 namespace ClingoSharp.NativeWrapper.Types
 {
-    /// <summary>
-    /// Struct used to specify the program parts that have to be grounded.
-    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct clingo_part
     {

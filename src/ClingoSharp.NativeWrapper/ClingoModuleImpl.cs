@@ -14,30 +14,12 @@ namespace ClingoSharp.NativeWrapper
     {
         #region Clingo C API Functions
 
-        /// <summary>
-        /// Obtain the clingo version.
-        /// </summary>
-        /// <param name="major">major version number</param>
-        /// <param name="minor">minor version number</param>
-        /// <param name="revision">revision number</param>
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
         private static extern void clingo_version([Out] IntPtr major, [Out] IntPtr minor, [Out] IntPtr revision);
 
-        /// <summary>
-        /// Get the last error code set by a clingo API call.
-        /// 
-        /// Note: Each thread has its own local error code.
-        /// </summary>
-        /// <returns>error code</returns>
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
         private static extern clingo_error clingo_error_code();
 
-        /// <summary>
-        /// Get the last error message set if an API call fails.
-        /// 
-        /// Note: Each thread has its own local error code.
-        /// </summary>
-        /// <returns>error message or null</returns>
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
         private static extern string clingo_error_message();
 
