@@ -1,0 +1,146 @@
+SF:D:\Users\neker\source\repos\ClingoSharp\source\ClingoSharp\Clingo.cs
+FN:13,System.String ClingoSharp.Clingo::get_Version()
+FNDA:1,System.String ClingoSharp.Clingo::get_Version()
+DA:14,1
+DA:15,1
+DA:16,1
+DA:17,1
+DA:20,1
+DA:21,1
+DA:22,1
+DA:23,1
+DA:25,1
+DA:26,1
+DA:28,1
+DA:29,1
+DA:31,1
+DA:32,1
+BRDA:15,11,0,1
+BRDA:15,11,1,1
+FN:8,System.Void ClingoSharp.Clingo::.cctor()
+FNDA:1,System.Void ClingoSharp.Clingo::.cctor()
+DA:9,1
+LF:15
+LH:15
+BRF:2
+BRH:2
+FNF:2
+FNH:2
+end_of_record
+SF:D:\Users\neker\source\repos\ClingoSharp\source\ClingoSharp\ClingoException.cs
+FN:17,System.Void ClingoSharp.ClingoException::.ctor()
+FNDA:0,System.Void ClingoSharp.ClingoException::.ctor()
+DA:18,0
+DA:19,0
+DA:20,0
+LF:3
+LH:0
+BRF:0
+BRH:0
+FNF:1
+FNH:0
+end_of_record
+SF:D:\Users\neker\source\repos\ClingoSharp\source\ClingoSharp\Control.cs
+FN:9,System.IntPtr ClingoSharp.Control::get_ControlObject()
+FNDA:2,System.IntPtr ClingoSharp.Control::get_ControlObject()
+DA:10,2
+FN:49,System.Void ClingoSharp.Control::Finalize()
+FNDA:0,System.Void ClingoSharp.Control::Finalize()
+DA:50,0
+DA:51,0
+DA:52,0
+FN:54,System.Void ClingoSharp.Control::Load(System.String)
+FNDA:0,System.Void ClingoSharp.Control::Load(System.String)
+DA:55,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:60,0
+BRDA:56,18,0,0
+BRDA:56,18,1,0
+FN:19,System.Void ClingoSharp.Control::.ctor(System.Collections.Generic.List`1<System.String>,ClingoSharp.Control/Logger,System.Int32)
+FNDA:1,System.Void ClingoSharp.Control::.ctor(System.Collections.Generic.List`1<System.String>,ClingoSharp.Control/Logger,System.Int32)
+DA:20,1
+DA:21,1
+DA:38,1
+DA:39,1
+DA:40,1
+DA:43,1
+DA:44,0
+DA:45,0
+DA:47,1
+BRDA:38,35,0,1
+BRDA:38,35,1,0
+BRDA:43,111,0,0
+BRDA:43,111,1,1
+FN:23,System.Void ClingoSharp.Control/<>c__DisplayClass4_0::<.ctor>g__LoggerWrapper|0(System.Int32,System.String,System.IntPtr)
+FNDA:0,System.Void ClingoSharp.Control/<>c__DisplayClass4_0::<.ctor>g__LoggerWrapper|0(System.Int32,System.String,System.IntPtr)
+DA:24,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:33,0
+DA:34,0
+DA:35,0
+BRDA:25,12,0,0
+BRDA:28,40,0,0
+BRDA:28,40,1,0
+BRDA:25,12,1,0
+LF:29
+LH:8
+BRF:10
+BRH:2
+FNF:5
+FNH:2
+end_of_record
+SF:D:\Users\neker\source\repos\ClingoSharp\source\ClingoSharp\Api\CClingo.cs
+FN:22,System.Void ClingoSharp.API.CClingo::LoadClingoLibrary()
+FNDA:2,System.Void ClingoSharp.API.CClingo::LoadClingoLibrary()
+DA:23,2
+DA:24,2
+DA:25,1
+DA:27,1
+DA:29,1
+DA:31,1
+DA:34,1
+DA:35,1
+DA:36,0
+DA:37,0
+DA:39,1
+DA:40,2
+BRDA:24,18,0,1
+BRDA:31,64,0,1
+BRDA:31,64,1,0
+BRDA:35,120,0,0
+BRDA:35,120,1,1
+BRDA:24,18,1,2
+FN:19,System.Void ClingoSharp.API.CClingo::.cctor()
+FNDA:1,System.Void ClingoSharp.API.CClingo::.cctor()
+DA:20,1
+DA:56,1
+DA:57,1
+DA:58,1
+LF:16
+LH:14
+BRF:6
+BRH:4
+FNF:2
+FNH:2
+end_of_record
+SF:D:\Users\neker\source\repos\ClingoSharp\source\ClingoSharp\Api\CControl.cs
+FN:11,System.Void ClingoSharp.API.CControl::.cctor()
+FNDA:1,System.Void ClingoSharp.API.CControl::.cctor()
+DA:12,1
+DA:13,1
+DA:14,1
+LF:3
+LH:3
+BRF:0
+BRH:0
+FNF:1
+FNH:1
+end_of_record

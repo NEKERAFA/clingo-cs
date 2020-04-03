@@ -1,3 +1,11 @@
+###############
+#    folder   #
+###############
+DROP/
+TEMP/
+_site/
+.vs/
+
 # Created by https://www.gitignore.io/api/csharp
 # Edit at https://www.gitignore.io/?templates=csharp
 
@@ -25,6 +33,7 @@ mono_crash.*
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
+[Pp]ackages/
 x64/
 x86/
 [Aa][Rr][Mm]/
@@ -33,7 +42,6 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
-[Bb]uild/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
