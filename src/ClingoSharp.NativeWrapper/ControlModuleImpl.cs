@@ -8,12 +8,10 @@ using ClingoSharp.CoreServices.Types;
 using ClingoSharp.NativeWrapper.Callbacks;
 using ClingoSharp.NativeWrapper.Enums;
 using ClingoSharp.NativeWrapper.EventHandlers;
-using ClingoSharp.NativeWrapper.Extensions;
 using ClingoSharp.NativeWrapper.Types;
 using System;
+using System.Linq;
 using System.Runtime.InteropServices;
-using clingo_symbol = System.UInt64;
-using clingo_literal = System.Int32;
 
 namespace ClingoSharp.NativeWrapper
 {
@@ -30,8 +28,6 @@ namespace ClingoSharp.NativeWrapper
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateClingoMaps();
-
                 cfg.CreateMap<Part, clingo_part>()
                     .ForMember(dest => dest.name, opt => opt.MapFrom(src => src.Name))
                     .ForMember(dest => dest.params_list, opt => opt.MapFrom(src => src.Params))
@@ -78,7 +74,20 @@ namespace ClingoSharp.NativeWrapper
         #region Solving Functions
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int clingo_control_solve(IntPtr control, clingo_solve_mode mode, clingo_literal[] assumptions, UIntPtr assumptions_size, clingo_solve_event_callback notify, IntPtr data, [Out] IntPtr[] handle);
+        private static extern int clingo_control_solve(IntPtr control, clingo_solve_mode mode, int[] assumptions, UIntPtr assumptions_size, clingo_solve_event_callback notify, IntPtr data, [Out] IntPtr[] handle);
+
+        #endregion
+
+        #region Program Inspection Functions
+
+        [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
+        private static extern int clingo_control_get_const(IntPtr control, string name, [Out] ulong[] symbol);
+
+        [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
+        private static extern int clingo_control_has_const(IntPtr control, string name, [Out] bool[] exists);
+
+        [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
+        private static extern int clingo_control_symbolic_atoms(IntPtr control, [Out] IntPtr[] atoms);
 
         #endregion
 
@@ -125,23 +134,23 @@ namespace ClingoSharp.NativeWrapper
 
         public bool Ground(Control control, Part[] parts, GroundCallback callback)
         {
-            int clingoGroundCallback(clingo_location[] clingoLocation, string name, clingo_symbol[] clingoArguments, UIntPtr arguments_size, IntPtr data, clingo_symbol_callback symbol_callback, IntPtr symbol_callback_data)
+            int clingoGroundCallback(clingo_location[] clingoLocation, string name, ulong[] clingoArguments, UIntPtr arguments_size, IntPtr data, clingo_symbol_callback symbol_callback, IntPtr symbol_callback_data)
             {
-                bool symbolCallback(Symbol[] symbols)
+                bool symbolCallback(Symbol[] symbols, IntPtr data)
                 {
-                    clingo_symbol[] clingoSymbols = symbols == null ? null : m_mapper.Map<Symbol[], clingo_symbol[]>(symbols);
+                    ulong[] clingoSymbols = symbols?.Select(s => (ulong)s).ToArray();
                     UIntPtr clingoSymbolsSize = new UIntPtr(Convert.ToUInt32(symbols == null ? 0 : symbols.Length));
 
-                    var success = symbol_callback(clingoSymbols, new UIntPtr(Convert.ToUInt32(symbols.Length)), symbol_callback_data);
+                    var success = symbol_callback(clingoSymbols, new UIntPtr(Convert.ToUInt32(symbols.Length)), data);
 
                     return success != 0;
                 }
 
                 Location location = clingoLocation == null ? null : m_mapper.Map<clingo_location, Location>(clingoLocation[0]);
 
-                Symbol[] arguments = clingoArguments == null ? null : m_mapper.Map<clingo_symbol[], Symbol[]>(clingoArguments);
+                Symbol[] arguments = clingoArguments?.Select(arg => (Symbol)arg).ToArray();
 
-                var success = callback(location, name, arguments, symbolCallback);
+                var success = callback(location, name, arguments, data, symbolCallback, symbol_callback_data);
 
                 return success ? 1 : 0;
             }
@@ -173,7 +182,7 @@ namespace ClingoSharp.NativeWrapper
 
             clingo_solve_mode cligoSolveMode = (clingo_solve_mode)mode;
 
-            clingo_literal[] clingoAssumptions = assumptions == null ? null : m_mapper.Map<Literal[], clingo_literal[]>(assumptions);
+            int[] clingoAssumptions = assumptions?.Select(ass => (int)ass).ToArray();
             UIntPtr clingoAssumptionsSize = new UIntPtr(Convert.ToUInt32(assumptions == null ? 0 : assumptions.Length));
 
             IntPtr[] handlerPtr = new IntPtr[1];
@@ -182,6 +191,34 @@ namespace ClingoSharp.NativeWrapper
 
             handler = new SolveHandle() { Object = handlerPtr[0] };
 
+            return success != 0;
+        }
+
+        #endregion
+
+        #region Program Inspection Functions
+
+        public bool GetConst(Control control, string name, out Symbol symbol)
+        {
+            ulong[] symbolPtr = new ulong[1];
+            var success = clingo_control_get_const(control.Object, name, symbolPtr);
+            symbol = symbolPtr[0];
+            return success != 0;
+        }
+
+        public bool HasConst(Control control, string name, out bool exists)
+        {
+            bool[] existsPtr = new bool[1];
+            var success = clingo_control_has_const(control.Object, name, existsPtr);
+            exists = existsPtr[0];
+            return success != 0;
+        }
+
+        public bool GetSymbolicAtoms(Control control, out SymbolicAtoms symbolicAtoms)
+        {
+            IntPtr[] symbolicAtomsPtr = new IntPtr[1];
+            var success = clingo_control_symbolic_atoms(control.Object, symbolicAtomsPtr);
+            symbolicAtoms = new SymbolicAtoms() { Object = symbolicAtomsPtr[0] };
             return success != 0;
         }
 

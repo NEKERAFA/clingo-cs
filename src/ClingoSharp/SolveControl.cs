@@ -3,7 +3,7 @@
     /// <summary>
     /// Object that allows for controlling a running search.
     /// </summary>
-    public class SolveControl
+    public sealed class SolveControl
     {
         #region Attributes
 

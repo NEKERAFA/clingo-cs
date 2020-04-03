@@ -1,5 +1,6 @@
 ﻿using ClingoSharp.CoreServices;
 using ClingoSharp.CoreServices.Enums;
+using ClingoSharp.CoreServices.Interfaces;
 using ClingoSharp.CoreServices.Interfaces.Modules;
 using ClingoSharp.Exceptions;
 using System;
@@ -15,7 +16,7 @@ namespace ClingoSharp
         #region Attributes
 
         private static string m_version = null;
-        private static readonly IClingoModule m_module;
+        private static readonly IMainModule m_module;
 
         #endregion
 
@@ -43,13 +44,22 @@ namespace ClingoSharp
 
         static Clingo()
         {
-            m_module = Repository.GetModule<IClingoModule>();
+            m_module = Repository.GetModule<IMainModule>();
         }
 
         #endregion
 
         #region Class Methods
 
+        /// <summary>
+        /// Gets the error message and the code that returns clingo and creates a new exception
+        /// </summary>
+        /// <param name="success"><c>false</c> to check clingo error</param>
+        /// <exception cref="RuntimeException"></exception>
+        /// <exception cref="LogicException"></exception>
+        /// <exception cref="BadAllocationException"></exception>
+        /// <exception cref="UnknownException"></exception>
+        /// <exception cref="Exception"></exception>
         internal static void HandleClingoError(bool success)
         {
             if (!success)
@@ -71,6 +81,24 @@ namespace ClingoSharp
                         throw new Exception(message);
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets the asociated API module in clingo
+        /// </summary>
+        /// <returns>The asociated module</returns>
+        public static IClingoModule GetModule()
+        {
+            return m_module;
+        }
+
+        /// <summary>
+        /// Gets the main module in clingo
+        /// </summary>
+        /// <returns>The the main module</returns>
+        public static IMainModule GetMainModule()
+        {
+            return m_module;
         }
 
         #endregion

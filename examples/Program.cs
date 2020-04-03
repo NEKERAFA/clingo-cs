@@ -19,24 +19,23 @@ namespace ClingoSharpApp
 
             ctl.Ground(parts);
 
-            // ctl.Solve(onModel: m => { Console.WriteLine($"Answer: {m}"); return true; });
+            // Using lockable call
+            //ctl.Solve(onModel: m => { Console.WriteLine($"Answer: {m}"); return true; });
 
-            /*
-            var handle = ctl.Solve(yield: true) as SolveHandle;
-            foreach (var m in handle)
-            {
-                Console.WriteLine($"Answer: {m}");
-                //handle.Get();
-            }
-            */
+            // Using yieldable call
+            //SolveHandle handle = ctl.Solve(yield: true);
+            //foreach (var m in handle)
+            //{
+            //    Console.WriteLine($"Answer: {m}");
+            //    handle.Get();
+            //}
 
+            // Using async call
             SolveHandle handle = ctl.Solve(onModel: m => { Console.WriteLine($"Answer: {m}"); return true; }, async: true);
             while (!handle.Wait(0))
             {
                 continue;
             }
-            
-
         }
     }
 }

@@ -1,8 +1,11 @@
 ﻿using ClingoSharp.CoreServices;
+using ClingoSharp.CoreServices.Interfaces;
 using ClingoSharp.CoreServices.Interfaces.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ClingoSymbol = ClingoSharp.CoreServices.Types.Symbol;
+using ClingoSymbolType = ClingoSharp.CoreServices.Enums.SymbolType;
 
 namespace ClingoSharp
 {
@@ -10,12 +13,12 @@ namespace ClingoSharp
     /// Represents a gringo symbol.
     /// This includes numbers, strings, functions (including constants with <c>len(arguments) == 0</c> and tuples with <c>len(name) == 0</c>), <c>#inf</c> and <c>#sup</c>.
     /// </summary>
-    public class Symbol : IEquatable<Symbol>, IComparable<Symbol>
+    public sealed class Symbol : IEquatable<Symbol>, IComparable<Symbol>
     {
         #region Attributes
 
         private static readonly ISymbolModule m_module;
-        internal readonly CoreServices.Types.Symbol m_clingoSymbol;
+        private readonly ClingoSymbol m_clingoSymbol;
 
         #endregion
 
@@ -56,7 +59,7 @@ namespace ClingoSharp
         {
             get
             {
-                Clingo.HandleClingoError(m_module.GetArguments(m_clingoSymbol, out CoreServices.Types.Symbol[] arguments));
+                Clingo.HandleClingoError(m_module.GetArguments(this, out ClingoSymbol[] arguments));
                 return arguments.Select(argument => new Symbol(argument)).ToList();
             }
         }
@@ -68,7 +71,7 @@ namespace ClingoSharp
         {
             get
             {
-                Clingo.HandleClingoError(m_module.GetName(m_clingoSymbol, out string name));
+                Clingo.HandleClingoError(m_module.GetName(this, out string name));
                 return name;
             }
         }
@@ -80,7 +83,7 @@ namespace ClingoSharp
         {
             get
             {
-                Clingo.HandleClingoError(m_module.IsNegative(m_clingoSymbol, out bool negative));
+                Clingo.HandleClingoError(m_module.IsNegative(this, out bool negative));
                 return negative;
             }
         }
@@ -92,7 +95,7 @@ namespace ClingoSharp
         {
             get
             {
-                Clingo.HandleClingoError(m_module.GetNumber(m_clingoSymbol, out int number));
+                Clingo.HandleClingoError(m_module.GetNumber(this, out int number));
                 return number;
             }
         }
@@ -104,7 +107,7 @@ namespace ClingoSharp
         {
             get
             {
-                Clingo.HandleClingoError(m_module.IsPositive(m_clingoSymbol, out bool positive));
+                Clingo.HandleClingoError(m_module.IsPositive(this, out bool positive));
                 return positive;
             }
         }
@@ -116,7 +119,7 @@ namespace ClingoSharp
         {
             get
             {
-                Clingo.HandleClingoError(m_module.GetString(m_clingoSymbol, out string value));
+                Clingo.HandleClingoError(m_module.GetString(this, out string value));
                 return value;
             }
         }
@@ -128,15 +131,15 @@ namespace ClingoSharp
         {
             get
             {
-                var type = m_module.GetType(m_clingoSymbol);
+                var type = m_module.GetType(this);
 
                 return type switch
                 {
-                    CoreServices.Enums.SymbolType.Infimun => SymbolType.Infimum,
-                    CoreServices.Enums.SymbolType.Number => SymbolType.Number,
-                    CoreServices.Enums.SymbolType.String => SymbolType.String,
-                    CoreServices.Enums.SymbolType.Function => SymbolType.Function,
-                    CoreServices.Enums.SymbolType.Supremum => SymbolType.Supremum,
+                    ClingoSymbolType.Infimum => SymbolType.Infimum,
+                    ClingoSymbolType.Number => SymbolType.Number,
+                    ClingoSymbolType.String => SymbolType.String,
+                    ClingoSymbolType.Function => SymbolType.Function,
+                    ClingoSymbolType.Supremum => SymbolType.Supremum,
                     _ => null
                 };
             }
@@ -151,7 +154,7 @@ namespace ClingoSharp
             m_module = Repository.GetModule<ISymbolModule>();
         }
 
-        internal Symbol(CoreServices.Types.Symbol clingoSymbol)
+        public Symbol(ClingoSymbol clingoSymbol)
         {
             m_clingoSymbol = clingoSymbol;
         }
@@ -206,6 +209,34 @@ namespace ClingoSharp
         #region Class Methods
 
         /// <summary>
+        /// Gets the asociated API module in clingo
+        /// </summary>
+        /// <returns>The asociated module</returns>
+        public static IClingoModule GetModule()
+        {
+            return m_module;
+        }
+
+        /// <summary>
+        /// Gets the symbol module in clingo
+        /// </summary>
+        /// <returns>The symbol module</returns>
+        public static ISymbolModule GetSymbolModule()
+        {
+            return m_module;
+        }
+
+        public static implicit operator ClingoSymbol(Symbol symbol)
+        {
+            return symbol.m_clingoSymbol;
+        }
+
+        public static implicit operator Symbol(ClingoSymbol clingoSymbol)
+        {
+            return new Symbol(clingoSymbol);
+        }
+
+        /// <summary>
         /// Construct a numeric symbol given a number.
         /// </summary>
         /// <param name="value">The given number</param>
@@ -227,32 +258,32 @@ namespace ClingoSharp
 
         public static bool operator <(Symbol a, Symbol b)
         {
-            return m_module.IsLessThan(a.m_clingoSymbol, b.m_clingoSymbol);
+            return m_module.IsLessThan(a, b);
         }
 
         public static bool operator <=(Symbol a, Symbol b)
         {
-            return !m_module.IsLessThan(b.m_clingoSymbol, a.m_clingoSymbol);
+            return !m_module.IsLessThan(b, a);
         }
 
         public static bool operator >(Symbol a, Symbol b)
         {
-            return m_module.IsLessThan(b.m_clingoSymbol, a.m_clingoSymbol);
+            return m_module.IsLessThan(b, a);
         }
 
         public static bool operator >=(Symbol a, Symbol b)
         {
-            return !m_module.IsLessThan(a.m_clingoSymbol, b.m_clingoSymbol);
+            return !m_module.IsLessThan(a, b);
         }
 
         public static bool operator ==(Symbol a, Symbol b)
         {
-            return m_module.IsEqualTo(a.m_clingoSymbol, b.m_clingoSymbol);
+            return m_module.IsEqualTo(a, b);
         }
 
         public static bool operator !=(Symbol a, Symbol b)
         {
-            return !m_module.IsEqualTo(a.m_clingoSymbol, b.m_clingoSymbol);
+            return !m_module.IsEqualTo(a, b);
         }
 
         #endregion
@@ -276,17 +307,17 @@ namespace ClingoSharp
         /// <inheritdoc/>
         public int CompareTo(Symbol other)
         {
-            if (m_module.IsLessThan(m_clingoSymbol, other.m_clingoSymbol))
+            if (m_module.IsLessThan(this, other))
             {
                 return -1;
             }
             
-            if (m_module.IsLessThan(other.m_clingoSymbol, m_clingoSymbol))
+            if (m_module.IsLessThan(other, this))
             {
                 return 1;
             }
 
-            if (m_module.IsEqualTo(m_clingoSymbol, other.m_clingoSymbol))
+            if (m_module.IsEqualTo(this, other))
             {
                 return 0;
             }
@@ -297,7 +328,7 @@ namespace ClingoSharp
         /// <inheritdoc/>
         public bool Equals(Symbol other)
         {
-            return m_module.IsEqualTo(m_clingoSymbol, other.m_clingoSymbol);
+            return m_module.IsEqualTo(this, other);
         }
 
         /// <inheritdoc/>
@@ -314,13 +345,13 @@ namespace ClingoSharp
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return Convert.ToInt32(m_module.GetHash(m_clingoSymbol).ToUInt32());
+            return Convert.ToInt32(m_module.GetHash(this).ToUInt32());
         }
 
         /// <inheritdoc/>
         public override string ToString()
         {
-            Clingo.HandleClingoError(m_module.ToString(m_clingoSymbol, out string value));
+            Clingo.HandleClingoError(m_module.ToString(this, out string value));
             return value;
         }
 

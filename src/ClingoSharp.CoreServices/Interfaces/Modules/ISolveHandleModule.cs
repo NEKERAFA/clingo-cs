@@ -7,7 +7,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
     /// <summary>
     /// Interact with a running search.
     /// </summary>
-    public interface ISolveHandleModule : IModule
+    public interface ISolveHandleModule : Interfaces.IClingoModule
     {
         /// <summary>
         /// <para>Get the next solve result.</para>

@@ -9,7 +9,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
     /// <summary>
     /// Functions to control the grounding and solving process.
     /// </summary>
-    public interface IControlModule : IModule
+    public interface IControlModule : Interfaces.IClingoModule
     {
         #region Functions
 

@@ -7,7 +7,7 @@ using System.Runtime.Loader;
 
 namespace ClingoSharp.CoreServices.Shared
 {
-    internal class ClingoContext : AssemblyLoadContext, IClingoContext
+    internal sealed class ClingoContext : AssemblyLoadContext, IClingoContext
     {
         #region Assembly load context methods
 
@@ -67,14 +67,14 @@ namespace ClingoSharp.CoreServices.Shared
 
         #region Clingo context methods
 
-        public IModule GetModule(Type moduleType)
+        public IClingoModule GetModule(Type moduleType)
         {
             var nativeWrapperAssembly = LoadFromAssemblyName(new AssemblyName(Constants.NativeWrapper));
             var type = nativeWrapperAssembly.GetType($"{Constants.NativeWrapper}.{moduleType.Name.Substring(1)}Impl", true);
-            return (IModule)Activator.CreateInstance(type);
+            return (IClingoModule)Activator.CreateInstance(type);
         }
 
-        public T GetModule<T>() where T : IModule
+        public T GetModule<T>() where T : IClingoModule
         {
             return (T)GetModule(typeof(T));
         }

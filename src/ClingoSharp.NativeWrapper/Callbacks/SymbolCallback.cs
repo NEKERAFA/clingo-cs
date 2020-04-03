@@ -1,8 +1,6 @@
-﻿using ClingoSharp.NativeWrapper.Enums;
-using System;
-using clingo_symbol = System.UInt64;
+﻿using System;
 
 namespace ClingoSharp.NativeWrapper.Callbacks
 {
-    internal delegate int clingo_symbol_callback(clingo_symbol[] symbols, UIntPtr symbols_size, IntPtr data);
+    internal delegate int clingo_symbol_callback(ulong[] symbols, UIntPtr symbols_size, IntPtr data);
 }

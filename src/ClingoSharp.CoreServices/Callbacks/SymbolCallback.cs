@@ -1,6 +1,13 @@
 ﻿using ClingoSharp.CoreServices.Types;
+using System;
 
 namespace ClingoSharp.CoreServices.Callbacks
 {
-    public delegate bool SymbolCallback(Symbol[] symbols);
+    /// <summary>
+    /// Callback function to inject symbols
+    /// </summary>
+    /// <param name="symbols">array of symbols</param>
+    /// <param name="data">user data of the callback</param>
+    /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
+    public delegate bool SymbolCallback(Symbol[] symbols, IntPtr data);
 }

@@ -2,27 +2,49 @@
 using ClingoSharp.CoreServices.Callbacks;
 using ClingoSharp.CoreServices.Enums;
 using ClingoSharp.CoreServices.EventHandlers;
+using ClingoSharp.CoreServices.Interfaces;
 using ClingoSharp.CoreServices.Interfaces.Modules;
-using ClingoSharp.CoreServices.Types;
+using ClingoSharp.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using ClingoControl = ClingoSharp.CoreServices.Types.Control;
+using ClingoLiteral = ClingoSharp.CoreServices.Types.Literal;
+using ClingoLocation = ClingoSharp.CoreServices.Types.Location;
+using ClingoModel = ClingoSharp.CoreServices.Types.Model;
+using ClingoPart = ClingoSharp.CoreServices.Types.Part;
+using ClingoSolveHandle = ClingoSharp.CoreServices.Types.SolveHandle;
+using ClingoSymbol = ClingoSharp.CoreServices.Types.Symbol;
+using ClingoSymbolicAtoms = ClingoSharp.CoreServices.Types.SymbolicAtoms;
 
 namespace ClingoSharp
 {
     /// <summary>
     /// Control object for the grounding/solving process.
     /// </summary>
-    public class Control : IDisposable
+    public sealed class Control : IDisposable
     {
         #region Attributes
 
         private static readonly IControlModule m_module;
-        private CoreServices.Types.Control m_clingoControl;
+        private ClingoControl m_clingoControl;
         // Track whether Dispose has been called.
         private bool disposed = false;
+
+        #endregion
+
+        #region Properties
+
+        public SymbolicAtoms SymbolicAtoms
+        {
+            get
+            {
+                Clingo.HandleClingoError(m_module.GetSymbolicAtoms(this, out ClingoSymbolicAtoms symbolicAtoms));
+                return new SymbolicAtoms(symbolicAtoms);
+            }
+        }
 
         #endregion
 
@@ -31,6 +53,11 @@ namespace ClingoSharp
         static Control()
         {
             m_module = Repository.GetModule<IControlModule>();
+        }
+
+        public Control(ClingoControl clingoControl)
+        {
+            m_clingoControl = clingoControl;
         }
 
         /// <summary>
@@ -45,12 +72,12 @@ namespace ClingoSharp
             {
                 if (logger != null)
                 {
-                    MessageCode messageCode = Enums.Enumeration.GetValue((int)code) as MessageCode;
+                    MessageCode messageCode = Enumeration.GetValue((int)code) as MessageCode;
                     logger(messageCode, message);
                 }
             }
 
-            Clingo.HandleClingoError(m_module.New(args?.ToArray(), loggerCallback, Convert.ToUInt32(messageLimit), out CoreServices.Types.Control controlPtr));
+            Clingo.HandleClingoError(m_module.New(args?.ToArray(), loggerCallback, Convert.ToUInt32(messageLimit), out ClingoControl controlPtr));
 
             m_clingoControl = controlPtr;
         }
@@ -61,7 +88,39 @@ namespace ClingoSharp
 
         ~Control()
         {
-            Dispose(false);
+            m_module.Free(m_clingoControl);
+        }
+
+        #endregion
+
+        #region Class Methods
+
+        /// <summary>
+        /// Gets the asociated API module in clingo
+        /// </summary>
+        /// <returns>The asociated module</returns>
+        public static IClingoModule GetModule()
+        {
+            return m_module;
+        }
+
+        /// <summary>
+        /// Gets the control module in clingo
+        /// </summary>
+        /// <returns>The control module</returns>
+        public static IControlModule GetControlModule()
+        {
+            return m_module;
+        }
+
+        public static implicit operator ClingoControl(Control control)
+        {
+            return control.m_clingoControl;
+        }
+
+        public static implicit operator Control(ClingoControl clingoControl)
+        {
+            return new Control(clingoControl);
         }
 
         #endregion
@@ -71,18 +130,14 @@ namespace ClingoSharp
         /// <inheritdoc/>
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if(!disposed)
+            if (!disposed)
             {
-                m_module.Free(m_clingoControl);
+                m_module.Free(this);
                 m_clingoControl = null;
                 disposed = true;
             }
+
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -93,7 +148,7 @@ namespace ClingoSharp
         /// <param name="program">The non-ground program in string form.</param>
         public void Add(string name, List<string> parameters, string program)
         {
-            Clingo.HandleClingoError(m_module.Add(m_clingoControl, name, parameters?.ToArray(), program));
+            Clingo.HandleClingoError(m_module.Add(this, name, parameters?.ToArray(), program));
         }
 
         /// <summary>
@@ -103,7 +158,7 @@ namespace ClingoSharp
         public void Ground(List<Tuple<string, List<Symbol>>> parts, object context = null)
         {
             // Creates a wrapper from the context object to a ground callback
-            bool groundCallback(Location location, string name, CoreServices.Types.Symbol[] arguments, SymbolCallback symbolCallback)
+            bool groundCallback(ClingoLocation location, string name, ClingoSymbol[] arguments, IntPtr data, SymbolCallback symbolCallback, IntPtr callbackData)
             {
                 try
                 {
@@ -112,17 +167,17 @@ namespace ClingoSharp
                     object result = method.Invoke(context, arguments);
 
                     // Convert return value in symbol object
-                    var newSymbols = new List<CoreServices.Types.Symbol>();
+                    var newSymbols = new List<ClingoSymbol>();
                     if (result is Symbol)
                     {
 
-                        newSymbols.Add(((Symbol)result).m_clingoSymbol);
+                        newSymbols.Add(((Symbol)result));
                     }
                     else if (result is IEnumerable<Symbol>)
                     {
                         foreach (var symbol in (result as IEnumerable<Symbol>))
                         {
-                            newSymbols.Add(symbol.m_clingoSymbol);
+                            newSymbols.Add(symbol);
                         }
                     }
                     else
@@ -130,7 +185,7 @@ namespace ClingoSharp
                         return false;
                     }
                     
-                    return symbolCallback(newSymbols.ToArray());
+                    return symbolCallback(newSymbols.ToArray(), callbackData);
                 }
                 catch
                 {
@@ -139,13 +194,13 @@ namespace ClingoSharp
             }
 
             // Converts the tuple list into a Part array
-            Part[] partArray = parts == null ? null : parts.Select(p => new Part()
+            ClingoPart[] partArray = parts?.Select(p => new ClingoPart()
             {
                 Name = p.Item1,
-                Params = p.Item2.Select(s => s.m_clingoSymbol).ToArray()
+                Params = p.Item2.Select(s => (ClingoSymbol)s).ToArray()
             }).ToArray();
 
-            Clingo.HandleClingoError(m_module.Ground(m_clingoControl, partArray, (context != null) ? (GroundCallback)groundCallback : null));
+            Clingo.HandleClingoError(m_module.Ground(this, partArray, (context != null) ? (GroundCallback)groundCallback : null));
         }
 
         /// <summary>
@@ -172,7 +227,7 @@ namespace ClingoSharp
                         case SolveEventType.Model:
                             if (onModel != null)
                             {
-                                var model = new Model(new CoreServices.Types.Model() { Object = eventPtr });
+                                var model = new Model(new ClingoModel() { Object = eventPtr });
                                 goon = onModel(model);
                             }
 
@@ -211,17 +266,40 @@ namespace ClingoSharp
                 }
             }
 
-            // Converts the asumptions into a Literal array
-            Literal[] literalArray = assumptions == null ? null : assumptions.Select(a => new Literal()
+            // Converts the asumptions into a literals list
+            var symbolicAtoms = SymbolicAtoms;
+            List<ClingoLiteral> literals = new List<ClingoLiteral>();
+            if (assumptions != null)
             {
-                ///Value = a.GetLiteralValue()
-            }).ToArray();
+                foreach (var assumption in assumptions)
+                {
+                    if (assumption.IsType<int>())
+                    {
+                        literals.Add(assumption.Get<int>());
+                    }
+                    else
+                    {
+                        var symbolicLiteral = assumption.Get<Tuple<Symbol, bool>>();
+                        if (symbolicAtoms.TryGetValue(symbolicLiteral.Item1, out SymbolicAtom symbolicAtom))
+                        {
+                            var literal = symbolicAtom.Literal;
+                            if (!symbolicLiteral.Item2) literal = -literal;
+                            literals.Add(literal);
+                        }
+                        else if (symbolicLiteral.Item2)
+                        {
+                            literals.Add(1);
+                            literals.Add(-1);
+                        }
+                    }
+                }
+            }
 
-            SolveMode mode = SolveMode.None;
+            SolveMode mode = 0;
             if (yield) { mode |= SolveMode.Yield; }
             if (async) { mode |= SolveMode.Async; }
 
-            Clingo.HandleClingoError(m_module.Solve(m_clingoControl, mode, null, (onModel == null) && (onStatistics == null) && (onFinish == null) ? null : (SolveEventHandler)notifyCallback, out CoreServices.Types.SolveHandle handlePtr));
+            Clingo.HandleClingoError(m_module.Solve(this, mode, literals.ToArray(), (onModel == null) && (onStatistics == null) && (onFinish == null) ? null : (SolveEventHandler)notifyCallback, out ClingoSolveHandle handlePtr));
 
             var handle = new SolveHandle(handlePtr);
 

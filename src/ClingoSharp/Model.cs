@@ -1,23 +1,28 @@
 ﻿using ClingoSharp.CoreServices;
-using ClingoSharp.CoreServices.Enums;
 using ClingoSharp.CoreServices.Interfaces.Modules;
-using ClingoSharp.CoreServices.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ClingoId = ClingoSharp.CoreServices.Types.Id;
+using ClingoLiteral = ClingoSharp.CoreServices.Types.Literal;
+using ClingoModel = ClingoSharp.CoreServices.Types.Model;
+using ClingoModelType = ClingoSharp.CoreServices.Enums.ModelType;
+using ClingoShowType = ClingoSharp.CoreServices.Enums.ShowType;
+using ClingoSymbol = ClingoSharp.CoreServices.Types.Symbol;
+using ClingoSolveControl = ClingoSharp.CoreServices.Types.SolveControl;
 
 namespace ClingoSharp
 {
     /// <summary>
     /// Provides access to a model during a solve call and provides a <see cref="SolveControl"/> object to provided limited support to influence the running search.
     /// </summary>
-    public class Model
+    public sealed class Model
     {
         #region Attributes
 
         private static readonly IModelModule m_module;
-        private readonly CoreServices.Types.Model m_clingoModel;
+        private readonly ClingoModel m_clingoModel;
 
         #endregion
 
@@ -30,7 +35,7 @@ namespace ClingoSharp
         {
             get
             {
-                Clingo.HandleClingoError(m_module.GetContext(m_clingoModel, out CoreServices.Types.SolveControl context));
+                Clingo.HandleClingoError(m_module.GetContext(this, out ClingoSolveControl context));
                 return new SolveControl(context);
             }
         }
@@ -43,7 +48,7 @@ namespace ClingoSharp
         {
             get
             {
-                Clingo.HandleClingoError(m_module.GetCosts(m_clingoModel, out long[] costs));
+                Clingo.HandleClingoError(m_module.GetCosts(this, out long[] costs));
                 return costs.Select(cost => Convert.ToInt32(cost)).ToList();
             }
         }
@@ -55,7 +60,7 @@ namespace ClingoSharp
         {
             get
             {
-                Clingo.HandleClingoError(m_module.GetNumber(m_clingoModel, out ulong number));
+                Clingo.HandleClingoError(m_module.GetNumber(this, out ulong number));
                 return Convert.ToInt32(number);
             }
         }
@@ -67,7 +72,7 @@ namespace ClingoSharp
         {
             get
             {
-                Clingo.HandleClingoError(m_module.IsOptimalityProven(m_clingoModel, out bool proven));
+                Clingo.HandleClingoError(m_module.IsOptimalityProven(this, out bool proven));
                 return proven;
             }
         }
@@ -79,7 +84,7 @@ namespace ClingoSharp
         {
             get
             {
-                Clingo.HandleClingoError(m_module.GetThreadId(m_clingoModel, out uint id));
+                Clingo.HandleClingoError(m_module.GetThreadId(this, out ClingoId id));
                 return Convert.ToInt32(id);
             }
         }
@@ -91,13 +96,13 @@ namespace ClingoSharp
         {
             get
             {
-                Clingo.HandleClingoError(m_module.GetType(m_clingoModel, out var type));
+                Clingo.HandleClingoError(m_module.GetType(this, out var type));
 
                 return type switch
                 {
-                    CoreServices.Enums.ModelType.StableModel => ModelType.StableModel,
-                    CoreServices.Enums.ModelType.BraveConsequences => ModelType.BraveConsequences,
-                    CoreServices.Enums.ModelType.CautiousConsequences => ModelType.CautiousConsequences,
+                    ClingoModelType.StableModel => ModelType.StableModel,
+                    ClingoModelType.BraveConsequences => ModelType.BraveConsequences,
+                    ClingoModelType.CautiousConsequences => ModelType.CautiousConsequences,
                     _ => null
                 };
             }
@@ -112,11 +117,25 @@ namespace ClingoSharp
             m_module = Repository.GetModule<IModelModule>();
         }
 
-        internal Model(CoreServices.Types.Model clingoModel)
+        public Model(ClingoModel clingoModel)
         {
             m_clingoModel = clingoModel;
         }
 
+        #endregion
+
+        #region Class Methods
+        
+        public static implicit operator ClingoModel(Model model)
+        {
+            return model.m_clingoModel;
+        }
+
+        public static implicit operator Model(ClingoModel clingoModel)
+        {
+            return new Model(clingoModel);
+        }
+        
         #endregion
 
         #region Instance Methods
@@ -129,7 +148,7 @@ namespace ClingoSharp
         /// <remarks>The atom must be represented using a function symbol.</remarks>
         public bool Contains(Symbol atom)
         {
-            Clingo.HandleClingoError(m_module.Contains(m_clingoModel, atom.m_clingoSymbol, out bool contained));
+            Clingo.HandleClingoError(m_module.Contains(this, atom, out bool contained));
             return contained;
         }
 
@@ -139,8 +158,8 @@ namespace ClingoSharp
         /// <param name="symbols">The symbols to add to the model.</param>
         public void Extend(List<Symbol> symbols)
         {
-            var atoms = symbols.Select(symbol => symbol.m_clingoSymbol).ToArray();
-            Clingo.HandleClingoError(m_module.Extends(m_clingoModel, atoms));
+            var atoms = symbols.Select(symbol => (ClingoSymbol)symbol).ToArray();
+            Clingo.HandleClingoError(m_module.Extends(this, atoms));
         }
 
         /// <summary>
@@ -150,12 +169,12 @@ namespace ClingoSharp
         /// <returns>Whether the given program literal is true.</returns>
         public bool IsTrue(int literal)
         {
-            var literalValue = new Literal()
+            var literalValue = new ClingoLiteral()
             {
                 Value = literal
             };
 
-            Clingo.HandleClingoError(m_module.IsTrue(m_clingoModel, literalValue, out bool result));
+            Clingo.HandleClingoError(m_module.IsTrue(this, literalValue, out bool result));
 
             return result;
         }
@@ -171,12 +190,12 @@ namespace ClingoSharp
         /// <returns>The selected symbols.</returns>
         public List<Symbol> GetSymbols(bool atoms = false, bool terms = false, bool shown = false, bool csp = false, bool complement = false)
         {
-            ShowType atomset = 0;
-            if (atoms) { atomset |= ShowType.Atoms; }
-            if (terms) { atomset |= ShowType.Terms; }
-            if (shown) { atomset |= ShowType.Shown; }
-            if (csp) { atomset |= ShowType.CSP; }
-            if (complement) { atomset |= ShowType.Complement; }
+            ClingoShowType atomset = 0;
+            if (atoms) { atomset |= ClingoShowType.Atoms; }
+            if (terms) { atomset |= ClingoShowType.Terms; }
+            if (shown) { atomset |= ClingoShowType.Shown; }
+            if (csp) { atomset |= ClingoShowType.CSP; }
+            if (complement) { atomset |= ClingoShowType.Complement; }
 
             Clingo.HandleClingoError(m_module.GetSymbols(m_clingoModel, atomset, out var symbols));
 

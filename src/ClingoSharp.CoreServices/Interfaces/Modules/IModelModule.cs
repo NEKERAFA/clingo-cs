@@ -6,7 +6,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
     /// <summary>
     /// Inspection of models and a high-level interface to add constraints during solving.
     /// </summary>
-    public interface IModelModule : IModule
+    public interface IModelModule : Interfaces.IClingoModule
     {
         #region Functions for Inspecting Models
 
@@ -66,7 +66,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="model">a model object</param>
         /// <param name="id">the resulting thread id</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool GetThreadId(Model model, out uint id);
+        bool GetThreadId(Model model, out Id id);
 
         /// <summary>
         /// Get the cost vector of a model
@@ -107,7 +107,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="control">the target</param>
         /// <param name="atoms">the resulting object</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool GetSymbolicAtoms(SolveControl control, SymbolicAtoms atoms);
+        bool GetSymbolicAtoms(SolveControl control, out SymbolicAtoms atoms);
 
         /// <summary>
         /// Add a clause that applies to the current solving step during model enumeration.

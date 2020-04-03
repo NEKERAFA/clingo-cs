@@ -7,7 +7,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
     /// <summary>
     /// Working with (evaluated) ground terms and related functions.
     /// </summary>
-    public interface ISymbolModule : IModule
+    public interface ISymbolModule : Interfaces.IClingoModule
     {
         #region Signature Functions
 

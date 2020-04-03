@@ -4,33 +4,16 @@ using ClingoSharp.CoreServices.Enums;
 using ClingoSharp.CoreServices.Interfaces.Modules;
 using ClingoSharp.CoreServices.Types;
 using ClingoSharp.NativeWrapper.Enums;
-using ClingoSharp.NativeWrapper.Extensions;
 using System;
 using System.Runtime.InteropServices;
 using clingo_symbol = System.UInt64;
 using clingo_signature = System.UInt64;
+using System.Linq;
 
 namespace ClingoSharp.NativeWrapper
 {
     public class SymbolModuleImpl : ISymbolModule
     {
-        private readonly IMapper m_mapper;
-
-        #region Constructors
-
-        public SymbolModuleImpl()
-        {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateClingoMaps();
-            });
-
-            m_mapper = config.CreateMapper();
-        }
-
-
-        #endregion
-
         #region Clingo C API Functions
 
         #region Signature Functions
@@ -221,7 +204,7 @@ namespace ClingoSharp.NativeWrapper
 
         public bool CreateFunction(string name, Symbol[] arguments, bool positive, out Symbol symbol)
         {
-            clingo_symbol[] clingoArguments = m_mapper.Map<Symbol[], clingo_symbol[]>(arguments);
+            clingo_symbol[] clingoArguments = arguments.Select(arg => (clingo_symbol)arg).ToArray();
             UIntPtr argumentsSize = new UIntPtr(Convert.ToUInt32(arguments != null ? arguments.Length : 0));
 
             clingo_symbol[] symbolPtr = new clingo_symbol[1];

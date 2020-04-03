@@ -1,8 +1,12 @@
-﻿using System;
+﻿using ClingoSharp.CoreServices.Interfaces;
+using System;
 
 namespace ClingoSharp.CoreServices.Types
 {
-    public class SolveHandle
+    /// <summary>
+    /// Search handle to a solve call.
+    /// </summary>
+    public sealed class SolveHandle : IClingoObject
     {
         public IntPtr Object { get; set; }
     }

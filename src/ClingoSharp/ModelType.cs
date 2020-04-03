@@ -6,11 +6,11 @@ namespace ClingoSharp
     /// <summary>
     /// Enumeration of the different types of models.
     /// </summary>
-    public class ModelType : Enumeration
+    public sealed class ModelType : Enumeration
     {
         #region Class attributes
 
-        protected new static string[] ModelTypeNames = new string[]
+        private static readonly string[] ModelTypeNames = new string[]
         {
             "StableModel",
             "BraveConsequences",

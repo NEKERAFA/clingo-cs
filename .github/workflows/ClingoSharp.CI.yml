@@ -16,12 +16,12 @@ on:
 
 jobs:
   build:
-
     runs-on: windows-latest
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
       - name: Checkout submodules
         run: |
           git submodule init
@@ -30,14 +30,48 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.100
+      - name: Setup Chocolatey
+        uses: crazy-max/ghaction-chocolatey@v1
       - name: Build
         run: dotnet build --configuration Release
       - name: Test
         run: |
           dotnet test --configuration Debug /p:CollectCoverage=true /p:CoverletOutput=results/ /p:CoverletOutputFormat=lcov
           powershell -Command "(gc 'tests\ClingoSharp.Tests\results\coverage.info') -replace [regex]::escape('D:\a\ClingoSharp\ClingoSharp\'), [regex]::escape('') | Out-File -encoding ASCII coverage.info"
+      - name: Building documentation
+        run: |
+          choco install docfx -y
+          docfx docfx.json
+          if ($lastexitcode -ne 0){
+            throw [System.Exception] "docfx build failed with exit code $lastexitcode."
+          }
+        shell: powershell
       - name: Reporting coverage result
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: .\coverage.info
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: site
+          path: _site
+  
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Download Artifacts # The built project is downloaded into the 'site' folder.
+        uses: actions/download-artifact@v1
+        with:
+          name: site
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: "_site" # The deployment folder should match the name of the artifact. Even though our project builds into the 'build' folder the artifact name of 'site' must be placed here.

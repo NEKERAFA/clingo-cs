@@ -3,7 +3,7 @@
     /// <summary>
     /// Captures the result of a solve call.
     /// </summary>
-    public class SolveResult
+    public sealed class SolveResult
     {
         #region Properties
 

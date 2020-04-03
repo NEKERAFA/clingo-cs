@@ -6,7 +6,7 @@ namespace ClingoSharp
     /// <summary>
     /// Enumeration of the different types of symbols.
     /// </summary>
-    public class SymbolType : Enumeration
+    public sealed class SymbolType : Enumeration
     {
         #region Class attributes
 

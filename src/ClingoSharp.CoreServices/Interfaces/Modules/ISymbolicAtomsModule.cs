@@ -6,7 +6,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
     /// <summary>
     /// Inspection of atoms occurring in ground logic programs
     /// </summary>
-    public interface ISymbolicAtomsModule : IModule
+    public interface ISymbolicAtomsModule : Interfaces.IClingoModule
     {
         /// <summary>
         /// Get the number of different atoms occurring in a logic program.
@@ -14,7 +14,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="atoms">the target</param>
         /// <param name="size">the number of atoms</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool GetSize(SymbolicAtoms atoms, UIntPtr size);
+        bool GetSize(SymbolicAtoms atoms, out UIntPtr size);
 
         /// <summary>
         /// Get a forward iterator to the beginning of the sequence of all symbolic atoms optionally restricted to a given signature.
@@ -23,7 +23,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="signature">optional signature</param>
         /// <param name="iterator">the resulting iterator</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool GetBegin(SymbolicAtoms atoms, Signature signature, out ulong iterator);
+        bool GetBeginIterator(SymbolicAtoms atoms, Signature signature, out SymbolicAtomIterator iterator);
 
         /// <summary>
         /// Iterator pointing to the end of the sequence of symbolic atoms.
@@ -31,7 +31,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="atoms">the target</param>
         /// <param name="iterator">the resulting iterator</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool GetEnd(SymbolicAtoms atoms, out ulong iterator);
+        bool GetEndIterator(SymbolicAtoms atoms, out SymbolicAtomIterator iterator);
 
         /// <summary>
         /// Find a symbolic atom given its symbolic representation.
@@ -40,7 +40,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="symbol">the symbol to lookup</param>
         /// <param name="iterator">iterator pointing to the symbolic atom or to the end of the sequence if no corresponding atom is found</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool Find(SymbolicAtoms atoms, Symbol symbol, out ulong iterator);
+        bool Find(SymbolicAtoms atoms, Symbol symbol, out SymbolicAtomIterator iterator);
 
         /// <summary>
         /// Check if two iterators point to the same element (or end of the sequence).
@@ -50,7 +50,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="iteratorB">the second iterator</param>
         /// <param name="equal">whether the two iterators are equal</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool IsIteratorEqualTo(SymbolicAtoms atoms, ulong iteratorA, ulong iteratorB, out bool equal);
+        bool IteratorIsEqualTo(SymbolicAtoms atoms, SymbolicAtomIterator iteratorA, SymbolicAtomIterator iteratorB, out bool equal);
 
         /// <summary>
         /// <para>Check whether an atom is external.</para>
@@ -60,7 +60,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="iterator">iterator to the atom</param>
         /// <param name="symbol">whether the atom is a external</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool GetSymbol(SymbolicAtoms atoms, ulong iterator, out Symbol symbol);
+        bool GetSymbol(SymbolicAtoms atoms, SymbolicAtomIterator iterator, out Symbol symbol);
 
         /// <summary>
         /// Check whether an atom is a fact.
@@ -72,7 +72,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="iterator">iterator to the atom</param>
         /// <param name="fact">whether the atom is a fact</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool IsFact(SymbolicAtoms atoms, ulong iterator, out bool fact);
+        bool IsFact(SymbolicAtoms atoms, SymbolicAtomIterator iterator, out bool fact);
 
         /// <summary>
         /// Get the symbolic representation of an atom.
@@ -81,7 +81,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="iterator">iterator to the atom</param>
         /// <param name="external">the resulting symbol</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool IsExternal(SymbolicAtoms atoms, ulong iterator, out bool external);
+        bool IsExternal(SymbolicAtoms atoms, SymbolicAtomIterator iterator, out bool external);
 
         /// <summary>
         /// <para>Returns the (numeric) aspif literal corresponding to the given symbolic atom.</para>
@@ -91,24 +91,15 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="iterator">iterator to the atom</param>
         /// <param name="literal">the associated literal</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool GetLiteral(SymbolicAtoms atoms, ulong iterator, out Literal literal);
-
-        /// <summary>
-        /// Get the number of different predicate signatures used in the program.
-        /// </summary>
-        /// <param name="atoms">the target</param>
-        /// <param name="size">the number of signatures</param>
-        /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool GetSignaturesSize(SymbolicAtoms atoms, UIntPtr size);
+        bool GetLiteral(SymbolicAtoms atoms, SymbolicAtomIterator iterator, out Literal literal);
 
         /// <summary>
         /// Get the predicate signatures occurring in a logic program.
         /// </summary>
         /// <param name="atoms">the target</param>
         /// <param name="signatures">the resulting signatures</param>
-        /// <param name="size">the number of signatures</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool GetSignatures(SymbolicAtoms atoms, out Signature[] signatures, UIntPtr size);
+        bool GetSignatures(SymbolicAtoms atoms, out Signature[] signatures);
 
         /// <summary>
         /// Get an iterator to the next element in the sequence of symbolic atoms.
@@ -117,7 +108,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="iterator">the current iterator</param>
         /// <param name="next">the succeeding iterator</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool GetNext(SymbolicAtoms atoms, ulong iterator, out ulong next);
+        bool GetNext(SymbolicAtoms atoms, SymbolicAtomIterator iterator, out SymbolicAtomIterator next);
 
         /// <summary>
         /// Check whether the given iterator points to some element with the sequence of symbolic atoms or to the end of the sequence.
@@ -126,6 +117,6 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="iterator">the iterator</param>
         /// <param name="valid">whether the iterator points to some element within the sequence</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool IsValid(SymbolicAtoms atoms, ulong iterator, out bool valid);
+        bool IsValid(SymbolicAtoms atoms, SymbolicAtomIterator iterator, out bool valid);
     }
 }

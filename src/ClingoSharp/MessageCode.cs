@@ -6,11 +6,11 @@ namespace ClingoSharp
     /// <summary>
     /// Enumeration of the different types of messages.
     /// </summary>
-    public class MessageCode : Enumeration
+    public sealed class MessageCode : Enumeration
     {
         #region Class attributes
 
-        protected static string[] MessageCodeNames = new string[] 
+        private static readonly string[] MessageCodeNames = new string[] 
         { 
             "OperationUndefined",
             "RuntimeError",

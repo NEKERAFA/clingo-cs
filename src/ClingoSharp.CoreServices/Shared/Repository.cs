@@ -9,7 +9,13 @@ namespace ClingoSharp.CoreServices
     /// </summary>
     public static class Repository
     {
+        #region Attributes
+
         private static readonly IClingoContext m_clingoContext;
+
+        #endregion
+
+        #region Constructors
 
         /// <summary>
         /// Loads the main context
@@ -19,12 +25,16 @@ namespace ClingoSharp.CoreServices
             m_clingoContext = new ClingoContext();
         }
 
+        #endregion
+
+        #region Class Methods
+
         /// <summary>
         /// Gets a clingo module
         /// </summary>
         /// <typeparam name="T">A module type</typeparam>
         /// <returns>The module implementation</returns>
-        public static T GetModule<T>() where T : IModule
+        public static T GetModule<T>() where T : IClingoModule
         {
             return m_clingoContext.GetModule<T>();
         }
@@ -34,9 +44,11 @@ namespace ClingoSharp.CoreServices
         /// </summary>
         /// <param name="moduleType">A module type</param>
         /// <returns>The module implementation</returns>
-        public static IModule GetModule(Type moduleType)
+        public static IClingoModule GetModule(Type moduleType)
         {
             return m_clingoContext.GetModule(moduleType);
         }
+
+        #endregion
     }
 }

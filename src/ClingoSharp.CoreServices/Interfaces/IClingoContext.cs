@@ -10,15 +10,15 @@ namespace ClingoSharp.CoreServices.Interfaces
         /// <summary>
         /// Gets a implementation module of a any type
         /// </summary>
-        /// <param name="moduleType">The type of the module to find the implementation. It must be a subtype of <see cref="IModule"/></param>
+        /// <param name="moduleType">The type of the module to find the implementation. It must be a subtype of <see cref="IClingoModule"/></param>
         /// <returns>A class that is the implementation of that module.</returns>
-        IModule GetModule(Type moduleType);
+        IClingoModule GetModule(Type moduleType);
 
         /// <summary>
         /// Gets a implementation module of a any type
         /// </summary>
         /// <typeparam name="T">The type of the module to find the implementation.</typeparam>
         /// <returns>A class that is the implementation of that module.</returns>
-        T GetModule<T>() where T : IModule;
+        T GetModule<T>() where T : IClingoModule;
     }
 }
