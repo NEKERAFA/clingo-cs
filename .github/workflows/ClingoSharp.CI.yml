@@ -31,7 +31,7 @@ jobs:
         with:
           dotnet-version: 3.1.100
       - name: Building dependecies
-        run: Start-Process "cmd.exe" -Wait -NoNewWindow "/c build-win32.bat"
+        run: cmd.exe "/c build-win32.bat"
       - name: Build
         run: dotnet build --configuration Release
       - name: Test
