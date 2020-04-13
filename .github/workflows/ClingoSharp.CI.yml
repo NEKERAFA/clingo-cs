@@ -30,8 +30,8 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.100
-      - name: Building dependendcies
-        run: ./build.win32.bat
+      - name: Building dependecies
+        run: Start-Process "cmd.exe" -Wait -NoNewWindow "/c build-win32.bat"
       - name: Build
         run: dotnet build --configuration Release
       - name: Test
