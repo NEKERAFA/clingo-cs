@@ -30,20 +30,21 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.100
+      - name: Building dependecies
+        run: cmd.exe "/c .\build-win32.bat"
       - name: Build
         run: dotnet build --configuration Release
       - name: Test
         run: |
           dotnet test --configuration Debug /p:CollectCoverage=true /p:CoverletOutput=results/ /p:CoverletOutputFormat=lcov
-          powershell -Command "(gc 'tests\ClingoSharp.Tests\results\coverage.info') -replace [regex]::escape('D:\a\ClingoSharp\ClingoSharp\'), [regex]::escape('') | Out-File -encoding ASCII coverage.info"
+          (Get-Content '.\tests\results\coverage.info') -replace [Regex]::Escape('D:\a\ClingoSharp\ClingoSharp\'), [Regex]::Escape('') | Out-File -encoding ASCII coverage.info
       - name: Building documentation
         run: |
           choco install docfx -y
-          docfx docfx.json
+          docfx '.\docfx.json'
           if ($lastexitcode -ne 0){
             throw [System.Exception] "docfx build failed with exit code $lastexitcode."
           }
-        shell: powershell
       - name: Reporting coverage result
         uses: coverallsapp/github-action@master
         with:
@@ -72,4 +73,4 @@ jobs:
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: "_site" # The deployment folder should match the name of the artifact. Even though our project builds into the 'build' folder the artifact name of 'site' must be placed here.
+          FOLDER: "site" # The deployment folder should match the name of the artifact. Even though our project builds into the 'build' folder the artifact name of 'site' must be placed here.
