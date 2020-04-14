@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyVersion>0.0.1</AssemblyVersion>
+    <FileVersion>0.0.1</FileVersion>
+    <Authors>Rafael Alcalde Azpiazu &lt;rafael.alcalde.azpiazu@udc.es&gt;</Authors>
+    <Company>University of A Coruña</Company>
+    <Copyright>Copyright© Rafael Alcalde Azpiazu - 2019</Copyright>
+    <PackageId>ClingoSharp.CoreServices</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>
