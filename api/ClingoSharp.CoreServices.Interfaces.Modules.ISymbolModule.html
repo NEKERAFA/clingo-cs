@@ -1,0 +1,1451 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface ISymbolModule
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface ISymbolModule
+   ">
+    <meta name="generator" content="docfx 2.52.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule">
+  
+  
+  <h1 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule" class="text-break">Interface ISymbolModule
+  </h1>
+  <div class="markdown level0 summary"><p>Working with (evaluated) ground terms and related functions.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="ClingoSharp.CoreServices.Interfaces.Modules.html">ClingoSharp.CoreServices.Interfaces.Modules</a></h6>
+  <h6><strong>Assembly</strong>: ClingoSharp.CoreServices.dll</h6>
+  <h5 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface ISymbolModule : IClingoModule</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateFunction_System_String_ClingoSharp_CoreServices_Types_Symbol___System_Boolean_ClingoSharp_CoreServices_Types_Symbol__.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateFunction(System.String%2CClingoSharp.CoreServices.Types.Symbol%5B%5D%2CSystem.Boolean%2CClingoSharp.CoreServices.Types.Symbol%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L125">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateFunction_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateFunction*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateFunction_System_String_ClingoSharp_CoreServices_Types_Symbol___System_Boolean_ClingoSharp_CoreServices_Types_Symbol__" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateFunction(System.String,ClingoSharp.CoreServices.Types.Symbol[],System.Boolean,ClingoSharp.CoreServices.Types.Symbol@)">CreateFunction(String, Symbol[], Boolean, out Symbol)</h4>
+  <div class="markdown level1 summary"><p>Construct a symbol representing a function or tuple.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool CreateFunction(string name, Symbol[] arguments, bool positive, out Symbol symbol)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>the name of the function</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a>[]</td>
+        <td><span class="parametername">arguments</span></td>
+        <td><p>the arguments of the function</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">positive</span></td>
+        <td><p>whether the symbol has a classical negation sign</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a></td>
+        <td><span class="parametername">symbol</span></td>
+        <td><p>the resulting symbol</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the function is success, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateId_System_String_System_Boolean_ClingoSharp_CoreServices_Types_Symbol__.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateId(System.String%2CSystem.Boolean%2CClingoSharp.CoreServices.Types.Symbol%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L115">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateId_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateId*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateId_System_String_System_Boolean_ClingoSharp_CoreServices_Types_Symbol__" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateId(System.String,System.Boolean,ClingoSharp.CoreServices.Types.Symbol@)">CreateId(String, Boolean, out Symbol)</h4>
+  <div class="markdown level1 summary"><p>Construct a symbol representing an id.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool CreateId(string name, bool positive, out Symbol symbol)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>the name</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">positive</span></td>
+        <td><p>whether the symbol has a classical negation sign</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a></td>
+        <td><span class="parametername">symbol</span></td>
+        <td><p>the resulting symbol</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the function is success, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateId_System_String_System_Boolean_ClingoSharp_CoreServices_Types_Symbol___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This is just a shortcut for <a class="xref" href="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.html#ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateFunction_System_String_ClingoSharp_CoreServices_Types_Symbol___System_Boolean_ClingoSharp_CoreServices_Types_Symbol__">CreateFunction(String, Symbol[], Boolean, out Symbol)</a> with empty arguments.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateInfimum_ClingoSharp_CoreServices_Types_Symbol__.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateInfimum(ClingoSharp.CoreServices.Types.Symbol%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L97">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateInfimum_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateInfimum*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateInfimum_ClingoSharp_CoreServices_Types_Symbol__" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateInfimum(ClingoSharp.CoreServices.Types.Symbol@)">CreateInfimum(out Symbol)</h4>
+  <div class="markdown level1 summary"><p>Construct a symbol representing <code>#inf</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void CreateInfimum(out Symbol symbol)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a></td>
+        <td><span class="parametername">symbol</span></td>
+        <td><p>the resulting symbol</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateNumber_System_Int32_ClingoSharp_CoreServices_Types_Symbol__.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateNumber(System.Int32%2CClingoSharp.CoreServices.Types.Symbol%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L85">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateNumber_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateNumber*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateNumber_System_Int32_ClingoSharp_CoreServices_Types_Symbol__" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateNumber(System.Int32,ClingoSharp.CoreServices.Types.Symbol@)">CreateNumber(Int32, out Symbol)</h4>
+  <div class="markdown level1 summary"><p>Construct a symbol representing a number.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void CreateNumber(int number, out Symbol symbol)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">number</span></td>
+        <td><p>the number</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a></td>
+        <td><span class="parametername">symbol</span></td>
+        <td><p>the resulting symbol</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateSignature_System_String_System_UInt32_System_Boolean_ClingoSharp_CoreServices_Types_Signature__.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateSignature(System.String%2CSystem.UInt32%2CSystem.Boolean%2CClingoSharp.CoreServices.Types.Signature%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L22">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateSignature_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateSignature*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateSignature_System_String_System_UInt32_System_Boolean_ClingoSharp_CoreServices_Types_Signature__" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateSignature(System.String,System.UInt32,System.Boolean,ClingoSharp.CoreServices.Types.Signature@)">CreateSignature(String, UInt32, Boolean, out Signature)</h4>
+  <div class="markdown level1 summary"><p>Create a new signature.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool CreateSignature(string name, uint arity, bool positive, out Signature signature)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>name of the signature</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">arity</span></td>
+        <td><p>arity of the signature</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">positive</span></td>
+        <td><p>false if the signature has a classical negation sign</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Signature.html">Signature</a></td>
+        <td><span class="parametername">signature</span></td>
+        <td><p>the resulting signature</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the function is success, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateString_System_String_ClingoSharp_CoreServices_Types_Symbol__.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateString(System.String%2CClingoSharp.CoreServices.Types.Symbol%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L105">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateString_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateString*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateString_System_String_ClingoSharp_CoreServices_Types_Symbol__" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateString(System.String,ClingoSharp.CoreServices.Types.Symbol@)">CreateString(String, out Symbol)</h4>
+  <div class="markdown level1 summary"><p>Construct a symbol representing a string.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool CreateString(string value, out Symbol symbol)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>the string</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a></td>
+        <td><span class="parametername">symbol</span></td>
+        <td><p>the resulting symbol</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the function is success, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateSupremum_ClingoSharp_CoreServices_Types_Symbol__.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateSupremum(ClingoSharp.CoreServices.Types.Symbol%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L91">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateSupremum_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateSupremum*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_CreateSupremum_ClingoSharp_CoreServices_Types_Symbol__" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.CreateSupremum(ClingoSharp.CoreServices.Types.Symbol@)">CreateSupremum(out Symbol)</h4>
+  <div class="markdown level1 summary"><p>Construct a symbol representing <code>#sup</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void CreateSupremum(out Symbol symbol)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a></td>
+        <td><span class="parametername">symbol</span></td>
+        <td><p>the resulting symbol</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetArguments_ClingoSharp_CoreServices_Types_Symbol_ClingoSharp_CoreServices_Types_Symbol____.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetArguments(ClingoSharp.CoreServices.Types.Symbol%2CClingoSharp.CoreServices.Types.Symbol%5B%5D%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L177">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetArguments_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetArguments*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetArguments_ClingoSharp_CoreServices_Types_Symbol_ClingoSharp_CoreServices_Types_Symbol____" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetArguments(ClingoSharp.CoreServices.Types.Symbol,ClingoSharp.CoreServices.Types.Symbol[]@)">GetArguments(Symbol, out Symbol[])</h4>
+  <div class="markdown level1 summary"><p>Get the arguments of a symbol.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool GetArguments(Symbol symbol, out Symbol[] arguments)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a></td>
+        <td><span class="parametername">symbol</span></td>
+        <td><p>the target symbol</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a>[]</td>
+        <td><span class="parametername">arguments</span></td>
+        <td><p>the resulting arguments</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the function is success, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetArity_ClingoSharp_CoreServices_Types_Signature_.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetArity(ClingoSharp.CoreServices.Types.Signature)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L36">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetArity_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetArity*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetArity_ClingoSharp_CoreServices_Types_Signature_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetArity(ClingoSharp.CoreServices.Types.Signature)">GetArity(Signature)</h4>
+  <div class="markdown level1 summary"><p>Get the arity of a signature.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">uint GetArity(Signature signature)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Signature.html">Signature</a></td>
+        <td><span class="parametername">signature</span></td>
+        <td><p>the target signature</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><p>the arity of the signature</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetHash_ClingoSharp_CoreServices_Types_Signature_.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetHash(ClingoSharp.CoreServices.Types.Signature)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L74">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetHash_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetHash*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetHash_ClingoSharp_CoreServices_Types_Signature_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetHash(ClingoSharp.CoreServices.Types.Signature)">GetHash(Signature)</h4>
+  <div class="markdown level1 summary"><p>Calculate a hash code of a signature.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">UIntPtr GetHash(Signature signature)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Signature.html">Signature</a></td>
+        <td><span class="parametername">signature</span></td>
+        <td><p>the target signature</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UIntPtr</span></td>
+        <td><p>the hash code of the signature</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetHash_ClingoSharp_CoreServices_Types_Symbol_.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetHash(ClingoSharp.CoreServices.Types.Symbol)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L220">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetHash_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetHash*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetHash_ClingoSharp_CoreServices_Types_Symbol_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetHash(ClingoSharp.CoreServices.Types.Symbol)">GetHash(Symbol)</h4>
+  <div class="markdown level1 summary"><p>Calculate a hash code of a symbol.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">UIntPtr GetHash(Symbol symbol)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a></td>
+        <td><span class="parametername">symbol</span></td>
+        <td><p>the target symbol</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UIntPtr</span></td>
+        <td><p>the hash code of the symbol</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetName_ClingoSharp_CoreServices_Types_Signature_.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetName(ClingoSharp.CoreServices.Types.Signature)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L29">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetName_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetName*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetName_ClingoSharp_CoreServices_Types_Signature_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetName(ClingoSharp.CoreServices.Types.Signature)">GetName(Signature)</h4>
+  <div class="markdown level1 summary"><p>Get the name of a signature.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">string GetName(Signature signature)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Signature.html">Signature</a></td>
+        <td><span class="parametername">signature</span></td>
+        <td><p>the target signature</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>the name of the signature</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetName_ClingoSharp_CoreServices_Types_Symbol_System_String__.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetName(ClingoSharp.CoreServices.Types.Symbol%2CSystem.String%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L145">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetName_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetName*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetName_ClingoSharp_CoreServices_Types_Symbol_System_String__" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetName(ClingoSharp.CoreServices.Types.Symbol,System.String@)">GetName(Symbol, out String)</h4>
+  <div class="markdown level1 summary"><p>Get the name of a symbol.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool GetName(Symbol symbol, out string name)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a></td>
+        <td><span class="parametername">symbol</span></td>
+        <td><p>the target symbol</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>the resulting name</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the function is success, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetNumber_ClingoSharp_CoreServices_Types_Symbol_System_Int32__.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetNumber(ClingoSharp.CoreServices.Types.Symbol%2CSystem.Int32%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L137">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetNumber_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetNumber*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetNumber_ClingoSharp_CoreServices_Types_Symbol_System_Int32__" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetNumber(ClingoSharp.CoreServices.Types.Symbol,System.Int32@)">GetNumber(Symbol, out Int32)</h4>
+  <div class="markdown level1 summary"><p>Get the number of a symbol.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool GetNumber(Symbol symbol, out int number)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a></td>
+        <td><span class="parametername">symbol</span></td>
+        <td><p>the target symbol</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">number</span></td>
+        <td><p>the resulting number</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the function is success, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetString_ClingoSharp_CoreServices_Types_Symbol_System_String__.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetString(ClingoSharp.CoreServices.Types.Symbol%2CSystem.String%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L153">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetString_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetString*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetString_ClingoSharp_CoreServices_Types_Symbol_System_String__" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetString(ClingoSharp.CoreServices.Types.Symbol,System.String@)">GetString(Symbol, out String)</h4>
+  <div class="markdown level1 summary"><p>Get the string of a symbol.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool GetString(Symbol symbol, out string value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a></td>
+        <td><span class="parametername">symbol</span></td>
+        <td><p>the target symbol</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>the resulting string</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the function is success, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetType_ClingoSharp_CoreServices_Types_Symbol_.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetType(ClingoSharp.CoreServices.Types.Symbol)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L184">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetType_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetType*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_GetType_ClingoSharp_CoreServices_Types_Symbol_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.GetType(ClingoSharp.CoreServices.Types.Symbol)">GetType(Symbol)</h4>
+  <div class="markdown level1 summary"><p>Get the type of a symbol.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">SymbolType GetType(Symbol symbol)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a></td>
+        <td><span class="parametername">symbol</span></td>
+        <td><p>the target symbol</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Enums.SymbolType.html">SymbolType</a></td>
+        <td><p>the type of the symbol</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsEqualTo_ClingoSharp_CoreServices_Types_Signature_ClingoSharp_CoreServices_Types_Signature_.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsEqualTo(ClingoSharp.CoreServices.Types.Signature%2CClingoSharp.CoreServices.Types.Signature)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L58">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsEqualTo_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsEqualTo*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsEqualTo_ClingoSharp_CoreServices_Types_Signature_ClingoSharp_CoreServices_Types_Signature_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsEqualTo(ClingoSharp.CoreServices.Types.Signature,ClingoSharp.CoreServices.Types.Signature)">IsEqualTo(Signature, Signature)</h4>
+  <div class="markdown level1 summary"><p>Check if two signatures are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsEqualTo(Signature signatureA, Signature signatureB)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Signature.html">Signature</a></td>
+        <td><span class="parametername">signatureA</span></td>
+        <td><p>first signature</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Signature.html">Signature</a></td>
+        <td><span class="parametername">signatureB</span></td>
+        <td><p>second signature</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>whether a == b</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsEqualTo_ClingoSharp_CoreServices_Types_Symbol_ClingoSharp_CoreServices_Types_Symbol_.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsEqualTo(ClingoSharp.CoreServices.Types.Symbol%2CClingoSharp.CoreServices.Types.Symbol)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L204">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsEqualTo_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsEqualTo*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsEqualTo_ClingoSharp_CoreServices_Types_Symbol_ClingoSharp_CoreServices_Types_Symbol_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsEqualTo(ClingoSharp.CoreServices.Types.Symbol,ClingoSharp.CoreServices.Types.Symbol)">IsEqualTo(Symbol, Symbol)</h4>
+  <div class="markdown level1 summary"><p>Check if two symbols are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsEqualTo(Symbol symbolA, Symbol symbolB)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a></td>
+        <td><span class="parametername">symbolA</span></td>
+        <td><p>first symbol</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a></td>
+        <td><span class="parametername">symbolB</span></td>
+        <td><p>second symbol</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>whether a == b</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsLessThan_ClingoSharp_CoreServices_Types_Signature_ClingoSharp_CoreServices_Types_Signature_.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsLessThan(ClingoSharp.CoreServices.Types.Signature%2CClingoSharp.CoreServices.Types.Signature)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L67">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsLessThan_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsLessThan*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsLessThan_ClingoSharp_CoreServices_Types_Signature_ClingoSharp_CoreServices_Types_Signature_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsLessThan(ClingoSharp.CoreServices.Types.Signature,ClingoSharp.CoreServices.Types.Signature)">IsLessThan(Signature, Signature)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsLessThan(Signature signatureA, Signature signatureB)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Signature.html">Signature</a></td>
+        <td><span class="parametername">signatureA</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Signature.html">Signature</a></td>
+        <td><span class="parametername">signatureB</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsLessThan_ClingoSharp_CoreServices_Types_Symbol_ClingoSharp_CoreServices_Types_Symbol_.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsLessThan(ClingoSharp.CoreServices.Types.Symbol%2CClingoSharp.CoreServices.Types.Symbol)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L213">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsLessThan_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsLessThan*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsLessThan_ClingoSharp_CoreServices_Types_Symbol_ClingoSharp_CoreServices_Types_Symbol_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsLessThan(ClingoSharp.CoreServices.Types.Symbol,ClingoSharp.CoreServices.Types.Symbol)">IsLessThan(Symbol, Symbol)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsLessThan(Symbol symbolA, Symbol symbolB)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a></td>
+        <td><span class="parametername">symbolA</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a></td>
+        <td><span class="parametername">symbolB</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsNegative_ClingoSharp_CoreServices_Types_Signature_.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsNegative(ClingoSharp.CoreServices.Types.Signature)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L50">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsNegative_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsNegative*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsNegative_ClingoSharp_CoreServices_Types_Signature_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsNegative(ClingoSharp.CoreServices.Types.Signature)">IsNegative(Signature)</h4>
+  <div class="markdown level1 summary"><p>Whether the signature is negative (is classically negated).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsNegative(Signature signature)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Signature.html">Signature</a></td>
+        <td><span class="parametername">signature</span></td>
+        <td><p>the target signature</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>whether the signature has a sign</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsNegative_ClingoSharp_CoreServices_Types_Symbol_System_Boolean__.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsNegative(ClingoSharp.CoreServices.Types.Symbol%2CSystem.Boolean%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L169">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsNegative_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsNegative*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsNegative_ClingoSharp_CoreServices_Types_Symbol_System_Boolean__" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsNegative(ClingoSharp.CoreServices.Types.Symbol,System.Boolean@)">IsNegative(Symbol, out Boolean)</h4>
+  <div class="markdown level1 summary"><p>Check if a function is negative (has a sign).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsNegative(Symbol symbol, out bool negative)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a></td>
+        <td><span class="parametername">symbol</span></td>
+        <td><p>the target symbol</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">negative</span></td>
+        <td><p>the result</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the function is success, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsPositive_ClingoSharp_CoreServices_Types_Signature_.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsPositive(ClingoSharp.CoreServices.Types.Signature)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L43">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsPositive_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsPositive*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsPositive_ClingoSharp_CoreServices_Types_Signature_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsPositive(ClingoSharp.CoreServices.Types.Signature)">IsPositive(Signature)</h4>
+  <div class="markdown level1 summary"><p>Whether the signature is positive (is not classically negated).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsPositive(Signature signature)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Signature.html">Signature</a></td>
+        <td><span class="parametername">signature</span></td>
+        <td><p>the target signature</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>whether the signature has no sign</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsPositive_ClingoSharp_CoreServices_Types_Symbol_System_Boolean__.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsPositive(ClingoSharp.CoreServices.Types.Symbol%2CSystem.Boolean%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L161">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsPositive_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsPositive*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_IsPositive_ClingoSharp_CoreServices_Types_Symbol_System_Boolean__" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.IsPositive(ClingoSharp.CoreServices.Types.Symbol,System.Boolean@)">IsPositive(Symbol, out Boolean)</h4>
+  <div class="markdown level1 summary"><p>Check if a function is positive (does not have a sign).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool IsPositive(Symbol symbol, out bool positive)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a></td>
+        <td><span class="parametername">symbol</span></td>
+        <td><p>the target symbol</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">positive</span></td>
+        <td><p>the result</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the function is success, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_ToString_ClingoSharp_CoreServices_Types_Symbol_System_String__.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.ToString(ClingoSharp.CoreServices.Types.Symbol%2CSystem.String%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L192">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_ToString_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.ToString*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule_ToString_ClingoSharp_CoreServices_Types_Symbol_System_String__" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.ToString(ClingoSharp.CoreServices.Types.Symbol,System.String@)">ToString(Symbol, out String)</h4>
+  <div class="markdown level1 summary"><p>Get the string representation of a symbol.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool ToString(Symbol symbol, out string value)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a></td>
+        <td><span class="parametername">symbol</span></td>
+        <td><p>the target symbol</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">value</span></td>
+        <td><p>the resulting string</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the function is success, <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_ISymbolModule.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/ISymbolModule.cs/#L10" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

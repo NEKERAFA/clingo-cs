@@ -1,0 +1,620 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Interface IControlModule
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Interface IControlModule
+   ">
+    <meta name="generator" content="docfx 2.52.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.IControlModule">
+  
+  
+  <h1 id="ClingoSharp_CoreServices_Interfaces_Modules_IControlModule" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.IControlModule" class="text-break">Interface IControlModule
+  </h1>
+  <div class="markdown level0 summary"><p>Functions to control the grounding and solving process.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="ClingoSharp.CoreServices.Interfaces.Modules.html">ClingoSharp.CoreServices.Interfaces.Modules</a></h6>
+  <h6><strong>Assembly</strong>: ClingoSharp.CoreServices.dll</h6>
+  <h5 id="ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface IControlModule : IClingoModule</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_Add_ClingoSharp_CoreServices_Types_Control_System_String_System_String___System_String_.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.Add(ClingoSharp.CoreServices.Types.Control%2CSystem.String%2CSystem.String%5B%5D%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/IControlModule.cs/#L46">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_Add_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.Add*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_Add_ClingoSharp_CoreServices_Types_Control_System_String_System_String___System_String_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.Add(ClingoSharp.CoreServices.Types.Control,System.String,System.String[],System.String)">Add(Control, String, String[], String)</h4>
+  <div class="markdown level1 summary"><p>Extend the logic program with the given non-ground logic program in string form.</p>
+<p>This function puts the given program into a block of form: <code>#program name(parameters).</code></p>
+<p>After extending the logic program, the corresponding program parts are typically grounded with <see cref="!:Ground(IntPtr, Part[], GroundCallback)"></see></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool Add(Control control, string name, string[] parameters, string program)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Control.html">Control</a></td>
+        <td><span class="parametername">control</span></td>
+        <td><p>a control ponter</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>name of the program block</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span>[]</td>
+        <td><span class="parametername">parameters</span></td>
+        <td><p>string array of parameters of the program block</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">program</span></td>
+        <td><p>string representation of the program</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the function is success and <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_Free_ClingoSharp_CoreServices_Types_Control_.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.Free(ClingoSharp.CoreServices.Types.Control)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/IControlModule.cs/#L30">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_Free_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.Free*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_Free_ClingoSharp_CoreServices_Types_Control_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.Free(ClingoSharp.CoreServices.Types.Control)">Free(Control)</h4>
+  <div class="markdown level1 summary"><p>Frees a control object created with <a class="xref" href="ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.html#ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_New_System_String___ClingoSharp_CoreServices_Callbacks_LoggerCallback_System_UInt32_ClingoSharp_CoreServices_Types_Control__">New(String[], LoggerCallback, UInt32, out Control)</a></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">void Free(Control control)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Control.html">Control</a></td>
+        <td><span class="parametername">control</span></td>
+        <td><p>a control pointer</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_GetConst_ClingoSharp_CoreServices_Types_Control_System_String_ClingoSharp_CoreServices_Types_Symbol__.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.GetConst(ClingoSharp.CoreServices.Types.Control%2CSystem.String%2CClingoSharp.CoreServices.Types.Symbol%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/IControlModule.cs/#L87">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_GetConst_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.GetConst*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_GetConst_ClingoSharp_CoreServices_Types_Control_System_String_ClingoSharp_CoreServices_Types_Symbol__" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.GetConst(ClingoSharp.CoreServices.Types.Control,System.String,ClingoSharp.CoreServices.Types.Symbol@)">GetConst(Control, String, out Symbol)</h4>
+  <div class="markdown level1 summary"><p>Return the symbol for a constant definition of form: <code>#const name = symbol.</code></p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool GetConst(Control control, string name, out Symbol symbol)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Control.html">Control</a></td>
+        <td><span class="parametername">control</span></td>
+        <td><p>the target</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>the name of the constant</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Symbol.html">Symbol</a></td>
+        <td><span class="parametername">symbol</span></td>
+        <td><p>the resulting symbol</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the function is success and <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_GetSymbolicAtoms_ClingoSharp_CoreServices_Types_Control_ClingoSharp_CoreServices_Types_SymbolicAtoms__.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.GetSymbolicAtoms(ClingoSharp.CoreServices.Types.Control%2CClingoSharp.CoreServices.Types.SymbolicAtoms%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/IControlModule.cs/#L104">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_GetSymbolicAtoms_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.GetSymbolicAtoms*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_GetSymbolicAtoms_ClingoSharp_CoreServices_Types_Control_ClingoSharp_CoreServices_Types_SymbolicAtoms__" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.GetSymbolicAtoms(ClingoSharp.CoreServices.Types.Control,ClingoSharp.CoreServices.Types.SymbolicAtoms@)">GetSymbolicAtoms(Control, out SymbolicAtoms)</h4>
+  <div class="markdown level1 summary"><p>Get an object to inspect symbolic atoms (the relevant Herbrand base) used for grounding</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool GetSymbolicAtoms(Control control, out SymbolicAtoms symbolicAtoms)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Control.html">Control</a></td>
+        <td><span class="parametername">control</span></td>
+        <td><p>the target</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.SymbolicAtoms.html">SymbolicAtoms</a></td>
+        <td><span class="parametername">symbolicAtoms</span></td>
+        <td><p>the symbolic atoms object</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the function is success and <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_Ground_ClingoSharp_CoreServices_Types_Control_ClingoSharp_CoreServices_Types_Part___ClingoSharp_CoreServices_Callbacks_GroundCallback_.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.Ground(ClingoSharp.CoreServices.Types.Control%2CClingoSharp.CoreServices.Types.Part%5B%5D%2CClingoSharp.CoreServices.Callbacks.GroundCallback)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/IControlModule.cs/#L59">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_Ground_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.Ground*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_Ground_ClingoSharp_CoreServices_Types_Control_ClingoSharp_CoreServices_Types_Part___ClingoSharp_CoreServices_Callbacks_GroundCallback_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.Ground(ClingoSharp.CoreServices.Types.Control,ClingoSharp.CoreServices.Types.Part[],ClingoSharp.CoreServices.Callbacks.GroundCallback)">Ground(Control, Part[], GroundCallback)</h4>
+  <div class="markdown level1 summary"><p>Ground the selected parts of the current (non-ground) logic program.</p>
+<p>After grounding, logic programs can be solved with <see cref="!:Solve(Control, SolveMode, Literal[], SolveEventHandler, out IntPtr)"></see>.</p>
+<remarks>
+Parts of a logic program without an explicit <code>#program</code> specification are by default put into a program called base without arguments.
+</remarks>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool Ground(Control control, Part[] parts, GroundCallback callback)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Control.html">Control</a></td>
+        <td><span class="parametername">control</span></td>
+        <td><p>a control ponter</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Part.html">Part</a>[]</td>
+        <td><span class="parametername">parts</span></td>
+        <td><p>array of parts to ground</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Callbacks.GroundCallback.html">GroundCallback</a></td>
+        <td><span class="parametername">callback</span></td>
+        <td><p>callback to implement external functions</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the function is success and <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_HasConst_ClingoSharp_CoreServices_Types_Control_System_String_System_Boolean__.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.HasConst(ClingoSharp.CoreServices.Types.Control%2CSystem.String%2CSystem.Boolean%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/IControlModule.cs/#L96">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_HasConst_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.HasConst*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_HasConst_ClingoSharp_CoreServices_Types_Control_System_String_System_Boolean__" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.HasConst(ClingoSharp.CoreServices.Types.Control,System.String,System.Boolean@)">HasConst(Control, String, out Boolean)</h4>
+  <div class="markdown level1 summary"><p>Check if there is a constant definition for the given constant.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool HasConst(Control control, string name, out bool exists)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Control.html">Control</a></td>
+        <td><span class="parametername">control</span></td>
+        <td><p>the target</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>the name of the constant</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">exists</span></td>
+        <td><p>whether a matching constant definition exists</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the function is success and <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_New_System_String___ClingoSharp_CoreServices_Callbacks_LoggerCallback_System_UInt32_ClingoSharp_CoreServices_Types_Control__.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.New(System.String%5B%5D%2CClingoSharp.CoreServices.Callbacks.LoggerCallback%2CSystem.UInt32%2CClingoSharp.CoreServices.Types.Control%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/IControlModule.cs/#L24">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_New_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.New*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_New_System_String___ClingoSharp_CoreServices_Callbacks_LoggerCallback_System_UInt32_ClingoSharp_CoreServices_Types_Control__" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.New(System.String[],ClingoSharp.CoreServices.Callbacks.LoggerCallback,System.UInt32,ClingoSharp.CoreServices.Types.Control@)">New(String[], LoggerCallback, UInt32, out Control)</h4>
+  <div class="markdown level1 summary"><p>Creates a new control object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool New(string[] arguments, LoggerCallback logger, uint messageLimit, out Control control)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span>[]</td>
+        <td><span class="parametername">arguments</span></td>
+        <td><p>An array of command line arguments</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Callbacks.LoggerCallback.html">LoggerCallback</a></td>
+        <td><span class="parametername">logger</span></td>
+        <td><p>callback functions for warnings and info messages</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">messageLimit</span></td>
+        <td><p>maximum number of times the logger callback is called</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Control.html">Control</a></td>
+        <td><span class="parametername">control</span></td>
+        <td><p>resulting control object</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the function is success and <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_Solve_ClingoSharp_CoreServices_Types_Control_ClingoSharp_CoreServices_Enums_SolveMode_ClingoSharp_CoreServices_Types_Literal___ClingoSharp_CoreServices_EventHandlers_SolveEventHandler_ClingoSharp_CoreServices_Types_SolveHandle__.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.Solve(ClingoSharp.CoreServices.Types.Control%2CClingoSharp.CoreServices.Enums.SolveMode%2CClingoSharp.CoreServices.Types.Literal%5B%5D%2CClingoSharp.CoreServices.EventHandlers.SolveEventHandler%2CClingoSharp.CoreServices.Types.SolveHandle%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/IControlModule.cs/#L74">View Source</a>
+  </span>
+  <a id="ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_Solve_" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.Solve*"></a>
+  <h4 id="ClingoSharp_CoreServices_Interfaces_Modules_IControlModule_Solve_ClingoSharp_CoreServices_Types_Control_ClingoSharp_CoreServices_Enums_SolveMode_ClingoSharp_CoreServices_Types_Literal___ClingoSharp_CoreServices_EventHandlers_SolveEventHandler_ClingoSharp_CoreServices_Types_SolveHandle__" data-uid="ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.Solve(ClingoSharp.CoreServices.Types.Control,ClingoSharp.CoreServices.Enums.SolveMode,ClingoSharp.CoreServices.Types.Literal[],ClingoSharp.CoreServices.EventHandlers.SolveEventHandler,ClingoSharp.CoreServices.Types.SolveHandle@)">Solve(Control, SolveMode, Literal[], SolveEventHandler, out SolveHandle)</h4>
+  <div class="markdown level1 summary"><p>Solve the currently grounded logic program enumerating its models.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">bool Solve(Control control, SolveMode mode, Literal[] assumptions, SolveEventHandler callback, out SolveHandle handle)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Control.html">Control</a></td>
+        <td><span class="parametername">control</span></td>
+        <td><p>a control ponter</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Enums.SolveMode.html">SolveMode</a></td>
+        <td><span class="parametername">mode</span></td>
+        <td><p>configures the search mode</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.Literal.html">Literal</a>[]</td>
+        <td><span class="parametername">assumptions</span></td>
+        <td><p>array of assumptions to solve under</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.EventHandlers.SolveEventHandler.html">SolveEventHandler</a></td>
+        <td><span class="parametername">callback</span></td>
+        <td><p>the event handler to register</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="ClingoSharp.CoreServices.Types.SolveHandle.html">SolveHandle</a></td>
+        <td><span class="parametername">handle</span></td>
+        <td><p>handle to the current search to enumerate models</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p><code>true</code> if the function is success and <code>false</code> otherwise</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/NEKERAFA/ClingoSharp/new/feature/us-23-main-features/apiSpec/new?filename=ClingoSharp_CoreServices_Interfaces_Modules_IControlModule.md&amp;value=---%0Auid%3A%20ClingoSharp.CoreServices.Interfaces.Modules.IControlModule%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/NEKERAFA/ClingoSharp/blob/feature/us-23-main-features/src/ClingoSharp.CoreServices/Interfaces/Modules/IControlModule.cs/#L12" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
