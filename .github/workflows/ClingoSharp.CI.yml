@@ -41,7 +41,7 @@ jobs:
       - name: Building documentation
         run: |
           choco install docfx -y
-          docfx docfx.json
+          docfx '.\docfx.json'
           if ($lastexitcode -ne 0){
             throw [System.Exception] "docfx build failed with exit code $lastexitcode."
           }
@@ -73,4 +73,4 @@ jobs:
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: "_site" # The deployment folder should match the name of the artifact. Even though our project builds into the 'build' folder the artifact name of 'site' must be placed here.
+          FOLDER: "site" # The deployment folder should match the name of the artifact. Even though our project builds into the 'build' folder the artifact name of 'site' must be placed here.
