@@ -16,7 +16,7 @@ namespace ClingoSharp.CoreServices.Shared
             if (assemblyName.Name.Equals(Constants.NativeWrapper))
             {
                 // Gets assembly path file
-                var assemblyPath = new Uri(typeof(ClingoContext).Assembly.CodeBase).LocalPath;
+                var assemblyPath = new Uri(Assembly.GetExecutingAssembly().Location).LocalPath;
                 // Gets assembly folder
                 var assemblyFolder = Path.GetDirectoryName(assemblyPath);
 
@@ -39,28 +39,34 @@ namespace ClingoSharp.CoreServices.Shared
         private IntPtr LoadNativeClingoLibrary()
         {
             // Gets assembly path file
-            var assemblyPath = new Uri(typeof(ClingoContext).Assembly.CodeBase).LocalPath;
+            var assemblyPath = new Uri(Assembly.GetExecutingAssembly().Location).LocalPath;
             // Gets assembly folder
             var assemblyFolder = Path.GetDirectoryName(assemblyPath);
-            // Gets arch process
-            string path = Environment.Is64BitProcess ? "lib" : "lib32";
-            // Gets extension name
+
+            // Gets the path to the native libraries
+            string nativeLibraryFolder;
+            // Gets the extension of the native libray
             string extension;
+
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
+                var arch = Environment.Is64BitProcess ? "x64" : "x86";
+                nativeLibraryFolder = $"win-{arch}";
                 extension = "dll";
             }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                extension = "dylib";
+                var arch = Environment.Is64BitProcess ? "amd64" : "i386";
+                nativeLibraryFolder = $"linux-{arch}"; 
+                extension = "so";
             }
             else
             {
-                extension = "so";
+                throw new PlatformNotSupportedException("ClingoSharp is not tested to this platform");
             }
 
             // Loads clingo library
-            return LoadUnmanagedDllFromPath(Path.Combine(assemblyFolder, path, $"clingo.{extension}"));
+            return LoadUnmanagedDllFromPath(Path.Combine(assemblyFolder, "runtimes", nativeLibraryFolder, "native", $"clingo.{extension}"));
         }
 
         #endregion

@@ -5,6 +5,7 @@ DROP/
 TEMP/
 _site/
 *.vs
+[Rr]untimes
 
 # Created by https://www.gitignore.io/api/csharp
 # Edit at https://www.gitignore.io/?templates=csharp

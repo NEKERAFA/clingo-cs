@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Target Name="AfterBuild" DependsOnTargets="CopyFilesToOutputDirectory">
+        <ItemGroup>
+            <ClingoWin86 Include="$(MSBuildThisFileDirectory)..\runtimes\win-x86\native\clingo.dll" />
+            <ClingoWin64 Include="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\clingo.dll" />
+        </ItemGroup>
+        <Copy SourceFiles="@(ClingoWin86)" DestinationFolder="$(ProjectDir)\runtimes\win-x86\native\clingo.dll" />
+        <Copy SourceFiles="@(ClingoWin64)" DestinationFolder="$(ProjectDir)\runtimes\win-x64\native\clingo.dll" />
+    </Target>
+    <Target Name="AddUnmanagedDll" AfterTargets="AfterBuild">  
+        <ItemGroup>
+            <Content Include="runtimes\win-x86\native\clingo.dll" />
+            <Content Include="runtimes\win-x64\native\clingo.dll" />
+        </ItemGroup>
+    </Target>
+</Project>
