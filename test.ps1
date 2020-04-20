@@ -20,7 +20,7 @@ Copy-Item ".\clingo\build\win\x64\bin\Release" ".\tests\bin\Debug\netcoreapp3.1\
 Write-Host "Executing tests..." -ForegroundColor Green
 
 dotnet test /p:CollectCoverage=true /p:CoverletOutput=results/ /p:CoverletOutputFormat=lcov
-(Get-Content ".\tests\results\coverage.info") -replace [Regex]::Escape($PSScriptRoot), [Regex]::Escape("") | Out-File -encoding ASCII coverage.info
+(Get-Content ".\tests\results\coverage.info") -replace [Regex]::Escape("$($PSScriptRoot)\"), [Regex]::Escape("") | Out-File -encoding ASCII "coverage.info"
 
 Write-Host ""
 
