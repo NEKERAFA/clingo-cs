@@ -9,7 +9,7 @@
       "output": {
         ".html": {
           "relative_path": "README.html",
-          "hash": "/hcsbEKOpiXViXgTk9an3g=="
+          "hash": "Au+We+C+k7UdgKzsSuF8ZA=="
         }
       },
       "is_incremental": false,
@@ -21,7 +21,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.Clingo.html",
-          "hash": "Jfva3h2nvb+aj1cZZYMjFA=="
+          "hash": "jrm4Di3FBHhTtfAMybHJxQ=="
         }
       },
       "is_incremental": false,
@@ -33,7 +33,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.Control.html",
-          "hash": "pXK3aohylPX7fXIGshP50w=="
+          "hash": "3SNVYnqznJPszvfY+B3S0g=="
         }
       },
       "is_incremental": false,
@@ -45,7 +45,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Callbacks.GroundCallback.html",
-          "hash": "Nggt2BpUiA5f6fyeZnjU6g=="
+          "hash": "kDvZpY0lDKHRyx4+TaFx8w=="
         }
       },
       "is_incremental": false,
@@ -57,7 +57,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Callbacks.LoggerCallback.html",
-          "hash": "WnelggICJqnA1t+VMPv5NA=="
+          "hash": "WnzXt8vn0C48dZSFcYpCDw=="
         }
       },
       "is_incremental": false,
@@ -69,7 +69,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Callbacks.SymbolCallback.html",
-          "hash": "ePfwdciQaR1yC9c9POGl+g=="
+          "hash": "nRo50zBHshqPT6/N+kKH+Q=="
         }
       },
       "is_incremental": false,
@@ -93,7 +93,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Constants.html",
-          "hash": "pGIK68Pd0kI6/8jFEtT/dQ=="
+          "hash": "RNYqrmgW+QzPVcZi/lv1Kw=="
         }
       },
       "is_incremental": false,
@@ -105,7 +105,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Enums.ErrorCode.html",
-          "hash": "vypj5WBZaom5Mk0DP5TayQ=="
+          "hash": "VMwPGdPZcf/L3NstHx+Ejg=="
         }
       },
       "is_incremental": false,
@@ -117,7 +117,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Enums.ModelType.html",
-          "hash": "e4nlJHqyPoDC0GnmaQ/ZVA=="
+          "hash": "wurPjTh5tHKVaaBAMAreUQ=="
         }
       },
       "is_incremental": false,
@@ -129,7 +129,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Enums.ShowType.html",
-          "hash": "77YyXEPgAVOhTLX8Sy4rdw=="
+          "hash": "tKdMCpKYm0uXjOlgtEna7A=="
         }
       },
       "is_incremental": false,
@@ -141,7 +141,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Enums.SolveEventType.html",
-          "hash": "S51Pvmya/O8M3mIjyxnmIA=="
+          "hash": "qMEpDx1mrdAOE2O8ZG28Bw=="
         }
       },
       "is_incremental": false,
@@ -153,7 +153,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Enums.SolveMode.html",
-          "hash": "q5oxLRzqqwH+PlPiom+x+w=="
+          "hash": "Nm9EqafzI4mnINHPffW2rg=="
         }
       },
       "is_incremental": false,
@@ -165,7 +165,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Enums.SolveResult.html",
-          "hash": "9EKfYhQ9E8AUEjSIH9J/ew=="
+          "hash": "BoB13MXJ+SUEh5WmHqX7pg=="
         }
       },
       "is_incremental": false,
@@ -177,7 +177,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Enums.SymbolType.html",
-          "hash": "FRq1GzkBZ/pxxOesF5CfPg=="
+          "hash": "xDFZNEUOzCnSZOVAVE7Gfg=="
         }
       },
       "is_incremental": false,
@@ -189,7 +189,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Enums.TruthValueType.html",
-          "hash": "dUHUqjhea4GpQP+gNfUrzA=="
+          "hash": "SzBO78fE/6uKFtVhbheP9w=="
         }
       },
       "is_incremental": false,
@@ -201,7 +201,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Enums.WarningCode.html",
-          "hash": "JbDjXr/iDEqMjFkELMMzQg=="
+          "hash": "YL/791dArhjL7r3x4RKlvQ=="
         }
       },
       "is_incremental": false,
@@ -225,7 +225,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.EventHandlers.SolveEventHandler.html",
-          "hash": "3Ybht1Zd5/NbByq212DYEA=="
+          "hash": "3itymqZ1H1nt/UYK55bDYw=="
         }
       },
       "is_incremental": false,
@@ -249,7 +249,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Interfaces.IClingoModule.html",
-          "hash": "/5wC7P0NTIDejoSNdjfWzg=="
+          "hash": "1+q2cYL6RmFN5VWhMnO3yA=="
         }
       },
       "is_incremental": false,
@@ -261,7 +261,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Interfaces.IClingoObject.html",
-          "hash": "6MZgphQJvNq/93E33kJtUA=="
+          "hash": "WwLgMHY0GBnaqf50ZQ/nrA=="
         }
       },
       "is_incremental": false,
@@ -273,7 +273,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Interfaces.Modules.IControlModule.html",
-          "hash": "wsQxB1ci/kGT2sRf3XkEZQ=="
+          "hash": "6Yw77LMjrfrZIgPBVc81og=="
         }
       },
       "is_incremental": false,
@@ -285,7 +285,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Interfaces.Modules.IMainModule.html",
-          "hash": "v/ma/aa4UqBfT/rfdz2ATw=="
+          "hash": "Y10R+ve0zj5ee2shTqXY3Q=="
         }
       },
       "is_incremental": false,
@@ -297,7 +297,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Interfaces.Modules.IModelModule.html",
-          "hash": "+iAQXIvB1sAEnjv/bGctrQ=="
+          "hash": "Z1EkNSZ/zj9Di2n/PDGXvA=="
         }
       },
       "is_incremental": false,
@@ -309,7 +309,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Interfaces.Modules.ISolveHandleModule.html",
-          "hash": "MS2TkN6Q2ndXARME1DaeaQ=="
+          "hash": "ZLJcVwFF6t3OZXs036IugQ=="
         }
       },
       "is_incremental": false,
@@ -321,7 +321,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Interfaces.Modules.ISymbolModule.html",
-          "hash": "0rhrAFiFEjcWYZO2nK7VMQ=="
+          "hash": "wWv1eHU57HpWGevdrPgzmQ=="
         }
       },
       "is_incremental": false,
@@ -333,7 +333,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Interfaces.Modules.ISymbolicAtomsModule.html",
-          "hash": "L/lNTI3x6kEbDqTlRtLm2Q=="
+          "hash": "SPWfJ/khWkOsFzMS6k6IhQ=="
         }
       },
       "is_incremental": false,
@@ -369,7 +369,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Repository.html",
-          "hash": "VsJc1wx4cfzzRG/nZszKjg=="
+          "hash": "PjxoPqOZkkOAjXj6Dt2Nng=="
         }
       },
       "is_incremental": false,
@@ -381,7 +381,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Types.Atom.html",
-          "hash": "JMo/Dw824H4e/NBjLXt0Fw=="
+          "hash": "grpyW4oi97gJhOIV4KMXHw=="
         }
       },
       "is_incremental": false,
@@ -393,7 +393,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Types.Control.html",
-          "hash": "4Iy6l7W4cW36AQCegO3psA=="
+          "hash": "7N+miUERp7Dr5dbHSNp4Og=="
         }
       },
       "is_incremental": false,
@@ -405,7 +405,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Types.Id.html",
-          "hash": "/YV9PhpdlKwdvI9BVYKpZw=="
+          "hash": "EfhI1CH1ryqGlFPal9XGTA=="
         }
       },
       "is_incremental": false,
@@ -417,7 +417,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Types.Literal.html",
-          "hash": "Dr4sl+wWUcpgBvUnB2jGWg=="
+          "hash": "lO0fWWCsyDMmh7A+B0VwXQ=="
         }
       },
       "is_incremental": false,
@@ -429,7 +429,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Types.Location.html",
-          "hash": "DSP0cgqnNCamsCJ488Mrzg=="
+          "hash": "c2HnSb6dH5JyAbLEvWY03A=="
         }
       },
       "is_incremental": false,
@@ -441,7 +441,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Types.Model.html",
-          "hash": "4lmetQZaAUHrHlzdL/EqPg=="
+          "hash": "dF/CZPDvTDeRRyIMvqEPpQ=="
         }
       },
       "is_incremental": false,
@@ -453,7 +453,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Types.Part.html",
-          "hash": "swQZWzmb3ocwTCpbLWGqRw=="
+          "hash": "9pZuTrBrZFI+l43NM+bANg=="
         }
       },
       "is_incremental": false,
@@ -465,7 +465,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Types.Signature.html",
-          "hash": "yWX2KifRP1gtNrhxSeyEsA=="
+          "hash": "JV8yKz5oxTlZAJLAQsE27g=="
         }
       },
       "is_incremental": false,
@@ -477,7 +477,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Types.SolveControl.html",
-          "hash": "ftlwo605n7tUInCZ/vgyxg=="
+          "hash": "OXVkbdpi+zDX42+8Nm3qdA=="
         }
       },
       "is_incremental": false,
@@ -489,7 +489,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Types.SolveHandle.html",
-          "hash": "2Njed64EJ/PQTaIBEhq7JQ=="
+          "hash": "YY7aYiGtaa3KTIxnTP3Isg=="
         }
       },
       "is_incremental": false,
@@ -501,7 +501,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Types.Symbol.html",
-          "hash": "I5mPwp95/w9JWrnW4g9YqA=="
+          "hash": "BCKZw0BXPaDz1JCy+KCJaA=="
         }
       },
       "is_incremental": false,
@@ -513,7 +513,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Types.SymbolicAtomIterator.html",
-          "hash": "wiUJpJ4rrCoyOzLo/asYzA=="
+          "hash": "ZqKkCzfPNvoSgKzq88SH7g=="
         }
       },
       "is_incremental": false,
@@ -525,7 +525,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Types.SymbolicAtoms.html",
-          "hash": "KB9Zy7+vpmzttli/NHEPbQ=="
+          "hash": "Q/aQ/yROn7MdDnbxDoAqsA=="
         }
       },
       "is_incremental": false,
@@ -537,7 +537,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Types.TruthValue.html",
-          "hash": "7Bmi44aduM/FAmjRq/rzWA=="
+          "hash": "U1Z0SBMMTsFwR+6ncjI2Eg=="
         }
       },
       "is_incremental": false,
@@ -549,7 +549,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.CoreServices.Types.Weight.html",
-          "hash": "fbgDGJVzCvF+te445QISHw=="
+          "hash": "HF2uYBNOc9SenbHY8/qi+Q=="
         }
       },
       "is_incremental": false,
@@ -585,7 +585,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.Enums.Enumeration.html",
-          "hash": "ECyUfs5IiPCnDmX3+MYXvg=="
+          "hash": "bFd5DWMHQ2j7y+Bdp68mmA=="
         }
       },
       "is_incremental": false,
@@ -597,7 +597,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.Enums.IEnumeration.html",
-          "hash": "Wy0J32/LjrR7cEpKTDaEtQ=="
+          "hash": "nMY1gJIjrOFWGabc4s7Drg=="
         }
       },
       "is_incremental": false,
@@ -621,7 +621,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.Exceptions.RuntimeException.html",
-          "hash": "nwTo9P0DJ/PlR8lUxJjoog=="
+          "hash": "LFMSYCaFBiUwr9LkR+MeQQ=="
         }
       },
       "is_incremental": false,
@@ -645,7 +645,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.MessageCode.html",
-          "hash": "l2genbRhTDUL4DWIKqdXyA=="
+          "hash": "raS3nxA4bzw5tPrwjFPHPw=="
         }
       },
       "is_incremental": false,
@@ -657,7 +657,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.Model.html",
-          "hash": "PX92wxr26KufwHFglZ54uA=="
+          "hash": "W1ZA1w10jZrvu6LFiTZ7Wg=="
         }
       },
       "is_incremental": false,
@@ -669,7 +669,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.ModelType.html",
-          "hash": "+M67WLSXJWo1kLME3nkauQ=="
+          "hash": "dKQ39ZOro0b8qoOnc4pKDQ=="
         }
       },
       "is_incremental": false,
@@ -681,7 +681,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.SolveControl.html",
-          "hash": "nFgLjSk3M7QrVAqhFlsK9w=="
+          "hash": "S2qP+HlVTTXPuDMiw/98rw=="
         }
       },
       "is_incremental": false,
@@ -693,7 +693,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.SolveHandle.html",
-          "hash": "SN5xssocWuxLaveaDOQgRA=="
+          "hash": "0ysrwJpzNIVJezT9KhKDMQ=="
         }
       },
       "is_incremental": false,
@@ -705,7 +705,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.SolveResult.html",
-          "hash": "XuhJoBWDIuyK8C0eW2aP0w=="
+          "hash": "xgwNsV86j71smFIfjxddkA=="
         }
       },
       "is_incremental": false,
@@ -717,7 +717,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.StatisticsMap.html",
-          "hash": "hUMSLZNa5AUXuo4utuhzxw=="
+          "hash": "q4iI9LcaKdLtfeJ7QFrPWw=="
         }
       },
       "is_incremental": false,
@@ -729,7 +729,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.Symbol.html",
-          "hash": "vV8XEaFlSbDWTX/KvZz2iA=="
+          "hash": "Yx5QtzUCSU2vuoXEzbPwew=="
         }
       },
       "is_incremental": false,
@@ -741,7 +741,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.SymbolType.html",
-          "hash": "Kx6qID6Df51m6Ff/iEhibQ=="
+          "hash": "6ZVh2q5GgzRAFHxW34Dc5g=="
         }
       },
       "is_incremental": false,
@@ -753,7 +753,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.SymbolicAtom.html",
-          "hash": "wSS5R3/7AqvWxttM5XjOQw=="
+          "hash": "axwP/++feadD6gnmBqVe/g=="
         }
       },
       "is_incremental": false,
@@ -765,7 +765,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.SymbolicAtomIterator.html",
-          "hash": "gkRTDtZhidllWMFhpjloZg=="
+          "hash": "et1p85OmmxlneguT5GG/cg=="
         }
       },
       "is_incremental": false,
@@ -777,7 +777,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.SymbolicAtoms.html",
-          "hash": "I99WCnl56lYX369nK2Bffw=="
+          "hash": "Ix4t5Buz6KYg7V3RIyxJSw=="
         }
       },
       "is_incremental": false,
@@ -789,7 +789,7 @@
       "output": {
         ".html": {
           "relative_path": "api/ClingoSharp.Union-2.html",
-          "hash": "a1IqHvIvfEsA9bcxx2tNBA=="
+          "hash": "izEfRM74PdqQnPXPmbnN1Q=="
         }
       },
       "is_incremental": false,
@@ -813,7 +813,7 @@
       "output": {
         ".html": {
           "relative_path": "api/index.html",
-          "hash": "2P8WjRS1C5VQSbL1+U3Wbg=="
+          "hash": "8ljT9VdMiq1+6QTkjmeFiw=="
         }
       },
       "is_incremental": false,
@@ -837,7 +837,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/intro.html",
-          "hash": "EsJGIkfEEDhAAZYtFt1EiQ=="
+          "hash": "K5WGdJu5h2FWIvW0B08ExQ=="
         }
       },
       "is_incremental": false,
@@ -861,7 +861,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "2c7d0r5B38Tv1hKdeR/IYw=="
+          "hash": "YBxAHJbaO2Mb9sARVUZWLQ=="
         }
       },
       "is_incremental": false,
