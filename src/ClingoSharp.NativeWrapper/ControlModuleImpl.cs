@@ -136,23 +136,23 @@ namespace ClingoSharp.NativeWrapper
         {
             int clingoGroundCallback(clingo_location[] clingoLocation, string name, ulong[] clingoArguments, UIntPtr arguments_size, IntPtr data, clingo_symbol_callback symbol_callback, IntPtr symbol_callback_data)
             {
-                bool symbolCallback(Symbol[] symbols, IntPtr data)
+                bool symbolCallback(Symbol[] symbols, IntPtr symbolData)
                 {
                     ulong[] clingoSymbols = symbols?.Select(s => (ulong)s).ToArray();
                     UIntPtr clingoSymbolsSize = new UIntPtr(Convert.ToUInt32(symbols == null ? 0 : symbols.Length));
 
-                    var success = symbol_callback(clingoSymbols, new UIntPtr(Convert.ToUInt32(symbols.Length)), data);
+                    var symbol_success = symbol_callback(clingoSymbols, new UIntPtr(Convert.ToUInt32(symbols.Length)), symbolData);
 
-                    return success != 0;
+                    return symbol_success != 0;
                 }
 
                 Location location = clingoLocation == null ? null : m_mapper.Map<clingo_location, Location>(clingoLocation[0]);
 
                 Symbol[] arguments = clingoArguments?.Select(arg => (Symbol)arg).ToArray();
 
-                var success = callback(location, name, arguments, data, symbolCallback, symbol_callback_data);
+                var callbackSuccess = callback(location, name, arguments, data, symbolCallback, symbol_callback_data);
 
-                return success ? 1 : 0;
+                return callbackSuccess ? 1 : 0;
             }
 
             clingo_part[] clingoParts = parts == null ? null : m_mapper.Map<Part[], clingo_part[]>(parts);
@@ -173,11 +173,11 @@ namespace ClingoSharp.NativeWrapper
             {
                 SolveEventType solveEventType = (SolveEventType)type;
 
-                var success = callback(solveEventType, eventData, out bool doneValue);
+                var callbackSuccess = callback(solveEventType, eventData, out bool doneValue);
 
                 goon = new bool[1] { doneValue };
 
-                return success ? 1 : 0;
+                return callbackSuccess ? 1 : 0;
             }
 
             clingo_solve_mode cligoSolveMode = (clingo_solve_mode)mode;
