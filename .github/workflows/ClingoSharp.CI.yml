@@ -4,9 +4,6 @@ on:
   push:
     branches: 
       - master
-      - develop
-      - release/*
-      - hotfix/*
   pull_request:
     branches:
       - develop
@@ -31,17 +28,16 @@ jobs:
         with:
           dotnet-version: 3.1.100
       - name: Building dependecies
-        run: cmd.exe "/c .\build-win32.bat"
+        run: .\build.ps1
       - name: Build
         run: dotnet build --configuration Release
       - name: Test
-        run: |
-          dotnet test --configuration Debug /p:CollectCoverage=true /p:CoverletOutput=results/ /p:CoverletOutputFormat=lcov
-          (Get-Content '.\tests\results\coverage.info') -replace [Regex]::Escape('D:\a\ClingoSharp\ClingoSharp\'), [Regex]::Escape('') | Out-File -encoding ASCII coverage.info
+        run: .\test.ps1
+      - name: Setup DocFX
+        run: choco install docfx -y
       - name: Building documentation
         run: |
-          choco install docfx -y
-          docfx '.\docfx.json'
+          docfx .\docfx.json
           if ($lastexitcode -ne 0){
             throw [System.Exception] "docfx build failed with exit code $lastexitcode."
           }

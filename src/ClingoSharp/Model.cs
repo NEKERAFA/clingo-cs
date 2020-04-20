@@ -98,13 +98,17 @@ namespace ClingoSharp
             {
                 Clingo.HandleClingoError(m_module.GetType(this, out var type));
 
-                return type switch
+                switch (type)
                 {
-                    ClingoModelType.StableModel => ModelType.StableModel,
-                    ClingoModelType.BraveConsequences => ModelType.BraveConsequences,
-                    ClingoModelType.CautiousConsequences => ModelType.CautiousConsequences,
-                    _ => null
-                };
+                    case ClingoModelType.StableModel:
+                        return ModelType.StableModel;
+                    case ClingoModelType.BraveConsequences:
+                        return ModelType.BraveConsequences;
+                    case ClingoModelType.CautiousConsequences:
+                        return ModelType.CautiousConsequences;
+                    default:
+                        return null;
+                }
             }
         }
 

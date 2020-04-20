@@ -133,14 +133,20 @@ namespace ClingoSharp
             {
                 var type = m_module.GetType(this);
 
-                return type switch
+                switch (type)
                 {
-                    ClingoSymbolType.Infimum => SymbolType.Infimum,
-                    ClingoSymbolType.Number => SymbolType.Number,
-                    ClingoSymbolType.String => SymbolType.String,
-                    ClingoSymbolType.Function => SymbolType.Function,
-                    ClingoSymbolType.Supremum => SymbolType.Supremum,
-                    _ => null
+                    case ClingoSymbolType.Infimum:
+                        return SymbolType.Infimum;
+                    case ClingoSymbolType.Number:
+                        return SymbolType.Number;
+                    case ClingoSymbolType.String:
+                        return SymbolType.String;
+                    case ClingoSymbolType.Function:
+                        return SymbolType.Function;
+                    case ClingoSymbolType.Supremum:
+                        return SymbolType.Supremum;
+                    default:
+                        return null;
                 };
             }
         }
