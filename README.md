@@ -2,7 +2,7 @@
 
 [![.NET Standard v2.0](https://img.shields.io/badge/.NET%20Standard-2.0-7014e8)](https://docs.microsoft.com/en-us/dotnet/standard/net-standard)
 [![Clingo 5.4.0](https://img.shields.io/badge/Clingo-5.4.0-blue)](https://github.com/potassco/clingo)
-[ClingoSharp Workflow](https://github.com/NEKERAFA/ClingoSharp/workflows/ClingoSharp%20Workflow/badge.svg?branch=master&event=push)
+![ClingoSharp Workflow](https://github.com/NEKERAFA/ClingoSharp/workflows/ClingoSharp%20Workflow/badge.svg?branch=master&event=push)
 [![Coverage Status](https://coveralls.io/repos/github/NEKERAFA/ClingoSharp/badge.svg?branch=master)](https://coveralls.io/github/NEKERAFA/ClingoSharp?branch=master)
 
 A C# bindings to the [clingo](https://github.com/potassco/clingo) library.
