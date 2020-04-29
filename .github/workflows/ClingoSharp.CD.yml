@@ -1,12 +1,9 @@
-name: ClingoSharp Test
+name: ClingoSharp Publish
 
 on:
-  pull_request:
-    branches:
-      - develop
-      - release/*
-      - feature/*
-      - bugfix/*  
+  push:
+    branches: 
+      - master
 
 jobs:
   build:
@@ -43,3 +40,27 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: .\coverage.info
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: site
+          path: _site
+
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Download Artifacts # The built project is downloaded into the 'site' folder.
+        uses: actions/download-artifact@v1
+        with:
+          name: site
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: "site" # The deployment folder should match the name of the artifact. Even though our project builds into the 'build' folder the artifact name of 'site' must be placed here.

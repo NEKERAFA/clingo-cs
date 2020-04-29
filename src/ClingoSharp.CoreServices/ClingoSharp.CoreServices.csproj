@@ -26,21 +26,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="ClingoSharp.CoreServices.targets" PackagePath="build\" />
+    <Content Include="ClingoSharp.CoreServices.targets" PackagePath="build" />
     <Content Include="..\..\clingo\build\win\x86\bin\Release\clingo.dll" PackagePath="runtimes\win-x86\native">
       <CopyToOutputDirectory>true</CopyToOutputDirectory>
     </Content>
     <Content Include="..\..\clingo\build\win\x64\bin\Release\clingo.dll" PackagePath="runtimes\win-x64\native">
       <CopyToOutputDirectory>true</CopyToOutputDirectory>
     </Content>
-    <!--
-    <Content Include="..\..\clingo\build\linux\i386\bin\Release\clingo.dll" PackagePath="runtimes\linux-i386\native">
+    <Content Include="..\..\clingo\build\linux\i386\bin\libclingo.so" PackagePath="runtimes\linux-i386\native">
       <CopyToOutputDirectory>true</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\clingo\build\linux\amd64\bin\Release\clingo.dll" PackagePath="runtimes\linux-amd64\native">
+    <Content Include="..\..\clingo\build\linux\amd64\bin\libclingo.so" PackagePath="runtimes\linux-amd64\native">
       <CopyToOutputDirectory>true</CopyToOutputDirectory>
     </Content>
-    -->
   </ItemGroup>
 
 </Project>
