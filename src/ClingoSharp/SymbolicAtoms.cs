@@ -5,13 +5,16 @@ using System.Collections;
 using System.Collections.Generic;
 using ClingoSymbolicAtomIterator = ClingoSharp.CoreServices.Types.SymbolicAtomIterator;
 using ClingoSymbolicAtoms = ClingoSharp.CoreServices.Types.SymbolicAtoms;
-using ClingoSymbol = ClingoSharp.CoreServices.Types.Symbol;
 using ClingoSignature = ClingoSharp.CoreServices.Types.Signature;
 using System.Linq;
 using ClingoSharp.CoreServices.Interfaces;
 
 namespace ClingoSharp
 {
+    /// <summary>
+    /// <para>This class provides read-only access to the atom base of the grounder.</para>
+    /// <para>It implements <see cref="IReadOnlyCollection{T}"/> of <see cref="SymbolicAtom"/> and <see cref="IReadOnlyDictionary{TKey, TValue}"/> of &lt; <see cref="Symbol"/> , <see cref="SymbolicAtom"/> &gt;.</para>
+    /// </summary>
     public sealed class SymbolicAtoms : IReadOnlyCollection<SymbolicAtom>, IReadOnlyDictionary<Symbol, SymbolicAtom>
     {
         #region Attributes
@@ -145,7 +148,7 @@ namespace ClingoSharp
         /// <param name="name">The name of the signature</param>
         /// <param name="arity">The arity of the signature</param>
         /// <param name="positive">The sign of the signature</param>
-        /// <returns>An <see cref="IEnumerable{Symbol}"/></returns>
+        /// <returns>An <see cref="IEnumerable{T}"/> of <see cref="Symbol"/></returns>
         public IEnumerator<Symbol> BySignature(string name, int arity, bool positive = true)
         {
             Clingo.HandleClingoError(Symbol.GetSymbolModule().CreateSignature(name, Convert.ToUInt32(arity), positive, out ClingoSignature signature));

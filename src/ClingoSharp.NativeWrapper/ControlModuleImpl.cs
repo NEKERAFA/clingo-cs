@@ -19,7 +19,7 @@ namespace ClingoSharp.NativeWrapper
     /// Functions to control the grounding and solving process.
     /// </summary>
     class ControlModuleImpl : IControlModule
-    {
+    { 
         private readonly IMapper m_mapper;
 
         #region Constructor
@@ -68,6 +68,9 @@ namespace ClingoSharp.NativeWrapper
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
         private static extern int clingo_control_ground(IntPtr control, clingo_part[] parts, UIntPtr parts_size, clingo_ground_callback ground_callback, IntPtr ground_callback_data);
+
+        [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
+        private static extern int clingo_control_load(IntPtr control, string filename);
 
         #endregion
 
@@ -122,6 +125,13 @@ namespace ClingoSharp.NativeWrapper
         #endregion
 
         #region Grounding Functions
+
+        public bool Load(Control control, string filename)
+        {
+            var success = clingo_control_load(control.Object, filename);
+
+            return success != 0;
+        }
 
         public bool Add(Control control, string name, string[] parameters, string program)
         {

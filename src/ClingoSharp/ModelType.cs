@@ -1,5 +1,4 @@
 ﻿using ClingoSharp.Enums;
-using System.Collections.Generic;
 
 namespace ClingoSharp
 {
@@ -38,31 +37,9 @@ namespace ClingoSharp
 
         #endregion
 
-        #region Instance Properties
-
-        public new string Name => ModelTypeNames[Value];
-
-        #endregion
-
         #region Constructors
 
-        private ModelType(int value) : base(value) { }
-
-        #endregion
-
-        #region Class methods
-
-        /// <inheritdoc/>
-        public new static IEnumerable<string> GetNames()
-        {
-            return (string[])ModelTypeNames.Clone();
-        }
-
-        /// <inheritdoc/>
-        public new static IEnumerable<Enumeration> GetValues()
-        {
-            return new ModelType[] { StableModel, BraveConsequences, CautiousConsequences };
-        }
+        private ModelType(int value) : base(value, ModelTypeNames[value]) { }
 
         #endregion
 
@@ -88,12 +65,6 @@ namespace ClingoSharp
             }
 
             return Value.Equals(other.Value);
-        }
-
-        /// <inheritdoc/>
-        public override string ToString()
-        {
-            return $"CligoSharp.ModelType<{Name}>";
         }
 
         #endregion

@@ -5,6 +5,9 @@ using ClingoSymbolicAtoms = ClingoSharp.CoreServices.Types.SymbolicAtoms;
 
 namespace ClingoSharp
 {
+    /// <summary>
+    /// Captures a symbolic atom and provides properties to inspect its state
+    /// </summary>
     public sealed class SymbolicAtom
     {
         #region Attributes
@@ -16,6 +19,9 @@ namespace ClingoSharp
 
         #region Properties
 
+        /// <summary>
+        /// Whether the atom is an external atom.
+        /// </summary>
         public bool IsExternal 
         {
             get
@@ -25,6 +31,9 @@ namespace ClingoSharp
             }
         }
 
+        /// <summary>
+        /// Whether the atom is a fact.
+        /// </summary>
         public bool IsFact
         {
             get
@@ -34,6 +43,9 @@ namespace ClingoSharp
             }
         }
 
+        /// <summary>
+        /// The program literal associated with the atom.
+        /// </summary>
         public int Literal
         {
             get
@@ -43,6 +55,9 @@ namespace ClingoSharp
             }
         }
 
+        /// <summary>
+        /// The representation of the atom in form of a symbol.
+        /// </summary>
         public Symbol Symbol
         {
             get
@@ -80,7 +95,7 @@ namespace ClingoSharp
 
         #region Constructors
 
-        internal SymbolicAtom(ClingoSymbolicAtoms symbolicAtoms, ClingoSymbolicAtomIterator position)
+        public SymbolicAtom(ClingoSymbolicAtoms symbolicAtoms, ClingoSymbolicAtomIterator position)
         {
             m_symbolicAtoms = symbolicAtoms;
             m_position = position;
@@ -90,6 +105,13 @@ namespace ClingoSharp
 
         #region Instance Methods
 
+        /// <summary>
+        /// Check if the atom matches the given signature.
+        /// </summary>
+        /// <param name="name">The name of the function</param>
+        /// <param name="arity">The arity of the function</param>
+        /// <returns>Whether the function matches</returns>
+        /// <seealso cref="Symbol.Match(string, int)"/>
         public bool Match(string name, int arity)
         {
             return Symbol.Match(name, arity);

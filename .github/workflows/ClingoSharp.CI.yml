@@ -69,8 +69,8 @@ jobs:
           name: clingo-linux
       - name: Installing Artifacts
         run: |
-          Copy-Item -Path '.\clingo-windows\*' -Destination '.\clingo\build\win' -Recurse
-          Copy-Item -Path '.\clingo-linux\*' -Destination '.\clingo\build\linux' -Recurse
+          Copy-Item -Path '.\clingo-windows' -Destination '.\clingo\build\win\' -Recurse
+          Copy-Item -Path '.\clingo-linux' -Destination '.\clingo\build\linux\' -Recurse
       - name: Build
         run: dotnet build --configuration Release
       - name: Test
