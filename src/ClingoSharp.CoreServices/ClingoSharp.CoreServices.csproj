@@ -26,6 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="..\..\clingo\build\win\x86\bin\Release\clingo.dll" PackagePath="runtimes\win-x86\native" />
+    <Content Include="..\..\clingo\build\win\x64\bin\Release\clingo.dll" PackagePath="runtimes\win-x64\native" />
+    <Content Include="..\..\clingo\build\linux\i386\bin\libclingo.so" PackagePath="runtimes\linux-i386\native" />
+    <Content Include="..\..\clingo\build\linux\amd64\bin\libclingo.so" PackagePath="runtimes\linux-amd64\native" />
     <Content Include="ClingoSharp.CoreServices.targets" PackagePath="build" />
   </ItemGroup>
 
