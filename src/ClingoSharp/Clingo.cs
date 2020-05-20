@@ -83,6 +83,27 @@ namespace ClingoSharp
             }
         }
 
+        internal static void HandleClingoWarning(WarningCode code, string message)
+        {
+            switch(code)
+            {
+                case WarningCode.OperationUndefined:
+                    throw new OperationUndefinedException(message);
+                case WarningCode.RuntimeError:
+                    throw new RuntimeException(message);
+                case WarningCode.AtomUndefined:
+                    throw new AtomUndefinedException(message);
+                case WarningCode.FileIncluded:
+                    throw new FileIncludedException(message);
+                case WarningCode.VariableUnbounded:
+                    throw new VariableUnboundedException(message);
+                case WarningCode.GlobalVariable:
+                    throw new GlobalVariableException(message);
+                case WarningCode.Other:
+                    throw new UnknownException(message);
+            }
+        }
+
         /// <summary>
         /// Gets the asociated API module in clingo
         /// </summary>

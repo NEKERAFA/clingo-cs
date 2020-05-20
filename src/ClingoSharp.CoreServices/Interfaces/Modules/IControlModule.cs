@@ -34,6 +34,14 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         #region Grounding Functions
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="control"></param>
+        /// <param name="filename"></param>
+        /// <returns></returns>
+        bool Load(Control control, string filename);
+
+        /// <summary>
         /// <para>Extend the logic program with the given non-ground logic program in string form.</para>
         /// <para>This function puts the given program into a block of form: <c>#program name(parameters).</c></para>
         /// <para>After extending the logic program, the corresponding program parts are typically grounded with <see cref="Ground(IntPtr, Part[], GroundCallback)"/></para>

@@ -47,17 +47,19 @@ namespace ClingoSharp.CoreServices.Shared
             string nativeLibraryFolder;
             // Gets the extension of the native libray
             string extension;
+            // Gets the prefix of the native library
+            string prefix;
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                var arch = Environment.Is64BitProcess ? "x64" : "x86";
-                nativeLibraryFolder = $"win-{arch}";
+                nativeLibraryFolder = $"win";
+                prefix = "";
                 extension = "dll";
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                var arch = Environment.Is64BitProcess ? "amd64" : "i386";
-                nativeLibraryFolder = $"linux-{arch}"; 
+                nativeLibraryFolder = $"linux"; 
+                prefix = "lib";
                 extension = "so";
             }
             else
@@ -66,7 +68,7 @@ namespace ClingoSharp.CoreServices.Shared
             }
 
             // Loads clingo library
-            return LoadUnmanagedDllFromPath(Path.Combine(assemblyFolder, "runtimes", nativeLibraryFolder, "native", $"clingo.{extension}"));
+            return LoadUnmanagedDllFromPath(Path.Combine(assemblyFolder, "runtimes", nativeLibraryFolder, "native", $"{prefix}clingo.{extension}"));
         }
 
         #endregion

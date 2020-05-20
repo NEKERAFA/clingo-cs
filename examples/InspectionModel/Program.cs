@@ -1,6 +1,8 @@
 ﻿using ClingoSharp;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
 namespace ClingoSharpApp
 {
@@ -11,7 +13,13 @@ namespace ClingoSharpApp
             Console.WriteLine($"Clingo {Clingo.Version}\n");
 
             Control ctl = new Control(new List<string>() { "0" });
-            ctl.Add("base", new List<string>() { }, "{a; b}.");
+
+            string filename = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "program.lp");
+            Console.WriteLine(filename);
+            ctl.Load(filename);
+
+            
+            //ctl.Add("base", new List<string>() { }, "{a; b}.");
             var parts = new List<Tuple<string, List<Symbol>>>()
             {
                 new Tuple<string, List<Symbol>>("base", new List<Symbol>() {}),
@@ -36,6 +44,7 @@ namespace ClingoSharpApp
             {
                 continue;
             }
+            
         }
     }
 }

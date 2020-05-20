@@ -5,6 +5,9 @@ using ClingoSymbolicAtomIterator = ClingoSharp.CoreServices.Types.SymbolicAtomIt
 
 namespace ClingoSharp
 {
+    /// <summary>
+    /// Implements <see cref="IEnumerable{T}"/> of <see cref="SymbolicAtom"/>.
+    /// </summary>
     public sealed class SymbolicAtomIterator : IEnumerable<SymbolicAtom>
     {
         #region Attributes

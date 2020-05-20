@@ -1,12 +1,9 @@
-name: ClingoSharp Test
+name: ClingoSharp Publish
 
 on:
-  pull_request:
-    branches:
-      - develop
-      - release/*
-      - feature/*
-      - bugfix/*  
+  push:
+    branches: 
+      - master
 
 jobs:
   build-windows:
@@ -69,14 +66,46 @@ jobs:
           name: clingo-linux
       - name: Installing Artifacts
         run: |
-          Copy-Item -Path '.\clingo-windows' -Destination '.\clingo\build\win\' -Recurse
-          Copy-Item -Path '.\clingo-linux' -Destination '.\clingo\build\linux\' -Recurse
+          Copy-Item -Path '.\clingo-windows\*' -Destination '.\clingo\build\win' -Recurse
+          Copy-Item -Path '.\clingo-linux\*' -Destination '.\clingo\build\linux' -Recurse
       - name: Build
         run: dotnet build --configuration Release
       - name: Test
         run: .\test.ps1
+      - name: Setup DocFX
+        run: choco install docfx -y
+      - name: Building documentation
+        run: |
+          docfx .\docfx.json
+          if ($lastexitcode -ne 0){
+            throw [System.Exception] "docfx build failed with exit code $lastexitcode."
+          }
       - name: Reporting coverage result
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: .\coverage.info
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: site
+          path: _site
+
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Download Artifacts # The built project is downloaded into the 'site' folder.
+        uses: actions/download-artifact@v1
+        with:
+          name: site
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: "site" # The deployment folder should match the name of the artifact. Even though our project builds into the 'build' folder the artifact name of 'site' must be placed here.
