@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.0;netstandard2.0;net472</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.0;net48</TargetFrameworks>
     <Authors>Rafael Alcalde Azpiazu &lt;rafael.alcalde.azpiazu@udc.es&gt;</Authors>
     <Company>University of A Coruña</Company>
     <Description>A C# wrapper to the native C clingo library.</Description>
@@ -13,9 +13,9 @@
     <PackageId>ClingoSharp.NativeWrapper</PackageId>
     <OutputType>Library</OutputType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <AssemblyVersion>0.0.2.0</AssemblyVersion>
-    <FileVersion>0.0.2.0</FileVersion>
-    <Version>0.0.2-alpha</Version>
+    <AssemblyVersion>0.0.2.1</AssemblyVersion>
+    <FileVersion>0.0.2.1</FileVersion>
+    <Version>0.0.2-alpha1</Version>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReleaseNotes>Added Clingo.Control.Load(string) function</PackageReleaseNotes>

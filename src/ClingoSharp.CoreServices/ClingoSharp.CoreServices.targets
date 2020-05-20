@@ -2,22 +2,16 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <Target Name="AfterBuild" DependsOnTargets="CopyFilesToOutputDirectory">
         <ItemGroup>
-            <ClingoWin86 Include="$(MSBuildThisFileDirectory)..\runtimes\win-x86\native\clingo.dll" />
-            <ClingoWin64 Include="$(MSBuildThisFileDirectory)..\runtimes\win-x64\native\clingo.dll" />
-            <ClingoLin86 Include="$(MSBuildThisFileDirectory)..\runtimes\linux-i386\native\libclingo.so" />
-            <ClingoLin64 Include="$(MSBuildThisFileDirectory)..\runtimes\linux-amd64\native\libclingo.so" />
+            <ClingoWin Include="$(MSBuildThisFileDirectory)..\runtimes\win\native\*.dll" />
+            <ClingoLinux Include="$(MSBuildThisFileDirectory)..\runtimes\linux\native\*.so" />
         </ItemGroup>
-        <Copy SourceFiles="@(ClingoWin86)" DestinationFolder="$(ProjectDir)\runtimes\win-x86\native\clingo.dll" />
-        <Copy SourceFiles="@(ClingoWin64)" DestinationFolder="$(ProjectDir)\runtimes\win-x64\native\clingo.dll" />
-        <Copy SourceFiles="@(ClingoWin86)" DestinationFolder="$(ProjectDir)\runtimes\linux-i386\native\libclingo.so" />
-        <Copy SourceFiles="@(ClingoWin64)" DestinationFolder="$(ProjectDir)\runtimes\linux-amd64\native\libclingo.so" />
+        <Copy SourceFiles="@(ClingoWin)" DestinationFolder="$(ProjectDir)runtimes\win\native" />
+        <Copy SourceFiles="@(ClingoLinux)" DestinationFolder="$(ProjectDir)runtimes\linux\native" />
     </Target>
     <Target Name="AddUnmanagedDll" AfterTargets="AfterBuild">  
         <ItemGroup>
-            <Content Include="runtimes\win-x86\native\clingo.dll" />
-            <Content Include="runtimes\win-x64\native\clingo.dll" />
-            <Content Include="runtimes\linux-i386\native\libclingo.so" />
-            <Content Include="runtimes\linux-amd64\native\libclingo.so" />
+            <Content Include="runtimes\win\native\*.dll" />
+            <Content Include="runtimes\linux\native\*.so" />
         </ItemGroup>
     </Target>
 </Project>
