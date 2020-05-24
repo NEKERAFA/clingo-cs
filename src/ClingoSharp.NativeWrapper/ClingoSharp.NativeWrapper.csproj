@@ -1,32 +1,67 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.0;net48</TargetFrameworks>
-    <Authors>Rafael Alcalde Azpiazu &lt;rafael.alcalde.azpiazu@udc.es&gt;</Authors>
-    <Company>University of A Coruña</Company>
-    <Description>A C# wrapper to the native C clingo library.</Description>
-    <Copyright>Copyright© Rafael Alcalde Azpiazu - 2019</Copyright>
-    <PackageProjectUrl>https://nekerafa.github.io/ClingoSharp/</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/NEKERAFA/ClingoSharp</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageTags>clingo bindings logic-programing answer-set-programming</PackageTags>
-    <PackageId>ClingoSharp.NativeWrapper</PackageId>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DC151E4D-7E1D-4460-B894-39F3829F665E}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <AssemblyVersion>0.0.2.1</AssemblyVersion>
-    <FileVersion>0.0.2.1</FileVersion>
-    <Version>0.0.2-alpha1</Version>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageReleaseNotes>Added Clingo.Control.Load(string) function</PackageReleaseNotes>
+    <RootNamespace>ClingoSharp.NativeWrapper</RootNamespace>
+    <AssemblyName>ClingoSharp.NativeWrapper</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
-
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <ProjectReference Include="..\ClingoSharp.CoreServices\ClingoSharp.CoreServices.csproj">
+      <Project>{4A32F868-4C1F-48A1-A892-D62410A46D27}</Project>
+      <Name>ClingoSharp.CoreServices</Name>
+    </ProjectReference>
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\ClingoSharp.CoreServices\ClingoSharp.CoreServices.csproj" />
+    <Compile Include="Callbacks\GroundCallback.cs" />
+    <Compile Include="Callbacks\LoggerCallback.cs" />
+    <Compile Include="Callbacks\SymbolCallback.cs" />
+    <Compile Include="Enums\ErrorCode.cs" />
+    <Compile Include="Enums\ModelType.cs" />
+    <Compile Include="Enums\ShowType.cs" />
+    <Compile Include="Enums\SolveEventType.cs" />
+    <Compile Include="Enums\SolveMode.cs" />
+    <Compile Include="Enums\SolveResult.cs" />
+    <Compile Include="Enums\SymbolType.cs" />
+    <Compile Include="Enums\WarningCode.cs" />
+    <Compile Include="EventHandlers\SolveEventHandler.cs" />
+    <Compile Include="Managers\ControlModuleImpl.cs" />
+    <Compile Include="Managers\SymbolicAtomsModuleImpl.cs" />
+    <Compile Include="Managers\MainModuleImpl.cs" />
+    <Compile Include="Managers\ModelModuleImpl.cs" />
+    <Compile Include="Managers\SolveHandleModuleImpl.cs" />
+    <Compile Include="Managers\SymbolModuleImpl.cs" />
+    <Compile Include="Types\Location.cs" />
+    <Compile Include="Types\Part.cs" />
+    <Compile Include="Helpers\MapperHelper.cs" />
   </ItemGroup>
-
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

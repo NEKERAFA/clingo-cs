@@ -1,4 +1,4 @@
-﻿using ClingoSharp.CoreServices.Enums;
+﻿using ClingoSharp.CoreServices.Components.Enums;
 
 namespace ClingoSharp.CoreServices.Interfaces.Modules
 {

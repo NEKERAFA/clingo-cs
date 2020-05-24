@@ -1,4 +1,4 @@
-﻿using ClingoSharp.CoreServices.Types;
+﻿using ClingoSharp.CoreServices.Components.Types;
 using System;
 
 namespace ClingoSharp.CoreServices.Interfaces.Modules
@@ -6,7 +6,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
     /// <summary>
     /// Inspection of atoms occurring in ground logic programs
     /// </summary>
-    public interface ISymbolicAtomsModule : Interfaces.IClingoModule
+    public interface ISymbolicAtomsModule : IClingoModule
     {
         /// <summary>
         /// Get the number of different atoms occurring in a logic program.

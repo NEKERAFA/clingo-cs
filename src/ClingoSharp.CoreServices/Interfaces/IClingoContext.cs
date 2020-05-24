@@ -5,7 +5,7 @@ namespace ClingoSharp.CoreServices.Interfaces
     /// <summary>
     /// This interface defines the main functions to get a implementation of clingo module
     /// </summary>
-    internal interface IClingoContext
+    internal interface IClingoContext : IDisposable
     {
         /// <summary>
         /// Gets a implementation module of a any type

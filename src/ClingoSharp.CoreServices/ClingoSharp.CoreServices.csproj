@@ -1,34 +1,87 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.0;net48</TargetFrameworks>
-    <Authors>Rafael Alcalde Azpiazu &lt;rafael.alcalde.azpiazu@udc.es&gt;</Authors>
-    <Company>University of A Coruña</Company>
-    <Copyright>Copyright© Rafael Alcalde Azpiazu - 2019</Copyright>
-    <PackageId>ClingoSharp.CoreServices</PackageId>
-    <Description>Defines a context and the interfaces to share between C# and clingo.</Description>
-    <PackageProjectUrl>https://nekerafa.github.io/ClingoSharp/</PackageProjectUrl>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/NEKERAFA/ClingoSharp</RepositoryUrl>
-    <PackageTags>clingo bindings logic-programing answer-set-programming</PackageTags>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4A32F868-4C1F-48A1-A892-D62410A46D27}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <AssemblyVersion>0.0.3.1</AssemblyVersion>
-    <FileVersion>0.0.3.1</FileVersion>
-    <Version>0.0.3-alpha1</Version>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Added Clingo.Control.Load(string) function</PackageReleaseNotes>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RootNamespace>ClingoSharp.CoreServices</RootNamespace>
+    <AssemblyName>ClingoSharp.CoreServices</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
-
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
+    <Compile Include="Components\Callbacks\GroundCallback.cs" />
+    <Compile Include="Components\Callbacks\LoggerCallback.cs" />
+    <Compile Include="Components\Callbacks\SymbolCallback.cs" />
+    <Compile Include="Components\Enums\ErrorCode.cs" />
+    <Compile Include="Components\Enums\ModelType.cs" />
+    <Compile Include="Components\Enums\ShowType.cs" />
+    <Compile Include="Components\Enums\SolveEventType.cs" />
+    <Compile Include="Components\Enums\SolveMode.cs" />
+    <Compile Include="Components\Enums\SolveResult.cs" />
+    <Compile Include="Components\Enums\SymbolType.cs" />
+    <Compile Include="Components\Enums\TruthValueType.cs" />
+    <Compile Include="Components\Enums\WarningCode.cs" />
+    <Compile Include="Components\EventHandlers\SolveEventHandle.cs" />
+    <Compile Include="Components\Types\Atom.cs" />
+    <Compile Include="Components\Types\Control.cs" />
+    <Compile Include="Components\Types\Id.cs" />
+    <Compile Include="Components\Types\Literal.cs" />
+    <Compile Include="Components\Types\Location.cs" />
+    <Compile Include="Components\Types\Model.cs" />
+    <Compile Include="Components\Types\Part.cs" />
+    <Compile Include="Components\Types\Signature.cs" />
+    <Compile Include="Components\Types\SolveControl.cs" />
+    <Compile Include="Components\Types\SolveHandle.cs" />
+    <Compile Include="Components\Types\Symbol.cs" />
+    <Compile Include="Components\Types\SymbolicAtoms.cs" />
+    <Compile Include="Components\Types\SymbolicAtomIterator.cs" />
+    <Compile Include="Components\Types\TruthValue.cs" />
+    <Compile Include="Components\Types\Weight.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Interfaces\IClingoContext.cs" />
+    <Compile Include="Interfaces\IClingoModule.cs" />
+    <Compile Include="Interfaces\IClingoObject.cs" />
+    <Compile Include="Interfaces\ILibraryLoadContext.cs" />
+    <Compile Include="Interfaces\Modules\IControlModule.cs" />
+    <Compile Include="Interfaces\Modules\IMainModule.cs" />
+    <Compile Include="Interfaces\Modules\IModelModule.cs" />
+    <Compile Include="Interfaces\Modules\ISolveHandleModule.cs" />
+    <Compile Include="Interfaces\Modules\ISymbolicAtomsModule.cs" />
+    <Compile Include="Interfaces\Modules\ISymbolicModule.cs" />
+    <Compile Include="Shared\ClingoContext.cs" />
+    <Compile Include="Shared\PoxisLoadContext.cs" />
+    <Compile Include="Shared\Repository.cs" />
+    <Compile Include="Shared\WindowsLoadContext.cs" />
   </ItemGroup>
-
+  <ItemGroup />
   <ItemGroup>
-    <Content Include="..\..\clingo\build\win\bin\Release\*.dll" PackagePath="runtimes\win\native" />
-    <Content Include="..\..\clingo\build\linux\bin\*.so" PackagePath="runtimes\linux\native" />
-    <Content Include="ClingoSharp.CoreServices.targets" PackagePath="build" />
+    <Reference Include="System" />
   </ItemGroup>
-
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,23 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.29806.167
+VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{9F79E55B-82B5-450C-AA07-6559196F8B31}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClingoSharp", "src\ClingoSharp\ClingoSharp.csproj", "{6C7E386E-E44D-46F2-9AAB-A0F8D19AFDBF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClingoSharp", "src\ClingoSharp\ClingoSharp.csproj", "{AD231050-B939-48E7-8D5B-5D313C44B8B8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{431995EA-435A-4A75-9077-BD1FF5645579}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClingoSharp.NativeWrapper", "src\ClingoSharp.NativeWrapper\ClingoSharp.NativeWrapper.csproj", "{F85762B3-1F18-404A-9778-8066F74E486A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClingoSharp.CoreServices", "src\ClingoSharp.CoreServices\ClingoSharp.CoreServices.csproj", "{4A32F868-4C1F-48A1-A892-D62410A46D27}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClingoSharp.CoreServices", "src\ClingoSharp.CoreServices\ClingoSharp.CoreServices.csproj", "{FD343390-4193-4981-B985-4FA0767B77A1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClingoSharp.NativeWrapper", "src\ClingoSharp.NativeWrapper\ClingoSharp.NativeWrapper.csproj", "{DC151E4D-7E1D-4460-B894-39F3829F665E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClingoSharp.Tests", "tests\ClingoSharp.Tests.csproj", "{E26B31EE-8CF9-43E7-A8F7-E7D7EF283A73}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{498A4F49-6B6C-4A39-932D-9F7F41DCE625}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clingo.InterativeShell", "examples\InteractiveShell\Clingo.InterativeShell.csproj", "{166D0AD3-F1FE-4519-A7B0-76C6F653B584}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clingo.Model", "examples\InspectionModel\Clingo.Model.csproj", "{63B19F43-8B04-41A9-8BDE-BA5A614F31FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClingoSharp.Tests", "tests\ClingoSharp.Tests.csproj", "{2131C735-CBEC-4439-844F-91092453B5E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,42 +19,32 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AD231050-B939-48E7-8D5B-5D313C44B8B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AD231050-B939-48E7-8D5B-5D313C44B8B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AD231050-B939-48E7-8D5B-5D313C44B8B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AD231050-B939-48E7-8D5B-5D313C44B8B8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F85762B3-1F18-404A-9778-8066F74E486A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F85762B3-1F18-404A-9778-8066F74E486A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F85762B3-1F18-404A-9778-8066F74E486A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F85762B3-1F18-404A-9778-8066F74E486A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FD343390-4193-4981-B985-4FA0767B77A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FD343390-4193-4981-B985-4FA0767B77A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FD343390-4193-4981-B985-4FA0767B77A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FD343390-4193-4981-B985-4FA0767B77A1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E26B31EE-8CF9-43E7-A8F7-E7D7EF283A73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E26B31EE-8CF9-43E7-A8F7-E7D7EF283A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E26B31EE-8CF9-43E7-A8F7-E7D7EF283A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E26B31EE-8CF9-43E7-A8F7-E7D7EF283A73}.Release|Any CPU.Build.0 = Release|Any CPU
-		{166D0AD3-F1FE-4519-A7B0-76C6F653B584}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{166D0AD3-F1FE-4519-A7B0-76C6F653B584}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{166D0AD3-F1FE-4519-A7B0-76C6F653B584}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{166D0AD3-F1FE-4519-A7B0-76C6F653B584}.Release|Any CPU.Build.0 = Release|Any CPU
-		{63B19F43-8B04-41A9-8BDE-BA5A614F31FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{63B19F43-8B04-41A9-8BDE-BA5A614F31FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{63B19F43-8B04-41A9-8BDE-BA5A614F31FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{63B19F43-8B04-41A9-8BDE-BA5A614F31FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C7E386E-E44D-46F2-9AAB-A0F8D19AFDBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C7E386E-E44D-46F2-9AAB-A0F8D19AFDBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C7E386E-E44D-46F2-9AAB-A0F8D19AFDBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C7E386E-E44D-46F2-9AAB-A0F8D19AFDBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A32F868-4C1F-48A1-A892-D62410A46D27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A32F868-4C1F-48A1-A892-D62410A46D27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A32F868-4C1F-48A1-A892-D62410A46D27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A32F868-4C1F-48A1-A892-D62410A46D27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC151E4D-7E1D-4460-B894-39F3829F665E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC151E4D-7E1D-4460-B894-39F3829F665E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC151E4D-7E1D-4460-B894-39F3829F665E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC151E4D-7E1D-4460-B894-39F3829F665E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2131C735-CBEC-4439-844F-91092453B5E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2131C735-CBEC-4439-844F-91092453B5E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2131C735-CBEC-4439-844F-91092453B5E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2131C735-CBEC-4439-844F-91092453B5E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{AD231050-B939-48E7-8D5B-5D313C44B8B8} = {9F79E55B-82B5-450C-AA07-6559196F8B31}
-		{F85762B3-1F18-404A-9778-8066F74E486A} = {9F79E55B-82B5-450C-AA07-6559196F8B31}
-		{FD343390-4193-4981-B985-4FA0767B77A1} = {9F79E55B-82B5-450C-AA07-6559196F8B31}
-		{166D0AD3-F1FE-4519-A7B0-76C6F653B584} = {498A4F49-6B6C-4A39-932D-9F7F41DCE625}
-		{63B19F43-8B04-41A9-8BDE-BA5A614F31FA} = {498A4F49-6B6C-4A39-932D-9F7F41DCE625}
+		{6C7E386E-E44D-46F2-9AAB-A0F8D19AFDBF} = {431995EA-435A-4A75-9077-BD1FF5645579}
+		{4A32F868-4C1F-48A1-A892-D62410A46D27} = {431995EA-435A-4A75-9077-BD1FF5645579}
+		{DC151E4D-7E1D-4460-B894-39F3829F665E} = {431995EA-435A-4A75-9077-BD1FF5645579}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {18573E7B-B9A8-42B3-8ADD-0FF827D999D6}
+		SolutionGuid = {5F75D060-75E3-4990-B53F-0BCE766E894B}
 	EndGlobalSection
 EndGlobal

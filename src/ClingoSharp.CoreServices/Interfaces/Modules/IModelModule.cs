@@ -1,12 +1,12 @@
-﻿using ClingoSharp.CoreServices.Enums;
-using ClingoSharp.CoreServices.Types;
+﻿using ClingoSharp.CoreServices.Components.Enums;
+using ClingoSharp.CoreServices.Components.Types;
 
 namespace ClingoSharp.CoreServices.Interfaces.Modules
 {
     /// <summary>
     /// Inspection of models and a high-level interface to add constraints during solving.
     /// </summary>
-    public interface IModelModule : Interfaces.IClingoModule
+    public interface IModelModule : IClingoModule
     {
         #region Functions for Inspecting Models
 

@@ -1,5 +1,5 @@
-﻿using ClingoSharp.CoreServices.Enums;
-using ClingoSharp.CoreServices.Types;
+﻿using ClingoSharp.CoreServices.Components.Enums;
+using ClingoSharp.CoreServices.Components.Types;
 using System;
 
 namespace ClingoSharp.CoreServices.Interfaces.Modules
@@ -7,7 +7,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
     /// <summary>
     /// Interact with a running search.
     /// </summary>
-    public interface ISolveHandleModule : Interfaces.IClingoModule
+    public interface ISolveHandleModule : IClingoModule
     {
         /// <summary>
         /// <para>Get the next solve result.</para>
@@ -57,4 +57,5 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
         bool Close(SolveHandle handle);
     }
+
 }

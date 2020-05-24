@@ -1,7 +1,7 @@
-﻿using ClingoSharp.CoreServices.Callbacks;
-using ClingoSharp.CoreServices.Enums;
-using ClingoSharp.CoreServices.EventHandlers;
-using ClingoSharp.CoreServices.Types;
+﻿using ClingoSharp.CoreServices.Components.Callbacks;
+using ClingoSharp.CoreServices.Components.Enums;
+using ClingoSharp.CoreServices.Components.EventHandlers;
+using ClingoSharp.CoreServices.Components.Types;
 using System;
 
 namespace ClingoSharp.CoreServices.Interfaces.Modules
@@ -9,7 +9,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
     /// <summary>
     /// Functions to control the grounding and solving process.
     /// </summary>
-    public interface IControlModule : Interfaces.IClingoModule
+    public interface IControlModule : IClingoModule
     {
         #region Functions
 
@@ -22,7 +22,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="control">resulting control object</param>
         /// <returns><c>true</c> if the function is success and <c>false</c> otherwise</returns>
         bool New(string[] arguments, LoggerCallback logger, uint messageLimit, out Control control);
-        
+
         /// <summary>
         /// Frees a control object created with <see cref="New(string[], LoggerCallback, uint, out Control)"/>
         /// </summary>
@@ -110,7 +110,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="symbolicAtoms">the symbolic atoms object</param>
         /// <returns><c>true</c> if the function is success and <c>false</c> otherwise</returns>
         bool GetSymbolicAtoms(Control control, out SymbolicAtoms symbolicAtoms);
-        
+
         #endregion
     }
 }
