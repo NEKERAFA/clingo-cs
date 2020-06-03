@@ -1,11 +1,11 @@
-﻿using ClingoSharp.CoreServices.Components.Enums;
+﻿using ClingoSharp.NativeWrapper.Enums;
 
-namespace ClingoSharp.CoreServices.Interfaces.Modules
+namespace ClingoSharp.NativeWrapper.Interfaces.Modules
 {
     /// <summary>
     /// Functions used throughout all modules and version information
     /// </summary>
-    public interface IMainModule : IClingoModule
+    public interface IClingo : IClingoModule
     {
         /// <summary>
         /// Obtains the clingo version as string

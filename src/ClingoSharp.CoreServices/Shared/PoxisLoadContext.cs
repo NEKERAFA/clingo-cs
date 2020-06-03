@@ -32,16 +32,15 @@ namespace ClingoSharp.CoreServices.Shared
 
         #region Library Load Context
 
-        public void LoadClingoLibrary()
+        public void LoadClingoLibrary(string currentPath)
         {
             if (clingoLibPtr == IntPtr.Zero)
             {
                 bool isOsx = Environment.OSVersion.Platform == PlatformID.MacOSX;
                 string ext = isOsx ? "so" : "dylib";
                 string arch = isOsx ? "osx" : "linux";
-                string currentPath = new Uri(Assembly.GetExecutingAssembly().Location).LocalPath;
 
-                var nativeFile = string.Format("{0}{1}runtimes{1}{2}-{3}{1}native{1}clingo.dll", currentPath, Path.DirectorySeparatorChar, arch, ext);
+                var nativeFile = string.Format("{0}{1}runtimes{1}{2}-64{1}native{1}clingo.{3}", currentPath, Path.DirectorySeparatorChar, arch, ext);
 
                 clingoLibPtr = dlopen(nativeFile, RTLD_NOW);
                 if (clingoLibPtr == IntPtr.Zero)

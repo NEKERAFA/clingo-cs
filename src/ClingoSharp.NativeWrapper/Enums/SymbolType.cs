@@ -1,6 +1,6 @@
 ﻿namespace ClingoSharp.NativeWrapper.Enums
 {
-    internal enum clingo_symbol_type
+    public enum SymbolType
     {
         clingo_symbol_type_infimum = 0,
         clingo_symbol_type_number = 1,

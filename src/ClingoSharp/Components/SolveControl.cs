@@ -1,4 +1,4 @@
-﻿using ClingoSolveControl = ClingoSharp.CoreServices.Components.Types.SolveControl;
+﻿using System;
 
 namespace ClingoSharp
 {
@@ -9,13 +9,13 @@ namespace ClingoSharp
     {
         #region Attributes
 
-        private ClingoSolveControl m_clingoSolveControl;
+        private IntPtr m_clingoSolveControl;
 
         #endregion
 
         #region Constructors
 
-        internal SolveControl(ClingoSolveControl clingoSolveControl)
+        internal SolveControl(IntPtr clingoSolveControl)
         {
             m_clingoSolveControl = clingoSolveControl;
         }

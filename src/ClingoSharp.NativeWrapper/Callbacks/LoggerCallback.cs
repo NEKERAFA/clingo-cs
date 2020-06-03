@@ -3,5 +3,5 @@ using System;
 
 namespace ClingoSharp.NativeWrapper.Callbacks
 {
-    internal delegate void clingo_logger(clingo_warning code, string mesage, IntPtr data);
+    public delegate void LoggerCallback(WarningCode code, string mesage, IntPtr data);
 }

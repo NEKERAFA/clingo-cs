@@ -35,51 +35,20 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Components\Callbacks\GroundCallback.cs" />
-    <Compile Include="Components\Callbacks\LoggerCallback.cs" />
-    <Compile Include="Components\Callbacks\SymbolCallback.cs" />
-    <Compile Include="Components\Enums\ErrorCode.cs" />
-    <Compile Include="Components\Enums\ModelType.cs" />
-    <Compile Include="Components\Enums\ShowType.cs" />
-    <Compile Include="Components\Enums\SolveEventType.cs" />
-    <Compile Include="Components\Enums\SolveMode.cs" />
-    <Compile Include="Components\Enums\SolveResult.cs" />
-    <Compile Include="Components\Enums\SymbolType.cs" />
-    <Compile Include="Components\Enums\TruthValueType.cs" />
-    <Compile Include="Components\Enums\WarningCode.cs" />
-    <Compile Include="Components\EventHandlers\SolveEventHandle.cs" />
-    <Compile Include="Components\Types\Atom.cs" />
-    <Compile Include="Components\Types\Control.cs" />
-    <Compile Include="Components\Types\Id.cs" />
-    <Compile Include="Components\Types\Literal.cs" />
-    <Compile Include="Components\Types\Location.cs" />
-    <Compile Include="Components\Types\Model.cs" />
-    <Compile Include="Components\Types\Part.cs" />
-    <Compile Include="Components\Types\Signature.cs" />
-    <Compile Include="Components\Types\SolveControl.cs" />
-    <Compile Include="Components\Types\SolveHandle.cs" />
-    <Compile Include="Components\Types\Symbol.cs" />
-    <Compile Include="Components\Types\SymbolicAtoms.cs" />
-    <Compile Include="Components\Types\SymbolicAtomIterator.cs" />
-    <Compile Include="Components\Types\TruthValue.cs" />
-    <Compile Include="Components\Types\Weight.cs" />
-    <Compile Include="Constants.cs" />
     <Compile Include="Interfaces\IClingoContext.cs" />
-    <Compile Include="Interfaces\IClingoModule.cs" />
-    <Compile Include="Interfaces\IClingoObject.cs" />
     <Compile Include="Interfaces\ILibraryLoadContext.cs" />
-    <Compile Include="Interfaces\Modules\IControlModule.cs" />
-    <Compile Include="Interfaces\Modules\IMainModule.cs" />
-    <Compile Include="Interfaces\Modules\IModelModule.cs" />
-    <Compile Include="Interfaces\Modules\ISolveHandleModule.cs" />
-    <Compile Include="Interfaces\Modules\ISymbolicAtomsModule.cs" />
-    <Compile Include="Interfaces\Modules\ISymbolicModule.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Shared\ClingoContext.cs" />
     <Compile Include="Shared\PoxisLoadContext.cs" />
     <Compile Include="Shared\Repository.cs" />
     <Compile Include="Shared\WindowsLoadContext.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ClingoSharp.NativeWrapper\ClingoSharp.NativeWrapper.csproj">
+      <Project>{dc151e4d-7e1d-4460-b894-39f3829f665e}</Project>
+      <Name>ClingoSharp.NativeWrapper</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>

@@ -1,7 +1,6 @@
 ﻿using ClingoSharp.CoreServices.Interfaces;
 using System;
 using System.IO;
-using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace ClingoSharp.CoreServices.Shared
@@ -23,11 +22,10 @@ namespace ClingoSharp.CoreServices.Shared
 
         #region Library Load Context
 
-        public void LoadClingoLibrary()
+        public void LoadClingoLibrary(string currentPath)
         {
             if (clingoLibPtr == IntPtr.Zero)
             {
-                string currentPath = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath);
                 var nativeFile = string.Format("{0}{1}runtimes{1}win-x64{1}native{1}clingo.dll", currentPath, Path.DirectorySeparatorChar);
                 clingoLibPtr = LoadLibrary(nativeFile);
             }

@@ -1,6 +1,6 @@
 ﻿namespace ClingoSharp.NativeWrapper.Enums
 {
-    internal enum clingo_error
+    public enum ErrorCode
     {
         clingo_error_success = 0,
         clingo_error_runtime = 1,

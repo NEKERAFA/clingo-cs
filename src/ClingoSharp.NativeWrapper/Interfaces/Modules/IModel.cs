@@ -1,12 +1,12 @@
-﻿using ClingoSharp.CoreServices.Components.Enums;
-using ClingoSharp.CoreServices.Components.Types;
+﻿using ClingoSharp.NativeWrapper.Enums;
+using System;
 
-namespace ClingoSharp.CoreServices.Interfaces.Modules
+namespace ClingoSharp.NativeWrapper.Interfaces.Modules
 {
     /// <summary>
     /// Inspection of models and a high-level interface to add constraints during solving.
     /// </summary>
-    public interface IModelModule : IClingoModule
+    public interface IModel : IClingoModule
     {
         #region Functions for Inspecting Models
 
@@ -17,7 +17,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="atom">the atom to lookup</param>
         /// <param name="contained">whether the atom is contained</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool Contains(Model model, Symbol atom, out bool contained);
+        bool Contains(IntPtr model, ulong atom, out bool contained);
 
         /// <summary>
         /// Add symbols to the model.
@@ -25,7 +25,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="model">a model object</param>
         /// <param name="atoms">the symbols to add</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool Extends(Model model, Symbol[] atoms);
+        bool Extends(IntPtr model, ulong[] atoms);
 
         /// <summary>
         /// Get the type of the model.
@@ -33,7 +33,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="model">a model object</param>
         /// <param name="type">the type of the model</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool GetType(Model model, out ModelType type);
+        bool GetType(IntPtr model, out ModelType type);
 
         /// <summary>
         /// Check if a program literal is true in a model.
@@ -42,7 +42,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="literal">the literal to lookup</param>
         /// <param name="result">whether the literal is true</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool IsTrue(Model model, Literal literal, out bool result);
+        bool IsTrue(IntPtr model, int literal, out bool result);
 
         /// <summary>
         /// Get the running number of the model.
@@ -50,7 +50,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="model">a model object</param>
         /// <param name="number">the number of the model</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool GetNumber(Model model, out ulong number);
+        bool GetNumber(IntPtr model, out ulong number);
 
         /// <summary>
         /// Whether the optimality of a model has been proven.
@@ -58,7 +58,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="model">a model object</param>
         /// <param name="proven">whether the optimality has been proven</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool IsOptimalityProven(Model model, out bool proven);
+        bool IsOptimalityProven(IntPtr model, out bool proven);
 
         /// <summary>
         /// Get the id of the solver thread that found the model.
@@ -66,7 +66,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="model">a model object</param>
         /// <param name="id">the resulting thread id</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool GetThreadId(Model model, out Id id);
+        bool GetThreadId(IntPtr model, out uint id);
 
         /// <summary>
         /// Get the cost vector of a model
@@ -74,7 +74,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="model">a model object</param>
         /// <param name="costs">the resulting costs</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool GetCosts(Model model, out long[] costs);
+        bool GetCosts(IntPtr model, out long[] costs);
 
         /// <summary>
         /// Get the symbols of the selected types in the model.
@@ -86,7 +86,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="showType">which symbols to select</param>
         /// <param name="symbols">the resulting symbols</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool GetSymbols(Model model, ShowType showType, out Symbol[] symbols);
+        bool GetSymbols(IntPtr model, ShowType showType, out ulong[] symbols);
 
         #endregion
 
@@ -99,15 +99,15 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="model">a model object</param>
         /// <param name="context">the resulting solve control object</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool GetContext(Model model, out SolveControl context);
+        bool GetContext(IntPtr model, out IntPtr context);
 
         /// <summary>
         /// Get an object to inspect the symbolic atoms.
         /// </summary>
-        /// <param name="control">the target</param>
+        /// <param name="solveControl">the target</param>
         /// <param name="atoms">the resulting object</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool GetSymbolicAtoms(SolveControl control, out SymbolicAtoms atoms);
+        bool GetSymbolicAtoms(IntPtr solveControl, out IntPtr atoms);
 
         /// <summary>
         /// Add a clause that applies to the current solving step during model enumeration.
@@ -115,10 +115,10 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <remarks>
         /// The Theory Propagation module provides a more sophisticated interface to add clauses - even on partial assignments.
         /// </remarks>
-        /// <param name="control">the target</param>
+        /// <param name="solveControl">the target</param>
         /// <param name="clause">array of literals representing the clause</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool AddClause(SolveControl control, Literal[] clause);
+        bool AddClause(IntPtr solveControl, int[] clause);
 
         #endregion
     }

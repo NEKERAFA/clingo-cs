@@ -1,13 +1,12 @@
-﻿using ClingoSharp.CoreServices.Components.Enums;
-using ClingoSharp.CoreServices.Components.Types;
+﻿using ClingoSharp.NativeWrapper.Enums;
 using System;
 
-namespace ClingoSharp.CoreServices.Interfaces.Modules
+namespace ClingoSharp.NativeWrapper.Interfaces.Modules
 {
     /// <summary>
     /// Interact with a running search.
     /// </summary>
-    public interface ISolveHandleModule : IClingoModule
+    public interface ISolveHandle : IClingoModule
     {
         /// <summary>
         /// <para>Get the next solve result.</para>
@@ -16,7 +15,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="handle">a handle object</param>
         /// <param name="result">the solve result</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool Get(SolveHandle handle, out SolveResult result);
+        bool Get(IntPtr handle, out SolveResult result);
 
         /// <summary>
         /// Wait for the specified amount of time to check if the next result is ready.
@@ -24,7 +23,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="handle">a handle object</param>
         /// <param name="timeout">the maximum time to wait</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        void Wait(SolveHandle handle, double timeout, out bool result);
+        void Wait(IntPtr handle, double timeout, out bool result);
 
         /// <summary>
         /// Get the next model (or zero if there are no more models).
@@ -32,7 +31,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="handle">a handle object</param>
         /// <param name="model">the model (it is <see cref="IntPtr.Zero"/> if there are no more models)</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool Model(SolveHandle handle, out Model model);
+        bool Model(IntPtr handle, out IntPtr model);
 
         /// <summary>
         /// Discards the last model and starts the search for the next one.
@@ -40,14 +39,14 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// If the search has been started asynchronously, this function continues the search in the background.
         /// <param name="handle">a handle object</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool Resume(SolveHandle handle);
+        bool Resume(IntPtr handle);
 
         /// <summary>
         /// Stop the running search and block until done.
         /// </summary>
         /// <param name="handle">a handle object</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool Cancel(SolveHandle handle);
+        bool Cancel(IntPtr handle);
 
         /// <summary>
         /// Stop the running search and block until done.
@@ -55,7 +54,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// Blocks until the search is stopped (as if an implicit cancel was called before the handle is released).
         /// <param name="handle">a handle object</param>
         /// <returns><c>true</c> if the function is success, <c>false</c> otherwise</returns>
-        bool Close(SolveHandle handle);
+        bool Close(IntPtr handle);
     }
 
 }

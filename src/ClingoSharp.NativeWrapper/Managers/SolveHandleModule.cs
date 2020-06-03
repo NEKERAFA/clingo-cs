@@ -1,19 +1,16 @@
-﻿using ClingoSharp.CoreServices;
-using ClingoSharp.CoreServices.Components.Enums;
-using ClingoSharp.CoreServices.Components.Types;
-using ClingoSharp.CoreServices.Interfaces.Modules;
-using ClingoSharp.NativeWrapper.Enums;
+﻿using ClingoSharp.NativeWrapper.Enums;
+using ClingoSharp.NativeWrapper.Interfaces.Modules;
 using System;
 using System.Runtime.InteropServices;
 
 namespace ClingoSharp.NativeWrapper.Managers
 {
-    public class SolveHandleModuleImpl : ISolveHandleModule
+    public class SolveHandleModule : ISolveHandle
     {
         #region Clingo C API Functions
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int clingo_solve_handle_get(IntPtr handle, [Out] clingo_solve_result[] result);
+        private static extern int clingo_solve_handle_get(IntPtr handle, [Out] Enums.SolveResult[] result);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
         private static extern void clingo_solve_handle_wait(IntPtr handle, double timeout, [Out] bool[] result);
@@ -34,44 +31,44 @@ namespace ClingoSharp.NativeWrapper.Managers
 
         #region Module implementation
 
-        public bool Get(SolveHandle handle, out SolveResult result)
+        public bool Get(IntPtr handle, out SolveResult result)
         {
-            clingo_solve_result[] resultPtr = new clingo_solve_result[1];
-            var success = clingo_solve_handle_get(handle.Object, resultPtr);
-            result = (SolveResult)resultPtr[0];
+            SolveResult[] resultPtr = new SolveResult[1];
+            var success = clingo_solve_handle_get(handle, resultPtr);
+            result = resultPtr[0];
             return success != 0;
         }
 
-        public void Wait(SolveHandle handle, double timeout, out bool result)
+        public void Wait(IntPtr handle, double timeout, out bool result)
         {
             bool[] resultPtr = new bool[1];
-            clingo_solve_handle_wait(handle.Object, timeout, resultPtr);
+            clingo_solve_handle_wait(handle, timeout, resultPtr);
             result = resultPtr[0];
         }
 
-        public bool Model(SolveHandle handle, out Model model)
+        public bool Model(IntPtr handle, out IntPtr model)
         {
             IntPtr[] modelPtr = new IntPtr[1];
-            var success = clingo_solve_handle_model(handle.Object, modelPtr);
-            model = new Model() { Object = modelPtr[0] };
+            var success = clingo_solve_handle_model(handle, modelPtr);
+            model = modelPtr[0];
             return success != 0;
         }
 
-        public bool Resume(SolveHandle handle)
+        public bool Resume(IntPtr handle)
         {
-            var success = clingo_solve_handle_resume(handle.Object);
+            var success = clingo_solve_handle_resume(handle);
             return success != 0;
         }
 
-        public bool Cancel(SolveHandle handle)
+        public bool Cancel(IntPtr handle)
         {
-            var success = clingo_solve_handle_cancel(handle.Object);
+            var success = clingo_solve_handle_cancel(handle);
             return success != 0;
         }
 
-        public bool Close(SolveHandle handle)
+        public bool Close(IntPtr handle)
         {
-            var success = clingo_solve_handle_close(handle.Object);
+            var success = clingo_solve_handle_close(handle);
             return success != 0;
         }
 

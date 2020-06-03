@@ -3,7 +3,7 @@
 namespace ClingoSharp.NativeWrapper.Enums
 {
     [Flags]
-    internal enum clingo_solve_result
+    public enum SolveResult
     {
         clingo_solve_result_satisfiable = 1,
         clingo_solve_result_unsatisfiable = 2,

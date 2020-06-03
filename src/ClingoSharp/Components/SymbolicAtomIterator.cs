@@ -1,7 +1,7 @@
-﻿using System.Collections;
+﻿using ClingoSharp.NativeWrapper.Interfaces.Modules;
+using System;
+using System.Collections;
 using System.Collections.Generic;
-using ClingoSymbolicAtoms = ClingoSharp.CoreServices.Components.Types.SymbolicAtoms;
-using ClingoSymbolicAtomIterator = ClingoSharp.CoreServices.Components.Types.SymbolicAtomIterator;
 
 namespace ClingoSharp
 {
@@ -12,14 +12,14 @@ namespace ClingoSharp
     {
         #region Attributes
 
-        private readonly ClingoSymbolicAtoms m_symbolicAtoms;
-        private ClingoSymbolicAtomIterator m_currentPosition;
+        private readonly IntPtr m_symbolicAtoms;
+        private ulong m_currentPosition;
 
         #endregion
 
         #region Constructors
 
-        public SymbolicAtomIterator(ClingoSymbolicAtoms symbolicAtoms, ClingoSymbolicAtomIterator startPosition)
+        public SymbolicAtomIterator(IntPtr symbolicAtoms, ulong startPosition)
         {
             m_symbolicAtoms = symbolicAtoms;
             m_currentPosition = startPosition;
@@ -29,12 +29,12 @@ namespace ClingoSharp
 
         #region Class Methods
 
-        public static implicit operator ClingoSymbolicAtoms(SymbolicAtomIterator iterator)
+        public static implicit operator IntPtr(SymbolicAtomIterator iterator)
         {
             return iterator.m_symbolicAtoms;
         }
 
-        public static implicit operator ClingoSymbolicAtomIterator(SymbolicAtomIterator iterator)
+        public static implicit operator ulong(SymbolicAtomIterator iterator)
         {
             return iterator.m_currentPosition;
         }
@@ -45,13 +45,13 @@ namespace ClingoSharp
 
         public IEnumerator<SymbolicAtom> GetEnumerator()
         {
-            Clingo.HandleClingoError(SymbolicAtoms.GetSymbolicAtomsModule().IsValid(this, this, out bool valid));
+            Clingo.HandleClingoError(SymbolicAtoms.SymbolicAtomsModule.IsValid(this, this, out bool valid));
             
             while (valid)
             {
                 yield return new SymbolicAtom(this, this);
-                Clingo.HandleClingoError(SymbolicAtoms.GetSymbolicAtomsModule().GetNext(this, this, out m_currentPosition));
-                Clingo.HandleClingoError(SymbolicAtoms.GetSymbolicAtomsModule().IsValid(this, this, out valid));
+                Clingo.HandleClingoError(SymbolicAtoms.SymbolicAtomsModule.GetNext(this, this, out m_currentPosition));
+                Clingo.HandleClingoError(SymbolicAtoms.SymbolicAtomsModule.IsValid(this, this, out valid));
             }
         }
 

@@ -1,7 +1,5 @@
-﻿using ClingoSharp.CoreServices;
-using ClingoSharp.CoreServices.Components.Enums;
-using ClingoSharp.CoreServices.Interfaces.Modules;
-using ClingoSharp.NativeWrapper.Enums;
+﻿using ClingoSharp.NativeWrapper.Enums;
+using ClingoSharp.NativeWrapper.Interfaces.Modules;
 using System;
 using System.Runtime.InteropServices;
 
@@ -10,7 +8,7 @@ namespace ClingoSharp.NativeWrapper.Managers
     /// <summary>
     /// Data types and functions used throughout all modules and version information
     /// </summary>
-    public class MainModuleImpl : IMainModule
+    public class ClingoModule : IClingo
     {
         #region Clingo C API Functions
 
@@ -18,7 +16,7 @@ namespace ClingoSharp.NativeWrapper.Managers
         private static extern void clingo_version([Out] IntPtr major, [Out] IntPtr minor, [Out] IntPtr revision);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern clingo_error clingo_error_code();
+        private static extern ErrorCode clingo_error_code();
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
         private static extern string clingo_error_message();

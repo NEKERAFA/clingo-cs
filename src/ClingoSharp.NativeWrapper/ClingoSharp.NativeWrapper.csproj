@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -30,20 +31,16 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClingoSharp.CoreServices\ClingoSharp.CoreServices.csproj">
-      <Project>{4A32F868-4C1F-48A1-A892-D62410A46D27}</Project>
-      <Name>ClingoSharp.CoreServices</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Callbacks\GroundCallback.cs" />
     <Compile Include="Callbacks\LoggerCallback.cs" />
     <Compile Include="Callbacks\SymbolCallback.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Enums\ErrorCode.cs" />
     <Compile Include="Enums\ModelType.cs" />
     <Compile Include="Enums\ShowType.cs" />
@@ -52,16 +49,23 @@
     <Compile Include="Enums\SolveResult.cs" />
     <Compile Include="Enums\SymbolType.cs" />
     <Compile Include="Enums\WarningCode.cs" />
-    <Compile Include="EventHandlers\SolveEventHandler.cs" />
-    <Compile Include="Managers\ControlModuleImpl.cs" />
+    <Compile Include="Callbacks\SolveEventCallback.cs" />
+    <Compile Include="Helpers\MarshalHelper.cs" />
+    <Compile Include="Interfaces\IClingoModule.cs" />
+    <Compile Include="Interfaces\Modules\IControl.cs" />
+    <Compile Include="Interfaces\Modules\IClingo.cs" />
+    <Compile Include="Interfaces\Modules\IModel.cs" />
+    <Compile Include="Interfaces\Modules\ISolveHandle.cs" />
+    <Compile Include="Interfaces\Modules\ISymbolicAtoms.cs" />
+    <Compile Include="Interfaces\Modules\ISymbol.cs" />
+    <Compile Include="Managers\ControlModule.cs" />
     <Compile Include="Managers\SymbolicAtomsModuleImpl.cs" />
-    <Compile Include="Managers\MainModuleImpl.cs" />
-    <Compile Include="Managers\ModelModuleImpl.cs" />
-    <Compile Include="Managers\SolveHandleModuleImpl.cs" />
+    <Compile Include="Managers\ClingoModule.cs" />
+    <Compile Include="Managers\ModelModule.cs" />
+    <Compile Include="Managers\SolveHandleModule.cs" />
     <Compile Include="Managers\SymbolModuleImpl.cs" />
     <Compile Include="Types\Location.cs" />
     <Compile Include="Types\Part.cs" />
-    <Compile Include="Helpers\MapperHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

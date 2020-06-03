@@ -1,7 +1,5 @@
-﻿using ClingoLiteral = ClingoSharp.CoreServices.Components.Types.Literal;
-using ClingoSymbol = ClingoSharp.CoreServices.Components.Types.Symbol;
-using ClingoSymbolicAtomIterator = ClingoSharp.CoreServices.Components.Types.SymbolicAtomIterator;
-using ClingoSymbolicAtoms = ClingoSharp.CoreServices.Components.Types.SymbolicAtoms;
+﻿using ClingoSharp.NativeWrapper.Interfaces.Modules;
+using System;
 
 namespace ClingoSharp
 {
@@ -12,12 +10,12 @@ namespace ClingoSharp
     {
         #region Attributes
 
-        private readonly ClingoSymbolicAtoms m_symbolicAtoms;
-        private readonly ClingoSymbolicAtomIterator m_position;
+        private readonly IntPtr m_symbolicAtoms;
+        private readonly ulong m_position;
 
         #endregion
 
-        #region Properties
+        #region Instance Properties
 
         /// <summary>
         /// Whether the atom is an external atom.
@@ -26,7 +24,7 @@ namespace ClingoSharp
         {
             get
             {
-                Clingo.HandleClingoError(SymbolicAtoms.GetSymbolicAtomsModule().IsExternal(this, this, out bool external));
+                Clingo.HandleClingoError(SymbolicAtoms.SymbolicAtomsModule.IsExternal(this, this, out bool external));
                 return external;
             }
         }
@@ -38,7 +36,7 @@ namespace ClingoSharp
         {
             get
             {
-                Clingo.HandleClingoError(SymbolicAtoms.GetSymbolicAtomsModule().IsFact(this, this, out bool fact));
+                Clingo.HandleClingoError(SymbolicAtoms.SymbolicAtomsModule.IsFact(this, this, out bool fact));
                 return fact;
             }
         }
@@ -50,7 +48,7 @@ namespace ClingoSharp
         {
             get
             {
-                Clingo.HandleClingoError(SymbolicAtoms.GetSymbolicAtomsModule().GetLiteral(this, this, out ClingoLiteral literal));
+                Clingo.HandleClingoError(SymbolicAtoms.SymbolicAtomsModule.GetLiteral(this, this, out int literal));
                 return literal;
             }
         }
@@ -62,7 +60,7 @@ namespace ClingoSharp
         {
             get
             {
-                Clingo.HandleClingoError(SymbolicAtoms.GetSymbolicAtomsModule().GetSymbol(this, this, out ClingoSymbol symbol));
+                Clingo.HandleClingoError(SymbolicAtoms.SymbolicAtomsModule.GetSymbol(this, this, out ulong symbol));
                 return new Symbol(symbol);
             }
         }
@@ -71,12 +69,12 @@ namespace ClingoSharp
 
         #region Class Methods
 
-        public static implicit operator ClingoSymbolicAtoms(SymbolicAtom symbolicAtom)
+        public static implicit operator IntPtr(SymbolicAtom symbolicAtom)
         {
             return symbolicAtom.m_symbolicAtoms;
         }
 
-        public static implicit operator ClingoSymbolicAtomIterator(SymbolicAtom symbolicAtom)
+        public static implicit operator ulong(SymbolicAtom symbolicAtom)
         {
             return symbolicAtom.m_position;
         }
@@ -95,7 +93,7 @@ namespace ClingoSharp
 
         #region Constructors
 
-        public SymbolicAtom(ClingoSymbolicAtoms symbolicAtoms, ClingoSymbolicAtomIterator position)
+        public SymbolicAtom(IntPtr symbolicAtoms, ulong position)
         {
             m_symbolicAtoms = symbolicAtoms;
             m_position = position;

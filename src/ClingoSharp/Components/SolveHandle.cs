@@ -1,11 +1,8 @@
-﻿using ClingoSharp.CoreServices;
-using ClingoSharp.CoreServices.Interfaces.Modules;
+﻿using ClingoSharp.NativeWrapper.Interfaces.Modules;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using ClingoModel = ClingoSharp.CoreServices.Components.Types.Model;
-using ClingoSolveHandle = ClingoSharp.CoreServices.Components.Types.SolveHandle;
-using ClingoSolveResult = ClingoSharp.CoreServices.Components.Enums.SolveResult;
+using static ClingoSharp.NativeWrapper.Enums.SolveResult;
 
 namespace ClingoSharp
 {
@@ -16,19 +13,30 @@ namespace ClingoSharp
     {
         #region Attributes
 
-        private static readonly ISolveHandleModule m_module;
-        private readonly ClingoSolveHandle m_clingoSolveHandle;
+        private static ISolveHandle m_solveHandleModule = null;
+
+        private readonly IntPtr m_clingoSolveHandle;
+
+        #endregion
+
+        #region Class Properties
+
+        internal static ISolveHandle SolveHandleModule
+        {
+            get
+            {
+                if (m_solveHandleModule == null)
+                    m_solveHandleModule = Clingo.ClingoRepository.GetModule<ISolveHandle>();
+
+                return m_solveHandleModule;
+            }
+        }
 
         #endregion
 
         #region Constructors
 
-        static SolveHandle()
-        {
-            m_module = Repository.GetModule<ISolveHandleModule>();
-        }
-
-        public SolveHandle(ClingoSolveHandle clingoSolveHandle)
+        public SolveHandle(IntPtr clingoSolveHandle)
         {
             m_clingoSolveHandle = clingoSolveHandle;
         }
@@ -37,12 +45,12 @@ namespace ClingoSharp
 
         #region Class Methods
         
-        public static implicit operator ClingoSolveHandle(SolveHandle solveHandle)
+        public static implicit operator IntPtr(SolveHandle solveHandle)
         {
             return solveHandle.m_clingoSolveHandle;
         }
 
-        public static implicit operator SolveHandle(ClingoSolveHandle clingoSolveHandle)
+        public static implicit operator SolveHandle(IntPtr clingoSolveHandle)
         {
             return new SolveHandle(clingoSolveHandle);
         }
@@ -53,19 +61,19 @@ namespace ClingoSharp
 
         public void Cancel()
         {
-            Clingo.HandleClingoError(m_module.Cancel(this));
+            Clingo.HandleClingoError(SolveHandleModule.Cancel(this));
         }
 
         public SolveResult Get()
         {
-            Clingo.HandleClingoError(m_module.Get(this, out ClingoSolveResult result));
+            Clingo.HandleClingoError(SolveHandleModule.Get(this, out var result));
 
             bool? satisfiable = null;
-            if ((result & ClingoSolveResult.Satisfiable) == ClingoSolveResult.Satisfiable)
+            if ((result & clingo_solve_result_satisfiable) == clingo_solve_result_satisfiable)
             {
                 satisfiable = true;
             } 
-            else if ((result & ClingoSolveResult.Unsatisfiable) == ClingoSolveResult.Unsatisfiable)
+            else if ((result & clingo_solve_result_unsatisfiable) == clingo_solve_result_unsatisfiable)
             {
                 satisfiable = false;
             }
@@ -75,37 +83,37 @@ namespace ClingoSharp
                 IsSatisfiable = satisfiable,
                 IsUnSatisfiable = satisfiable.HasValue ? !satisfiable : null,
                 IsUnknown = !satisfiable.HasValue,
-                IsExhausted = (result & ClingoSolveResult.Exhausted) == ClingoSolveResult.Exhausted,
-                IsInterrupted = (result & ClingoSolveResult.Interrupted) == ClingoSolveResult.Interrupted
+                IsExhausted = (result & clingo_solve_result_exhausted) == clingo_solve_result_exhausted,
+                IsInterrupted = (result & clingo_solve_result_interrupted) == clingo_solve_result_interrupted
             };
         }
 
         public void Resume()
         {
-            Clingo.HandleClingoError(m_module.Resume(this));
+            Clingo.HandleClingoError(SolveHandleModule.Resume(this));
         }
 
         public bool Wait(float? timeout = null)
         {
-            m_module.Wait(this, Convert.ToDouble(timeout.HasValue ? -timeout : 0.0f), out bool result);
+            SolveHandleModule.Wait(this, Convert.ToDouble(timeout.HasValue ? -timeout : 0.0f), out bool result);
 
             return result;
         }
 
         public IEnumerator<Model> GetEnumerator()
         {
-            ClingoModel modelPtr;
+            IntPtr modelPtr;
             do
             {
-                Clingo.HandleClingoError(m_module.Resume(this));
-                Clingo.HandleClingoError(m_module.Model(this, out modelPtr));
+                Clingo.HandleClingoError(SolveHandleModule.Resume(this));
+                Clingo.HandleClingoError(SolveHandleModule.Model(this, out modelPtr));
 
-                if (modelPtr.Object != IntPtr.Zero)
+                if (modelPtr != IntPtr.Zero)
                 {
                     yield return new Model(modelPtr);
                 }
             }
-            while (modelPtr.Object != IntPtr.Zero);
+            while (modelPtr != IntPtr.Zero);
         }
 
         IEnumerator IEnumerable.GetEnumerator()

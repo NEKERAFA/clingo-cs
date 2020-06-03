@@ -1,9 +1,13 @@
 ﻿using ClingoSharp.CoreServices;
-using ClingoSharp.CoreServices.Components.Enums;
 using ClingoSharp.CoreServices.Interfaces;
-using ClingoSharp.CoreServices.Interfaces.Modules;
 using ClingoSharp.Exceptions;
+using ClingoSharp.NativeWrapper.Enums;
+using ClingoSharp.NativeWrapper.Interfaces.Modules;
 using System;
+using System.IO;
+using System.Reflection;
+using static ClingoSharp.NativeWrapper.Enums.ErrorCode;
+using static ClingoSharp.NativeWrapper.Enums.WarningCode;
 
 namespace ClingoSharp
 {
@@ -11,12 +15,15 @@ namespace ClingoSharp
     /// The clingo-5.4.0 module.
     /// This module provides functions and classes to control the grounding and solving process.
     /// </summary>
-    public static class Clingo
+    public sealed class Clingo
     {
         #region Attributes
 
-        private static string m_version = null;
-        private static readonly IMainModule m_module;
+        private static string m_workingPath;
+        private static IRepository m_clingoRepository = null;
+        private static IClingo m_clingoModule;
+
+        private string m_version;
 
         #endregion
 
@@ -25,16 +32,38 @@ namespace ClingoSharp
         /// <summary>
         /// Version of the clingo module (<c>'5.4.0'</c>)
         /// </summary>
-        public static string Version
+        public string Version
         {
             get
             {
                 if (m_version == null)
                 {
-                    m_version = m_module.GetVersion();
+                    m_version = m_clingoModule.GetVersion();
                 }
 
                 return m_version;
+            }
+        }
+
+        internal static IRepository ClingoRepository
+        {
+            get
+            {
+                if (m_clingoRepository == null)
+                     m_clingoRepository = new Repository(m_workingPath);
+
+                return m_clingoRepository;
+            }
+        }
+
+        internal static IClingo ClingoModule
+        {
+            get
+            {
+                if (m_clingoModule == null)
+                    m_clingoModule = ClingoRepository.GetModule<IClingo>();
+
+                return m_clingoModule;
             }
         }
 
@@ -42,9 +71,10 @@ namespace ClingoSharp
 
         #region Constructors
 
-        static Clingo()
+        public Clingo(string workingPath = null)
         {
-            m_module = Repository.GetModule<IMainModule>();
+            m_workingPath = workingPath ?? Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).AbsolutePath);
+            m_clingoModule = ClingoRepository.GetModule<IClingo>();
         }
 
         #endregion
@@ -64,20 +94,20 @@ namespace ClingoSharp
         {
             if (!success)
             {
-                string message = m_module.GetErrorMessage();
+                string message = m_clingoModule.GetErrorMessage();
                 if (message == null) { message = "no message"; }
 
-                switch(m_module.GetErrorCode())
+                switch(m_clingoModule.GetErrorCode())
                 {
-                    case ErrorCode.RuntimeError:
+                    case clingo_error_runtime:
                         throw new RuntimeException(message);
-                    case ErrorCode.LogicError:
+                    case clingo_error_logic:
                         throw new LogicException(message);
-                    case ErrorCode.BadAlloc:
+                    case clingo_error_bad_alloc:
                         throw new BadAllocationException(message);
-                    case ErrorCode.Unknown:
+                    case clingo_error_unknown:
                         throw new UnknownException(message);
-                    case ErrorCode.Success:
+                    case clingo_error_success:
                         throw new Exception(message);
                 }
             }
@@ -87,39 +117,21 @@ namespace ClingoSharp
         {
             switch(code)
             {
-                case WarningCode.OperationUndefined:
+                case clingo_warning_operation_undefined:
                     throw new OperationUndefinedException(message);
-                case WarningCode.RuntimeError:
+                case clingo_warning_runtime_error:
                     throw new RuntimeException(message);
-                case WarningCode.AtomUndefined:
+                case clingo_warning_atom_undefined:
                     throw new AtomUndefinedException(message);
-                case WarningCode.FileIncluded:
+                case clingo_warning_file_included:
                     throw new FileIncludedException(message);
-                case WarningCode.VariableUnbounded:
+                case clingo_warning_variable_unbounded:
                     throw new VariableUnboundedException(message);
-                case WarningCode.GlobalVariable:
+                case clingo_warning_global_variable:
                     throw new GlobalVariableException(message);
-                case WarningCode.Other:
+                case clingo_warning_other:
                     throw new UnknownException(message);
             }
-        }
-
-        /// <summary>
-        /// Gets the asociated API module in clingo
-        /// </summary>
-        /// <returns>The asociated module</returns>
-        public static IClingoModule GetModule()
-        {
-            return m_module;
-        }
-
-        /// <summary>
-        /// Gets the main module in clingo
-        /// </summary>
-        /// <returns>The the main module</returns>
-        public static IMainModule GetMainModule()
-        {
-            return m_module;
         }
 
         #endregion

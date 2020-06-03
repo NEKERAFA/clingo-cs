@@ -1,15 +1,14 @@
-﻿using ClingoSharp.CoreServices.Components.Callbacks;
-using ClingoSharp.CoreServices.Components.Enums;
-using ClingoSharp.CoreServices.Components.EventHandlers;
-using ClingoSharp.CoreServices.Components.Types;
+﻿using ClingoSharp.NativeWrapper.Callbacks;
+using ClingoSharp.NativeWrapper.Enums;
+using ClingoSharp.NativeWrapper.Types;
 using System;
 
-namespace ClingoSharp.CoreServices.Interfaces.Modules
+namespace ClingoSharp.NativeWrapper.Interfaces.Modules
 {
     /// <summary>
     /// Functions to control the grounding and solving process.
     /// </summary>
-    public interface IControlModule : IClingoModule
+    public interface IControl : IClingoModule
     {
         #region Functions
 
@@ -21,13 +20,13 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="messageLimit">maximum number of times the logger callback is called</param>
         /// <param name="control">resulting control object</param>
         /// <returns><c>true</c> if the function is success and <c>false</c> otherwise</returns>
-        bool New(string[] arguments, LoggerCallback logger, uint messageLimit, out Control control);
+        bool New(string[] arguments, LoggerCallback logger, uint messageLimit, out IntPtr control);
 
         /// <summary>
-        /// Frees a control object created with <see cref="New(string[], LoggerCallback, uint, out Control)"/>
+        /// Frees a control object created with <see cref="New(string[], LoggerCallback, uint, out IntPtr)"/>
         /// </summary>
         /// <param name="control">a control pointer</param>
-        void Free(Control control);
+        void Free(IntPtr control);
 
         #endregion
 
@@ -39,7 +38,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="control"></param>
         /// <param name="filename"></param>
         /// <returns></returns>
-        bool Load(Control control, string filename);
+        bool Load(IntPtr control, string filename);
 
         /// <summary>
         /// <para>Extend the logic program with the given non-ground logic program in string form.</para>
@@ -51,7 +50,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="parameters">string array of parameters of the program block</param>
         /// <param name="program">string representation of the program</param>
         /// <returns><c>true</c> if the function is success and <c>false</c> otherwise</returns>
-        bool Add(Control control, string name, string[] parameters, string program);
+        bool Add(IntPtr control, string name, string[] parameters, string program);
 
         /// <summary>
         /// <para>Ground the selected parts of the current (non-ground) logic program.</para>
@@ -64,7 +63,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="parts">array of parts to ground</param>
         /// <param name="callback">callback to implement external functions</param>
         /// <returns><c>true</c> if the function is success and <c>false</c> otherwise</returns>
-        bool Ground(Control control, Part[] parts, GroundCallback callback);
+        bool Ground(IntPtr control, Part[] parts, GroundCallback callback);
 
         #endregion
 
@@ -79,7 +78,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="callback">the event handler to register</param>
         /// <param name="handle">handle to the current search to enumerate models</param>
         /// <returns><c>true</c> if the function is success and <c>false</c> otherwise</returns>
-        bool Solve(Control control, SolveMode mode, Literal[] assumptions, SolveEventHandler callback, out SolveHandle handle);
+        bool Solve(IntPtr control, SolveMode mode, int[] assumptions, SolveEventCallback callback, out IntPtr handle);
 
         #endregion
 
@@ -92,7 +91,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="name">the name of the constant</param>
         /// <param name="symbol">the resulting symbol</param>
         /// <returns><c>true</c> if the function is success and <c>false</c> otherwise</returns>
-        bool GetConst(Control control, string name, out Symbol symbol);
+        bool GetConst(IntPtr control, string name, out ulong symbol);
 
         /// <summary>
         /// Check if there is a constant definition for the given constant.
@@ -101,7 +100,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="name">the name of the constant</param>
         /// <param name="exists">whether a matching constant definition exists</param>
         /// <returns><c>true</c> if the function is success and <c>false</c> otherwise</returns>
-        bool HasConst(Control control, string name, out bool exists);
+        bool HasConst(IntPtr control, string name, out bool exists);
 
         /// <summary>
         /// Get an object to inspect symbolic atoms (the relevant Herbrand base) used for grounding
@@ -109,7 +108,7 @@ namespace ClingoSharp.CoreServices.Interfaces.Modules
         /// <param name="control">the target</param>
         /// <param name="symbolicAtoms">the symbolic atoms object</param>
         /// <returns><c>true</c> if the function is success and <c>false</c> otherwise</returns>
-        bool GetSymbolicAtoms(Control control, out SymbolicAtoms symbolicAtoms);
+        bool GetSymbolicAtoms(IntPtr control, out IntPtr symbolicAtoms);
 
         #endregion
     }

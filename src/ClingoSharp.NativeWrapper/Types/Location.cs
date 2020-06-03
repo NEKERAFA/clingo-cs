@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace ClingoSharp.NativeWrapper.Types
 {
     [StructLayout(LayoutKind.Sequential)]
-    internal struct clingo_location
+    public struct Location
     {
         public string begin_file;
         public string end_file;

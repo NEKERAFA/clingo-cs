@@ -1,24 +1,16 @@
-﻿using ClingoSharp.CoreServices;
-using ClingoSharp.CoreServices.Components.Callbacks;
-using ClingoSharp.CoreServices.Components.Enums;
-using ClingoSharp.CoreServices.Components.EventHandlers;
-using ClingoSharp.CoreServices.Interfaces;
-using ClingoSharp.CoreServices.Interfaces.Modules;
-using ClingoSharp.Enums;
+﻿using ClingoSharp.Enums;
+using ClingoSharp.NativeWrapper.Callbacks;
+using ClingoSharp.NativeWrapper.Enums;
+using ClingoSharp.NativeWrapper.Interfaces.Modules;
+using ClingoSharp.NativeWrapper.Types;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using ClingoControl = ClingoSharp.CoreServices.Components.Types.Control;
-using ClingoLiteral = ClingoSharp.CoreServices.Components.Types.Literal;
-using ClingoLocation = ClingoSharp.CoreServices.Components.Types.Location;
-using ClingoModel = ClingoSharp.CoreServices.Components.Types.Model;
-using ClingoPart = ClingoSharp.CoreServices.Components.Types.Part;
-using ClingoSolveHandle = ClingoSharp.CoreServices.Components.Types.SolveHandle;
-using ClingoSymbol = ClingoSharp.CoreServices.Components.Types.Symbol;
-using ClingoSymbolicAtoms = ClingoSharp.CoreServices.Components.Types.SymbolicAtoms;
+using static ClingoSharp.NativeWrapper.Enums.SolveEventType;
+using static ClingoSharp.NativeWrapper.Enums.SolveMode;
 
 namespace ClingoSharp
 {
@@ -29,20 +21,36 @@ namespace ClingoSharp
     {
         #region Attributes
 
-        private static readonly IControlModule m_module;
-        private ClingoControl m_clingoControl;
+        private static IControl m_controlModule = null;
+        private IntPtr m_clingoControl;
+
         // Track whether Dispose has been called.
         private bool disposed = false;
 
         #endregion
 
-        #region Properties
+        #region Class Properties
+        
+        internal static IControl ControlModule
+        {
+            get
+            {
+                if (m_controlModule == null)
+                    m_controlModule = Clingo.ClingoRepository.GetModule<IControl>();
+
+                return m_controlModule;
+            }
+        }
+        
+        #endregion
+
+        #region Instance Properties
 
         public SymbolicAtoms SymbolicAtoms
         {
             get
             {
-                Clingo.HandleClingoError(m_module.GetSymbolicAtoms(this, out ClingoSymbolicAtoms symbolicAtoms));
+                Clingo.HandleClingoError(ControlModule.GetSymbolicAtoms(m_clingoControl, out IntPtr symbolicAtoms));
                 return new SymbolicAtoms(symbolicAtoms);
             }
         }
@@ -50,16 +58,6 @@ namespace ClingoSharp
         #endregion
 
         #region Constructors
-
-        static Control()
-        {
-            m_module = Repository.GetModule<IControlModule>();
-        }
-
-        public Control(ClingoControl clingoControl)
-        {
-            m_clingoControl = clingoControl;
-        }
 
         /// <summary>
         /// Create a new <see cref="Control"/> object
@@ -83,7 +81,7 @@ namespace ClingoSharp
                 }
             }
 
-            Clingo.HandleClingoError(m_module.New(args?.ToArray(), loggerCallback, Convert.ToUInt32(messageLimit), out ClingoControl controlPtr));
+            Clingo.HandleClingoError(ControlModule.New(args?.ToArray(), loggerCallback, Convert.ToUInt32(messageLimit), out IntPtr controlPtr));
 
             m_clingoControl = controlPtr;
         }
@@ -101,32 +99,9 @@ namespace ClingoSharp
 
         #region Class Methods
 
-        /// <summary>
-        /// Gets the asociated API module in clingo
-        /// </summary>
-        /// <returns>The asociated module</returns>
-        public static IClingoModule GetModule()
-        {
-            return m_module;
-        }
-
-        /// <summary>
-        /// Gets the control module in clingo
-        /// </summary>
-        /// <returns>The control module</returns>
-        public static IControlModule GetControlModule()
-        {
-            return m_module;
-        }
-
-        public static implicit operator ClingoControl(Control control)
+        public static implicit operator IntPtr(Control control)
         {
             return control.m_clingoControl;
-        }
-
-        public static implicit operator Control(ClingoControl clingoControl)
-        {
-            return new Control(clingoControl);
         }
 
         #endregion
@@ -141,10 +116,10 @@ namespace ClingoSharp
 
         private void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (!disposed && m_clingoControl != IntPtr.Zero)
             {
-                m_module.Free(this);
-                m_clingoControl = null;
+                ControlModule.Free(m_clingoControl);
+                m_clingoControl = IntPtr.Zero;
                 disposed = true;
             }
 
@@ -160,7 +135,7 @@ namespace ClingoSharp
         /// <param name="program">The non-ground program in string form.</param>
         public void Add(string name, List<string> parameters, string program)
         {
-            Clingo.HandleClingoError(m_module.Add(this, name, parameters?.ToArray(), program));
+            Clingo.HandleClingoError(ControlModule.Add(m_clingoControl, name, parameters?.ToArray(), program));
         }
 
         public void Load(string filename)
@@ -168,7 +143,7 @@ namespace ClingoSharp
             if (!File.Exists(filename))
                 throw new FileNotFoundException(filename);
 
-            Clingo.HandleClingoError(m_module.Load(this, filename));
+            Clingo.HandleClingoError(ControlModule.Load(m_clingoControl, filename));
         }
 
         /// <summary>
@@ -178,49 +153,50 @@ namespace ClingoSharp
         public void Ground(List<Tuple<string, List<Symbol>>> parts, object context = null)
         {
             // Creates a wrapper from the context object to a ground callback
-            bool groundCallback(ClingoLocation location, string name, ClingoSymbol[] arguments, IntPtr data, SymbolCallback symbolCallback, IntPtr callbackData)
+            int groundCallback(Location[] location, string name, ulong[] arguments, UIntPtr argumentsSize, IntPtr data, SymbolCallback symbolCallback, IntPtr symbolCallbackData)
             {
                 try
                 {
                     // Get the method
                     MethodInfo method = context.GetType().GetMethod(name);
-                    object result = method.Invoke(context, arguments);
+                    object result = method.Invoke(context, arguments.Cast<object>().ToArray());
 
                     // Convert return value in symbol object
-                    var newSymbols = new List<ClingoSymbol>();
+                    var newSymbols = new List<Symbol>();
                     if (result is Symbol)
                     {
 
-                        newSymbols.Add(((Symbol)result));
+                        newSymbols.Add((Symbol)result);
                     }
                     else if (result is IEnumerable<Symbol>)
                     {
-                        foreach (var symbol in (result as IEnumerable<Symbol>))
+                        foreach (var symbol in result as IEnumerable<Symbol>)
                         {
                             newSymbols.Add(symbol);
                         }
                     }
                     else
                     {
-                        return false;
+                        return 0;
                     }
                     
-                    return symbolCallback(newSymbols.ToArray(), callbackData);
+                    return symbolCallback(newSymbols.Select(symbol => (ulong)symbol).ToArray(), new UIntPtr(Convert.ToUInt32(newSymbols.Count)), symbolCallbackData);
                 }
                 catch
                 {
-                    return false;
+                    return 0;
                 }
             }
 
             // Converts the tuple list into a Part array
-            ClingoPart[] partArray = parts?.Select(p => new ClingoPart()
+            Part[] partArray = parts?.Select(part => new Part
             {
-                Name = p.Item1,
-                Params = p.Item2.Select(s => (ClingoSymbol)s).ToArray()
+                name = part.Item1,
+                params_list = part.Item2.Select(symbol => (ulong)symbol).ToArray(),
+                size = new UIntPtr(Convert.ToUInt32(part.Item2.Count))
             }).ToArray();
 
-            Clingo.HandleClingoError(m_module.Ground(this, partArray, (context != null) ? (GroundCallback)groundCallback : null));
+            Clingo.HandleClingoError(ControlModule.Ground(m_clingoControl, partArray, (context != null) ? (GroundCallback)groundCallback : null));
         }
 
         /// <summary>
@@ -236,24 +212,24 @@ namespace ClingoSharp
         public Union<SolveHandle, SolveResult> Solve(List<Union<Tuple<Symbol, bool>, int>> assumptions = null, Func<Model, bool> onModel = null, Action<StatisticsMap, StatisticsMap> onStatistics = null, Action<SolveResult> onFinish = null, bool yield = false, bool async = false)
         {
             // Creates a wrapper between the argument callbacks and the solve event notify callback
-            bool notifyCallback(SolveEventType type, IntPtr eventPtr, out bool goon)
+            int notifyCallback(SolveEventType type, IntPtr eventPtr, IntPtr data, out bool[] goon)
             {
-                goon = true;
+                goon = new bool[1];
 
                 try
                 {
                     switch (type)
                     {
-                        case SolveEventType.Model:
+                        case clingo_solve_event_type_model:
                             if (onModel != null)
                             {
-                                var model = new Model(new ClingoModel() { Object = eventPtr });
-                                goon = onModel(model);
+                                var model = new Model(eventPtr);
+                                goon[0] = onModel(model);
                             }
 
-                            return true;
+                            return 1;
 
-                        case SolveEventType.Statistics:
+                        case clingo_solve_event_type_statistics:
                             if (onStatistics != null)
                             {
                                 IntPtr[] statistics = new IntPtr[2];
@@ -264,31 +240,31 @@ namespace ClingoSharp
                                 onStatistics(stepStatistics, acumulatedStatistics);
                             }
 
-                            return true;
+                            return 1;
 
-                        case SolveEventType.Finish:
+                        case clingo_solve_event_type_finish:
                             if (onFinish != null)
                             {
                                 var solveResult = new SolveResult();
                                 onFinish(solveResult);
                             }
 
-                            return true;
+                            return 1;
 
                         default:
-                            return false;
+                            return 0;
                     }
                 }
                 catch
                 {
                     // If a (non-recoverable) clingo API function fails in this callback, it must return false.
-                    return false;
+                    return 0;
                 }
             }
 
             // Converts the asumptions into a literals list
             var symbolicAtoms = SymbolicAtoms;
-            List<ClingoLiteral> literals = new List<ClingoLiteral>();
+            List<int> literals = new List<int>();
             if (assumptions != null)
             {
                 foreach (var assumption in assumptions)
@@ -315,11 +291,11 @@ namespace ClingoSharp
                 }
             }
 
-            SolveMode mode = 0;
-            if (yield) { mode |= SolveMode.Yield; }
-            if (async) { mode |= SolveMode.Async; }
+            SolveMode mode = clingo_solve_mode_none;
+            if (yield) { mode |= clingo_solve_mode_async; }
+            if (async) { mode |= clingo_solve_mode_yield; }
 
-            Clingo.HandleClingoError(m_module.Solve(this, mode, literals.ToArray(), (onModel == null) && (onStatistics == null) && (onFinish == null) ? null : (SolveEventHandler)notifyCallback, out ClingoSolveHandle handlePtr));
+            Clingo.HandleClingoError(ControlModule.Solve(this, mode, literals.ToArray(), (onModel == null) && (onStatistics == null) && (onFinish == null) ? null : (SolveEventCallback)notifyCallback, out IntPtr handlePtr));
 
             var handle = new SolveHandle(handlePtr);
 

@@ -5,7 +5,7 @@
     /// </summary>
     public interface ILibraryLoadContext
     {
-        void LoadClingoLibrary();
+        void LoadClingoLibrary(string currentPath);
         void FreeClingoLibrary();
     }
 }

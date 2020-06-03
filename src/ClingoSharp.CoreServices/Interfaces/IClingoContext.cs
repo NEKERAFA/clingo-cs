@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClingoSharp.NativeWrapper.Interfaces;
+using System;
 
 namespace ClingoSharp.CoreServices.Interfaces
 {

@@ -34,7 +34,6 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ClingoSharp.CoreServices\ClingoSharp.CoreServices.csproj">
       <Project>{4a32f868-4c1f-48a1-a892-d62410a46d27}</Project>
@@ -48,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Components\Clingo.cs" />
     <Compile Include="Components\Control.cs" />
+    <Compile Include="Components\ModelType.cs" />
     <Compile Include="Components\Tuple.cs" />
     <Compile Include="Enums\Enumeration.cs" />
     <Compile Include="Enums\IEnumeration.cs" />
@@ -62,7 +62,6 @@
     <Compile Include="Exceptions\VariableUnboundedException.cs" />
     <Compile Include="Components\MessageCode.cs" />
     <Compile Include="Components\Model.cs" />
-    <Compile Include="Components\ModelType.cs" />
     <Compile Include="Components\SolveControl.cs" />
     <Compile Include="Components\SolveHandle.cs" />
     <Compile Include="Components\SolveResult.cs" />
@@ -73,6 +72,9 @@
     <Compile Include="Components\SymbolicAtoms.cs" />
     <Compile Include="Components\SymbolType.cs" />
     <Compile Include="Components\Union.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

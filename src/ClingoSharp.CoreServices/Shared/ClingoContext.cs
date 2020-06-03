@@ -1,6 +1,6 @@
 ﻿using ClingoSharp.CoreServices.Interfaces;
+using ClingoSharp.NativeWrapper.Interfaces;
 using System;
-using System.IO;
 using System.Reflection;
 
 namespace ClingoSharp.CoreServices.Shared
@@ -11,7 +11,7 @@ namespace ClingoSharp.CoreServices.Shared
 
         #region Assembly load context methods
 
-        public ClingoContext()
+        public ClingoContext(string currentPath)
         {
             // Checks if we are running in a Unix platform
             // https://www.mono-project.com/docs/faq/technical/#how-to-detect-the-execution-platform
@@ -25,7 +25,7 @@ namespace ClingoSharp.CoreServices.Shared
                 loaderContext = new WindowsLoadContext();
             }
 
-            loaderContext.LoadClingoLibrary();
+            loaderContext.LoadClingoLibrary(currentPath);
         }
 
         ~ClingoContext()
@@ -54,13 +54,18 @@ namespace ClingoSharp.CoreServices.Shared
 
         public IClingoModule GetModule(Type moduleType)
         {
-            string currentPath = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).LocalPath);
-            Assembly nativeWrapperAssembly = Assembly.LoadFrom(Path.Combine(currentPath, string.Format("{0}.dll", Constants.NativeWrapper)));
+            Type tModule = null;
 
-            string typeName = string.Format("{0}.Managers.{1}Impl", Constants.NativeWrapper, moduleType.Name.Substring(1));
-            Type type = nativeWrapperAssembly.GetType(typeName);
+            foreach (Type t in Assembly.GetAssembly(typeof(IClingoModule)).GetTypes())
+            {
+                if (moduleType.IsAssignableFrom(t) && !t.IsAbstract && !t.IsInterface)
+                {
+                    tModule = t;
+                    break;
+                }
+            }
 
-            return (IClingoModule)Activator.CreateInstance(type);
+            return (IClingoModule)Activator.CreateInstance(tModule);
         }
 
         public T GetModule<T>() where T : IClingoModule

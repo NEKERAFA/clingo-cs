@@ -1,4 +1,4 @@
-﻿namespace ClingoSharp.CoreServices.Interfaces
+﻿namespace ClingoSharp.NativeWrapper.Interfaces
 {
     /// <summary>
     /// Main interface that represents a module object
