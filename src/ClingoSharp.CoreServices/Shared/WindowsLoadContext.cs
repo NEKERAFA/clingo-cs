@@ -27,6 +27,7 @@ namespace ClingoSharp.CoreServices.Shared
             if (clingoLibPtr == IntPtr.Zero)
             {
                 var nativeFile = string.Format("{0}{1}runtimes{1}win-x64{1}native{1}clingo.dll", currentPath, Path.DirectorySeparatorChar);
+                if (!File.Exists(nativeFile)) throw new FileNotFoundException("clingo library not found", nativeFile);
                 clingoLibPtr = LoadLibrary(nativeFile);
             }
         }

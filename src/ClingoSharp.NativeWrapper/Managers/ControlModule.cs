@@ -30,7 +30,7 @@ namespace ClingoSharp.NativeWrapper.Managers
         private static extern int clingo_control_add(IntPtr control, string name, string[] parameters, UIntPtr parameters_size, string program);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int clingo_control_ground(IntPtr control, Part[] parts, UIntPtr parts_size, Callbacks.GroundCallback ground_callback, IntPtr ground_callback_data);
+        private static extern int clingo_control_ground(IntPtr control, Part[] parts, UIntPtr parts_size, GroundCallback ground_callback, IntPtr ground_callback_data);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
         private static extern int clingo_control_load(IntPtr control, string filename);

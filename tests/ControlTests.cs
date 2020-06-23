@@ -22,11 +22,13 @@ namespace ClingoSharp.Tests
             control.Ground(parts);
 
             List<string> models = new List<string>();
-            control.Solve(onModel: m =>
+            SolveHandle handle = control.Solve(onModel: m =>
             {
                 models.Add(m.ToString());
                 return true;
-            });
+            }, async: true);
+
+            while (!handle.Wait(0)) handle.Get();
 
             Assert.AreEqual(1, models.Count);
             Assert.AreEqual("a", models[0]);
