@@ -17,7 +17,7 @@ namespace ClingoSharp.NativeWrapper.Managers
         #region Functions
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int clingo_control_new(string[] arguments, UIntPtr arguments_size, Callbacks.LoggerCallback logger, IntPtr logger_data, uint message_limit, [Out] IntPtr[] control);
+        private static extern int clingo_control_new(string[] arguments, UIntPtr arguments_size, [MarshalAs(UnmanagedType.FunctionPtr)] LoggerCallback logger, IntPtr logger_data, uint message_limit, [Out] out IntPtr control);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
         private static extern void clingo_control_free(IntPtr control);
@@ -30,7 +30,7 @@ namespace ClingoSharp.NativeWrapper.Managers
         private static extern int clingo_control_add(IntPtr control, string name, string[] parameters, UIntPtr parameters_size, string program);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int clingo_control_ground(IntPtr control, Part[] parts, UIntPtr parts_size, Callbacks.GroundCallback ground_callback, IntPtr ground_callback_data);
+        private static extern int clingo_control_ground(IntPtr control, Part[] parts, UIntPtr parts_size, [MarshalAs(UnmanagedType.FunctionPtr)] GroundCallback ground_callback, IntPtr ground_callback_data);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
         private static extern int clingo_control_load(IntPtr control, string filename);
@@ -40,7 +40,7 @@ namespace ClingoSharp.NativeWrapper.Managers
         #region Solving Functions
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int clingo_control_solve(IntPtr control, Enums.SolveMode mode, int[] assumptions, UIntPtr assumptions_size, SolveEventCallback notify, IntPtr data, [Out] IntPtr[] handle);
+        private static extern int clingo_control_solve(IntPtr control, SolveMode mode, int[] assumptions, UIntPtr assumptions_size, [MarshalAs(UnmanagedType.FunctionPtr)] SolveEventCallback notify, IntPtr data, [Out] IntPtr[] handle);
 
         #endregion
 

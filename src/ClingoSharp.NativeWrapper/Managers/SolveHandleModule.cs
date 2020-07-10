@@ -10,7 +10,7 @@ namespace ClingoSharp.NativeWrapper.Managers
         #region Clingo C API Functions
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int clingo_solve_handle_get(IntPtr handle, [Out] Enums.SolveResult[] result);
+        private static extern int clingo_solve_handle_get(IntPtr handle, [Out] SolveResult[] result);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
         private static extern void clingo_solve_handle_wait(IntPtr handle, double timeout, [Out] bool[] result);

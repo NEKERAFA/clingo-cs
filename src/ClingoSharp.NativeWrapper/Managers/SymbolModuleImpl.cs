@@ -88,7 +88,7 @@ namespace ClingoSharp.NativeWrapper.Managers
         private static extern int clingo_symbol_to_string_size(ulong symbol, [Out] UIntPtr[] size);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int clingo_symbol_to_string(ulong symbol, [Out] char[] value, UIntPtr size);
+        private static extern int clingo_symbol_to_string(ulong symbol, [Out] byte[] value, UIntPtr size);
 
         #endregion
 
@@ -290,11 +290,11 @@ namespace ClingoSharp.NativeWrapper.Managers
 
             if (success != 0)
             {
-                char[] stringPtr = new char[stringSizePtr[0].ToUInt32()];
+                byte[] stringPtr = new byte[stringSizePtr[0].ToUInt32()];
 
                 success = clingo_symbol_to_string(symbol, stringPtr, stringSizePtr[0]);
 
-                value = new string(stringPtr);
+                value = System.Text.Encoding.UTF8.GetString(stringPtr);
                 value = value.Replace("\0", string.Empty).Trim();
 
                 return success != 0;

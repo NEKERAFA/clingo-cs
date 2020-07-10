@@ -21,7 +21,7 @@ namespace ClingoSharp
 
         #region Class Properties
 
-        internal static ISolveHandle SolveHandleModule
+        public static ISolveHandle SolveHandleModule
         {
             get
             {
@@ -102,18 +102,7 @@ namespace ClingoSharp
 
         public IEnumerator<Model> GetEnumerator()
         {
-            IntPtr modelPtr;
-            do
-            {
-                Clingo.HandleClingoError(SolveHandleModule.Resume(this));
-                Clingo.HandleClingoError(SolveHandleModule.Model(this, out modelPtr));
-
-                if (modelPtr != IntPtr.Zero)
-                {
-                    yield return new Model(modelPtr);
-                }
-            }
-            while (modelPtr != IntPtr.Zero);
+            return new ModelEnumerator(this);
         }
 
         IEnumerator IEnumerable.GetEnumerator()

@@ -45,6 +45,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\ModelEnumerator.cs" />
     <Compile Include="Components\Clingo.cs" />
     <Compile Include="Components\Control.cs" />
     <Compile Include="Components\ModelType.cs" />

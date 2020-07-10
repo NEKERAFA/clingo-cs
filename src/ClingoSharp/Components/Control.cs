@@ -2,6 +2,7 @@
 using ClingoSharp.NativeWrapper.Callbacks;
 using ClingoSharp.NativeWrapper.Enums;
 using ClingoSharp.NativeWrapper.Interfaces.Modules;
+using ClingoSharp.NativeWrapper.Managers;
 using ClingoSharp.NativeWrapper.Types;
 using System;
 using System.Collections.Generic;
@@ -138,6 +139,12 @@ namespace ClingoSharp
             Clingo.HandleClingoError(ControlModule.Add(m_clingoControl, name, parameters?.ToArray(), program));
         }
 
+        public Symbol GetConst(string name)
+        {
+            Clingo.HandleClingoError(ControlModule.GetConst(m_clingoControl, name, out ulong symbol));
+            return new Symbol(symbol);
+        }
+
         public void Load(string filename)
         {
             if (!File.Exists(filename))
@@ -212,10 +219,8 @@ namespace ClingoSharp
         public Union<SolveHandle, SolveResult> Solve(List<Union<Tuple<Symbol, bool>, int>> assumptions = null, Func<Model, bool> onModel = null, Action<StatisticsMap, StatisticsMap> onStatistics = null, Action<SolveResult> onFinish = null, bool yield = false, bool async = false)
         {
             // Creates a wrapper between the argument callbacks and the solve event notify callback
-            int notifyCallback(SolveEventType type, IntPtr eventPtr, IntPtr data, out bool[] goon)
+            int notifyCallback(SolveEventType type, IntPtr eventPtr, IntPtr data, ref int goon)
             {
-                goon = new bool[1];
-
                 try
                 {
                     switch (type)
@@ -224,10 +229,12 @@ namespace ClingoSharp
                             if (onModel != null)
                             {
                                 var model = new Model(eventPtr);
-                                goon[0] = onModel(model);
+                                var result = onModel(model);
+
+                                goon = result ? 1 : 0;
                             }
 
-                            return 1;
+                            break;
 
                         case clingo_solve_event_type_statistics:
                             if (onStatistics != null)
@@ -240,7 +247,7 @@ namespace ClingoSharp
                                 onStatistics(stepStatistics, acumulatedStatistics);
                             }
 
-                            return 1;
+                            break;
 
                         case clingo_solve_event_type_finish:
                             if (onFinish != null)
@@ -249,11 +256,10 @@ namespace ClingoSharp
                                 onFinish(solveResult);
                             }
 
-                            return 1;
-
-                        default:
-                            return 0;
+                            break;
                     }
+
+                    return 1;
                 }
                 catch
                 {
@@ -292,8 +298,8 @@ namespace ClingoSharp
             }
 
             SolveMode mode = clingo_solve_mode_none;
-            if (yield) { mode |= clingo_solve_mode_async; }
-            if (async) { mode |= clingo_solve_mode_yield; }
+            if (yield) { mode |= clingo_solve_mode_yield; }
+            if (async) { mode |= clingo_solve_mode_async; }
 
             Clingo.HandleClingoError(ControlModule.Solve(this, mode, literals.ToArray(), (onModel == null) && (onStatistics == null) && (onFinish == null) ? null : (SolveEventCallback)notifyCallback, out IntPtr handlePtr));
 

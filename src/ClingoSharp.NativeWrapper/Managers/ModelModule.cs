@@ -12,16 +12,16 @@ namespace ClingoSharp.NativeWrapper.Managers
         #region Functions for Inspecting Models
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int clingo_model_type(IntPtr model, [Out] Enums.ModelType[] type);
+        private static extern int clingo_model_type(IntPtr model, [Out] ModelType[] type);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
         private static extern int clingo_model_number(IntPtr model, [Out] ulong[] number);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int clingo_model_symbols_size(IntPtr model, Enums.ShowType show, [Out] UIntPtr[] size);
+        private static extern int clingo_model_symbols_size(IntPtr model, ShowType show, [Out] UIntPtr[] size);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int clingo_model_symbols(IntPtr model, Enums.ShowType show, [Out] ulong[] symbols, UIntPtr size);
+        private static extern int clingo_model_symbols(IntPtr model, ShowType show, [Out] ulong[] symbols, UIntPtr size);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
         private static extern int clingo_model_is_true(IntPtr model, int literal, [Out] bool[] result);
