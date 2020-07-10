@@ -1,4 +1,4 @@
-﻿using ClingoSharp.NativeWrapper.Callbacks;
+using ClingoSharp.NativeWrapper.Callbacks;
 using ClingoSharp.NativeWrapper.Enums;
 using ClingoSharp.NativeWrapper.Interfaces.Modules;
 using ClingoSharp.NativeWrapper.Types;

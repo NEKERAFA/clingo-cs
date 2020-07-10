@@ -1,4 +1,4 @@
-﻿using ClingoSharp.CoreServices.Interfaces;
+using ClingoSharp.CoreServices.Interfaces;
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
