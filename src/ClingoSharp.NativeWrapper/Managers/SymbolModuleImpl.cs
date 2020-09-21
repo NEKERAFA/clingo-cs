@@ -64,25 +64,25 @@ namespace ClingoSharp.NativeWrapper.Managers
         #region Symbol Inspection
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int clingo_symbol_number(ulong symbol, [Out] int[] number);
+        private static extern int clingo_symbol_number(ulong symbol, [Out] IntPtr number);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int clingo_symbol_name(ulong symbol, [Out] string[] name);
+        private static extern int clingo_symbol_name(ulong symbol, [Out] IntPtr[] name);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int clingo_symbol_string(ulong symbol, [Out] string[] value);
+        private static extern int clingo_symbol_string(ulong symbol, [Out] IntPtr[] value);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int clingo_symbol_is_positive(ulong symbol, [Out] bool[] positive);
+        private static extern int clingo_symbol_is_positive(ulong symbol, [Out] IntPtr positive);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int clingo_symbol_is_negative(ulong symbol, [Out] bool[] negative);
+        private static extern int clingo_symbol_is_negative(ulong symbol, [Out] IntPtr negative);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int clingo_symbol_arguments(ulong symbol, [Out] IntPtr arguments, [Out] UIntPtr[] arguments_size);
+        private static extern int clingo_symbol_arguments(ulong symbol, [Out] IntPtr[] arguments, [Out] UIntPtr[] arguments_size);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern Enums.SymbolType clingo_symbol_type(ulong symbol);
+        private static extern SymbolType clingo_symbol_type(ulong symbol);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
         private static extern int clingo_symbol_to_string_size(ulong symbol, [Out] UIntPtr[] size);
@@ -214,65 +214,65 @@ namespace ClingoSharp.NativeWrapper.Managers
 
         public bool GetNumber(ulong symbol, out int number)
         {
-            int[] numberPtr = new int[1];
-
-            var result = clingo_symbol_number(symbol, numberPtr);
-            number = numberPtr[0];
-
+            IntPtr numberRef = Marshal.AllocHGlobal(sizeof(int));
+            var result = clingo_symbol_number(symbol, numberRef);
+            number = result != 0 ? Marshal.ReadInt32(numberRef) : default;
+            Marshal.FreeHGlobal(numberRef);
             return result != 0;
         }
 
         public bool GetName(ulong symbol, out string name)
         {
-            string[] namePtr = new string[1];
-
-            var result = clingo_symbol_name(symbol, namePtr);
-            name = namePtr[0];
-
+            IntPtr[] nameRef = new IntPtr[1];
+            var result = clingo_symbol_name(symbol, nameRef);
+            name = result != 0 ? Marshal.PtrToStringAnsi(nameRef[0]) : default;
             return result != 0;
         }
 
         public bool GetString(ulong symbol, out string value)
         {
-            string[] stringPtr = new string[1];
-
+            IntPtr[] stringPtr = new IntPtr[1];
             var result = clingo_symbol_string(symbol, stringPtr);
-            value = stringPtr[0];
-
+            value = result != 0 ? Marshal.PtrToStringAnsi(stringPtr[0]) : default;
             return result != 0;
         }
 
         public bool IsPositive(ulong symbol, out bool positive)
         {
-            bool[] positivePtr = new bool[1];
-
+            IntPtr positivePtr = Marshal.AllocHGlobal(sizeof(int));
             var result = clingo_symbol_is_positive(symbol, positivePtr);
-            positive = positivePtr[0];
-
+            positive = result != 0 && Marshal.ReadInt32(positivePtr) != 0;
+            Marshal.FreeHGlobal(positivePtr);
             return result != 0;
         }
 
         public bool IsNegative(ulong symbol, out bool negative)
         {
-            bool[] negativePtr = new bool[1];
-
+            IntPtr negativePtr = Marshal.AllocHGlobal(sizeof(int));
             var result = clingo_symbol_is_negative(symbol, negativePtr);
-            negative = negativePtr[0];
-
+            negative = result != 0 && Marshal.ReadInt32(negativePtr) != 0;
+            Marshal.FreeHGlobal(negativePtr);
             return result != 0;
         }
 
         public bool GetArguments(ulong symbol, out ulong[] arguments)
         {
-            IntPtr argumentsPtr = new IntPtr();
+            IntPtr[] argumentsPtr = new IntPtr[1];
             UIntPtr[] argumentsSizePtr = new UIntPtr[1];
 
             var result = clingo_symbol_arguments(symbol, argumentsPtr, argumentsSizePtr);
 
-            // Copies all symbols in a managed array
-            int argumentsSize = Convert.ToInt32(argumentsSizePtr[0].ToUInt32());
-            arguments = new ulong[argumentsSize];
-            MarshalHelper.Copy(argumentsPtr, arguments, 0, argumentsSize);
+            if (result != 0)
+            {
+                // Copies all symbols in a managed array
+                int argumentsSize = Convert.ToInt32(argumentsSizePtr[0].ToUInt32());
+                arguments = new ulong[argumentsSize];
+                MarshalHelper.Copy(argumentsPtr[0], arguments, 0, argumentsSize);
+            }
+            else
+            {
+                arguments = null;
+            }
 
             return result != 0;
         }
@@ -290,7 +290,8 @@ namespace ClingoSharp.NativeWrapper.Managers
 
             if (success != 0)
             {
-                byte[] stringPtr = new byte[stringSizePtr[0].ToUInt32()];
+                int stringSize = Convert.ToInt32(stringSizePtr[0].ToUInt32());
+                byte[] stringPtr = new byte[stringSize];
 
                 success = clingo_symbol_to_string(symbol, stringPtr, stringSizePtr[0]);
 

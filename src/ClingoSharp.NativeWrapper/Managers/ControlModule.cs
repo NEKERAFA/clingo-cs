@@ -26,8 +26,8 @@ namespace ClingoSharp.NativeWrapper.Managers
 
         #region Grounding Functions
 
-        [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int clingo_control_add(IntPtr control, string name, string[] parameters, UIntPtr parameters_size, string program);
+        [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        private static extern int clingo_control_add(IntPtr control, string name, string[] parameters, UIntPtr parameters_size, [MarshalAs(UnmanagedType.LPStr)] string program);
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
         private static extern int clingo_control_ground(IntPtr control, Part[] parts, UIntPtr parts_size, [MarshalAs(UnmanagedType.FunctionPtr)] GroundCallback ground_callback, IntPtr ground_callback_data);
@@ -66,9 +66,8 @@ namespace ClingoSharp.NativeWrapper.Managers
         public bool New(string[] arguments, LoggerCallback logger, uint messageLimit, out IntPtr control)
         {
             UIntPtr argumentsSize = new UIntPtr(Convert.ToUInt32(arguments == null ? 0 : arguments.Length));
-            IntPtr[] controlPtr = new IntPtr[1];
-            var success = clingo_control_new(arguments, argumentsSize, logger, IntPtr.Zero, messageLimit, controlPtr);
-            control = controlPtr[0];
+            var success = clingo_control_new(arguments, argumentsSize, logger, IntPtr.Zero, messageLimit, out IntPtr controlPtr);
+            control = controlPtr;
             return success != 0;
         }
 

@@ -13,22 +13,13 @@ namespace ClingoSharp
 
         private readonly IntPtr m_clingoSolveHandle;
 
-        private readonly List<Model> m_models;
-
-        private int m_position;
-
         #endregion
 
         #region Instance properties
 
-        /// <summary>
-        /// The current name of models
-        /// </summary>
-        public int Count => m_models.Count;
-
-        public Model Current => m_models[m_position];
-
         object IEnumerator.Current => Current;
+
+        public Model Current { get; private set; }
 
         #endregion
 
@@ -37,8 +28,6 @@ namespace ClingoSharp
         public ModelEnumerator(IntPtr clingoSolveHandle)
         {
             m_clingoSolveHandle = clingoSolveHandle;
-            m_models = new List<Model>();
-            m_position = -1;
         }
 
         #endregion
@@ -55,6 +44,11 @@ namespace ClingoSharp
             return new ModelEnumerator(clingoSolveHandle);
         }
 
+        public static implicit operator Model(ModelEnumerator enumerator)
+        {
+            return enumerator.Current;
+        }
+
         #endregion
 
         #region Instance methods
@@ -62,28 +56,18 @@ namespace ClingoSharp
         public void Dispose()
         {
             Clingo.HandleClingoError(SolveHandle.SolveHandleModule.Close(this));
-            m_models.Clear();
         }
 
         public bool MoveNext()
         {
             bool result = false;
 
-            if (m_position == (Count - 1))
-            {
-                Clingo.HandleClingoError(SolveHandle.SolveHandleModule.Resume(this));
-                Clingo.HandleClingoError(SolveHandle.SolveHandleModule.Model(this, out IntPtr modelPtr));
+            Clingo.HandleClingoError(SolveHandle.SolveHandleModule.Resume(this));
+            Clingo.HandleClingoError(SolveHandle.SolveHandleModule.Model(this, out IntPtr modelPtr));
 
-                if (modelPtr != IntPtr.Zero)
-                {
-                    m_models.Add(modelPtr);
-                    m_position++;
-                    result = true;
-                }
-            }
-            else if (m_position < (Count - 1))
+            if (modelPtr != IntPtr.Zero)
             {
-                m_position++;
+                Current = new Model(modelPtr);
                 result = true;
             }
 
@@ -92,7 +76,7 @@ namespace ClingoSharp
 
         public void Reset()
         {
-            m_position = -1;
+            throw new InvalidOperationException();
         }
 
         #endregion

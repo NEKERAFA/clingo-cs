@@ -226,7 +226,7 @@ namespace ClingoSharp
                 {
                     string name = symbol.Name;
                     List<Symbol> args = symbol.Arguments;
-                    if (args.Count == 2 && name.Equals("$"))
+                    if (args.Count == 2 && name != null && name.Equals("$"))
                     {
                         sb.Append($"{args[0]}={args[1]}");
                     }

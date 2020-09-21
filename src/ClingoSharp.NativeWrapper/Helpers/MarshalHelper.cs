@@ -4,7 +4,7 @@ namespace ClingoSharp.NativeWrapper.Helpers
 {
     public static class MarshalHelper
     {
-        public static void Copy(IntPtr source, ushort[] destination, int startIndex, int length)
+        public static void Copy(IntPtr source, byte[] destination, int startIndex, int length)
         {
             if (source == IntPtr.Zero)
                 throw new ArgumentNullException(nameof(source));
@@ -17,7 +17,7 @@ namespace ClingoSharp.NativeWrapper.Helpers
 
             unsafe
             {
-                ushort* sourcePtr = (ushort*)source;
+                byte* sourcePtr = (byte*)source;
                 for (int i = startIndex; i < startIndex + length; ++i)
                 {
                     destination[i] = *sourcePtr++;
