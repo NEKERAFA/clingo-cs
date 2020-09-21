@@ -221,51 +221,43 @@ namespace ClingoSharp
             // Creates a wrapper between the argument callbacks and the solve event notify callback
             int notifyCallback(SolveEventType type, IntPtr eventPtr, IntPtr data, ref int goon)
             {
-                try
+                switch (type)
                 {
-                    switch (type)
-                    {
-                        case clingo_solve_event_type_model:
-                            if (onModel != null)
-                            {
-                                var model = new Model(eventPtr);
-                                var result = onModel(model);
+                    case clingo_solve_event_type_model:
+                        if (onModel != null)
+                        {
+                            var model = new Model(eventPtr);
+                            var result = onModel(model);
 
-                                goon = result ? 1 : 0;
-                            }
+                            goon = result ? 1 : 0;
+                        }
 
-                            break;
+                        break;
 
-                        case clingo_solve_event_type_statistics:
-                            if (onStatistics != null)
-                            {
-                                IntPtr[] statistics = new IntPtr[2];
-                                Marshal.Copy(eventPtr, statistics, 0, 2);
+                    case clingo_solve_event_type_statistics:
+                        if (onStatistics != null)
+                        {
+                            IntPtr[] statistics = new IntPtr[2];
+                            Marshal.Copy(eventPtr, statistics, 0, 2);
 
-                                var stepStatistics = new StatisticsMap();
-                                var acumulatedStatistics = new StatisticsMap();
-                                onStatistics(stepStatistics, acumulatedStatistics);
-                            }
+                            var stepStatistics = new StatisticsMap();
+                            var acumulatedStatistics = new StatisticsMap();
+                            onStatistics(stepStatistics, acumulatedStatistics);
+                        }
 
-                            break;
+                        break;
 
-                        case clingo_solve_event_type_finish:
-                            if (onFinish != null)
-                            {
-                                var solveResult = new SolveResult();
-                                onFinish(solveResult);
-                            }
+                    case clingo_solve_event_type_finish:
+                        if (onFinish != null)
+                        {
+                            var solveResult = new SolveResult();
+                            onFinish(solveResult);
+                        }
 
-                            break;
-                    }
-
-                    return 1;
+                        break;
                 }
-                catch
-                {
-                    // If a (non-recoverable) clingo API function fails in this callback, it must return false.
-                    return 0;
-                }
+
+                return 1;
             }
 
             // Converts the asumptions into a literals list

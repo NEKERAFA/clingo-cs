@@ -19,7 +19,7 @@ namespace ClingoSharp.NativeWrapper.Managers
         private static extern ErrorCode clingo_error_code();
 
         [DllImport(Constants.ClingoLib, CallingConvention = CallingConvention.Cdecl)]
-        private static extern string clingo_error_message();
+        private static extern IntPtr clingo_error_message();
 
         #endregion
 
@@ -46,12 +46,14 @@ namespace ClingoSharp.NativeWrapper.Managers
 
         public ErrorCode GetErrorCode()
         {
-            return (ErrorCode)clingo_error_code();
+            return clingo_error_code();
         }
 
         public string GetErrorMessage()
         {
-            return clingo_error_message();
+            IntPtr stringPtr = clingo_error_message();
+            if (stringPtr == IntPtr.Zero) return null;
+            return Marshal.PtrToStringAnsi(stringPtr);
         }
 
         #endregion

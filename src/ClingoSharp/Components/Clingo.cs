@@ -73,7 +73,10 @@ namespace ClingoSharp
 
         public Clingo(string workingPath = null)
         {
-            m_workingPath = workingPath ?? Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).AbsolutePath);
+            if (workingPath == null)
+                m_workingPath = Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().Location).AbsolutePath);
+            else
+                m_workingPath = workingPath;
             m_clingoModule = ClingoRepository.GetModule<IClingo>();
         }
 
@@ -94,10 +97,11 @@ namespace ClingoSharp
         {
             if (!success)
             {
+                ErrorCode code = m_clingoModule.GetErrorCode();
                 string message = m_clingoModule.GetErrorMessage();
                 if (message == null) { message = "no message"; }
 
-                switch(m_clingoModule.GetErrorCode())
+                switch(code)
                 {
                     case clingo_error_runtime:
                         throw new RuntimeException(message);
