@@ -1,29 +1,81 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.0;net48</TargetFrameworks>
-    <Authors>Rafael Alcalde Azpiazu &lt;rafael.alcalde.azpiazu@udc.es&gt;</Authors>
-    <Company>University of A Coruña</Company>
-    <Copyright>Copyright© Rafael Alcalde Azpiazu - 2019</Copyright>
-    <RepositoryUrl>https://github.com/NEKERAFA/ClingoSharp</RepositoryUrl>
-    <PackageProjectUrl>https://nekerafa.github.io/ClingoSharp/</PackageProjectUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageTags>clingo bindings logic-programing answer-set-programming</PackageTags>
-    <Description>A C# bindings to the C clingo library.</Description>
-    <PackageId>ClingoSharp</PackageId>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6C7E386E-E44D-46F2-9AAB-A0F8D19AFDBF}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <AssemblyVersion>0.0.2.1</AssemblyVersion>
-    <FileVersion>0.0.2.1</FileVersion>
-    <Version>0.0.2-alpha1</Version>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Added Clingo.Control.Load(string) function</PackageReleaseNotes>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RootNamespace>ClingoSharp</RootNamespace>
+    <AssemblyName>ClingoSharp</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
-
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClingoSharp.CoreServices\ClingoSharp.CoreServices.csproj" />
-    <ProjectReference Include="..\ClingoSharp.NativeWrapper\ClingoSharp.NativeWrapper.csproj" />
+    <ProjectReference Include="..\ClingoSharp.CoreServices\ClingoSharp.CoreServices.csproj">
+      <Project>{4a32f868-4c1f-48a1-a892-d62410a46d27}</Project>
+      <Name>ClingoSharp.CoreServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ClingoSharp.NativeWrapper\ClingoSharp.NativeWrapper.csproj">
+      <Project>{dc151e4d-7e1d-4460-b894-39f3829f665e}</Project>
+      <Name>ClingoSharp.NativeWrapper</Name>
+    </ProjectReference>
   </ItemGroup>
-
+  <ItemGroup>
+    <Compile Include="Components\ModelEnumerator.cs" />
+    <Compile Include="Components\Clingo.cs" />
+    <Compile Include="Components\Control.cs" />
+    <Compile Include="Components\ModelType.cs" />
+    <Compile Include="Components\Tuple.cs" />
+    <Compile Include="Enums\Enumeration.cs" />
+    <Compile Include="Enums\IEnumeration.cs" />
+    <Compile Include="Exceptions\AtomUndefinedException.cs" />
+    <Compile Include="Exceptions\BadAllocationException.cs" />
+    <Compile Include="Exceptions\FileIncludedException.cs" />
+    <Compile Include="Exceptions\GlobalVariableException.cs" />
+    <Compile Include="Exceptions\LogicException.cs" />
+    <Compile Include="Exceptions\OperationUndefinedException.cs" />
+    <Compile Include="Exceptions\RuntimeException.cs" />
+    <Compile Include="Exceptions\UnknownException.cs" />
+    <Compile Include="Exceptions\VariableUnboundedException.cs" />
+    <Compile Include="Components\MessageCode.cs" />
+    <Compile Include="Components\Model.cs" />
+    <Compile Include="Components\SolveControl.cs" />
+    <Compile Include="Components\SolveHandle.cs" />
+    <Compile Include="Components\SolveResult.cs" />
+    <Compile Include="Components\StatisticsMap.cs" />
+    <Compile Include="Components\Symbol.cs" />
+    <Compile Include="Components\SymbolicAtom.cs" />
+    <Compile Include="Components\SymbolicAtomIterator.cs" />
+    <Compile Include="Components\SymbolicAtoms.cs" />
+    <Compile Include="Components\SymbolType.cs" />
+    <Compile Include="Components\Union.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

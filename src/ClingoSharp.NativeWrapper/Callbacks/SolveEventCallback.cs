@@ -5,5 +5,5 @@ using System.Runtime.InteropServices;
 namespace ClingoSharp.NativeWrapper.Callbacks
 {
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    public delegate void LoggerCallback(WarningCode code, string mesage, IntPtr data);
+    public delegate int SolveEventCallback(SolveEventType type, IntPtr event_data, IntPtr data, ref int goon);
 }

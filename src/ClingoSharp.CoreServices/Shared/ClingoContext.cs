@@ -1,74 +1,51 @@
 ﻿using ClingoSharp.CoreServices.Interfaces;
+using ClingoSharp.NativeWrapper.Interfaces;
 using System;
-using System.IO;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Runtime.Loader;
 
 namespace ClingoSharp.CoreServices.Shared
 {
-    internal sealed class ClingoContext : AssemblyLoadContext, IClingoContext
+    internal sealed class ClingoContext : IClingoContext
     {
+        private readonly ILibraryLoadContext loaderContext;
+
         #region Assembly load context methods
 
-        protected override Assembly Load(AssemblyName assemblyName)
+        public ClingoContext(string currentPath)
         {
-            if (assemblyName.Name.Equals(Constants.NativeWrapper))
+            // Checks if we are running in a Unix platform
+            // https://www.mono-project.com/docs/faq/technical/#how-to-detect-the-execution-platform
+            int platform = (int)Environment.OSVersion.Platform;
+            if ((platform == 4) || (platform == 6) || (platform == 128))
             {
-                // Gets assembly path file
-                var assemblyPath = new Uri(Assembly.GetExecutingAssembly().Location).LocalPath;
-                // Gets assembly folder
-                var assemblyFolder = Path.GetDirectoryName(assemblyPath);
-
-                return LoadFromAssemblyPath(Path.Combine(assemblyFolder, $"{Constants.NativeWrapper}.dll"));
-            }
-
-            return null;
-        }
-
-        protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
-        {
-            if (unmanagedDllName.Contains(Constants.ClingoLib))
-            {
-                return LoadNativeClingoLibrary();
-            }
-
-            return base.LoadUnmanagedDll(unmanagedDllName);
-        }
-
-        private IntPtr LoadNativeClingoLibrary()
-        {
-            // Gets assembly path file
-            var assemblyPath = new Uri(Assembly.GetExecutingAssembly().Location).LocalPath;
-            // Gets assembly folder
-            var assemblyFolder = Path.GetDirectoryName(assemblyPath);
-
-            // Gets the path to the native libraries
-            string nativeLibraryFolder;
-            // Gets the extension of the native libray
-            string extension;
-            // Gets the prefix of the native library
-            string prefix;
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                nativeLibraryFolder = $"win";
-                prefix = "";
-                extension = "dll";
-            }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                nativeLibraryFolder = $"linux"; 
-                prefix = "lib";
-                extension = "so";
+                loaderContext = new PoxisLoadContext();
             }
             else
             {
-                throw new PlatformNotSupportedException("ClingoSharp is not tested to this platform");
+                loaderContext = new WindowsLoadContext();
             }
 
-            // Loads clingo library
-            return LoadUnmanagedDllFromPath(Path.Combine(assemblyFolder, "runtimes", nativeLibraryFolder, "native", $"{prefix}clingo.{extension}"));
+            loaderContext.LoadClingoLibrary(currentPath);
+        }
+
+        ~ClingoContext()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            loaderContext.FreeClingoLibrary();
+
+            if (disposing)
+            {
+                GC.SuppressFinalize(this);
+            }
         }
 
         #endregion
@@ -77,9 +54,18 @@ namespace ClingoSharp.CoreServices.Shared
 
         public IClingoModule GetModule(Type moduleType)
         {
-            var nativeWrapperAssembly = LoadFromAssemblyName(new AssemblyName(Constants.NativeWrapper));
-            var type = nativeWrapperAssembly.GetType($"{Constants.NativeWrapper}.{moduleType.Name.Substring(1)}Impl", true);
-            return (IClingoModule)Activator.CreateInstance(type);
+            Type tModule = null;
+
+            foreach (Type t in Assembly.GetAssembly(typeof(IClingoModule)).GetTypes())
+            {
+                if (moduleType.IsAssignableFrom(t) && !t.IsAbstract && !t.IsInterface)
+                {
+                    tModule = t;
+                    break;
+                }
+            }
+
+            return (IClingoModule)Activator.CreateInstance(tModule);
         }
 
         public T GetModule<T>() where T : IClingoModule

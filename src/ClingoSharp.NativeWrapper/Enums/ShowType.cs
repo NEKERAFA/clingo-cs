@@ -3,7 +3,7 @@
 namespace ClingoSharp.NativeWrapper.Enums
 {
     [Flags]
-    internal enum clingo_show_type
+    public enum ShowType
     {
         clingo_show_type_none = 0,
         clingo_show_type_csp = 1,

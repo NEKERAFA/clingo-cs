@@ -47,7 +47,7 @@ namespace ClingoSharp.Enums
             if (typeEnum.IsSubclassOf(typeof(Enumeration)))
             {
                 var fields = typeEnum.GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
-                var values = fields.Select(f => f.GetValue(null)).Cast<IEnumeration>();
+                var values = fields.Select(f => f.GetValue(null, null)).Cast<IEnumeration>();
                 return values;
             }
 
@@ -111,7 +111,7 @@ namespace ClingoSharp.Enums
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="typeEnum"/> not contains a instance with the <paramref name="value"/> value</exception>
         public static TEnum GetValue<TEnum>(int value) where TEnum : IEnumeration
         {
-            return (TEnum) GetValue(typeof(TEnum), value);
+            return (TEnum)GetValue(typeof(TEnum), value);
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace ClingoSharp.Enums
         /// <exception cref="ArgumentException"><paramref name="typeEnum"/> not contains a instance with the name <paramref name="name"/> value</exception>
         public static IEnumeration Parse(Type typeEnum, string name, bool ignoreCase = false)
         {
-            if (string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrEmpty(name.Trim()))
             {
                 if (name == null)
                     throw new ArgumentNullException("name");
