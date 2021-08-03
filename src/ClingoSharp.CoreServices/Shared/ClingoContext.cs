@@ -52,15 +52,13 @@ namespace ClingoSharp.CoreServices.Shared
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                var arch = Environment.Is64BitProcess ? "x64" : "x86";
-                nativeLibraryFolder = $"win-{arch}";
+                nativeLibraryFolder = $"win";
                 prefix = "";
                 extension = "dll";
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                var arch = Environment.Is64BitProcess ? "amd64" : "i386";
-                nativeLibraryFolder = $"linux-{arch}"; 
+                nativeLibraryFolder = $"linux"; 
                 prefix = "lib";
                 extension = "so";
             }

@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  build:
+  build-windows:
     runs-on: windows-latest
     steps:
       - name: Checkout repository
@@ -17,12 +17,57 @@ jobs:
         run: |
           git submodule init
           git submodule update
+      - name: Building dependecies
+        run: .\build.ps1
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: clingo-windows
+          path: .\clingo\build\win
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Checkout submodules
+        run: |
+          git submodule init
+          git submodule update
+      - name: Building dependecies
+        run: ./build.sh
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: clingo-linux
+          path: ./clingo/build/linux
+
+  build:
+    needs: [build-windows, build-linux]
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.100
-      - name: Building dependecies
-        run: .\build.ps1
+      - name: Download Windows Artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: clingo-windows
+      - name: Download Linux Artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: clingo-linux
+      - name: Installing Artifacts
+        run: |
+          Copy-Item -Path '.\clingo-windows\*' -Destination '.\clingo\build\win' -Recurse
+          Copy-Item -Path '.\clingo-linux\*' -Destination '.\clingo\build\linux' -Recurse
       - name: Build
         run: dotnet build --configuration Release
       - name: Test

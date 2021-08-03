@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.0;net48</TargetFrameworks>
     <Authors>Rafael Alcalde Azpiazu &lt;rafael.alcalde.azpiazu@udc.es&gt;</Authors>
     <Company>University of A Coruña</Company>
     <Copyright>Copyright© Rafael Alcalde Azpiazu - 2019</Copyright>
@@ -13,11 +13,11 @@
     <PackageTags>clingo bindings logic-programing answer-set-programming</PackageTags>
     <OutputType>Library</OutputType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <AssemblyVersion>0.0.1.0</AssemblyVersion>
-    <FileVersion>0.0.1.0</FileVersion>
-    <Version>0.0.1-alpha</Version>
+    <AssemblyVersion>0.0.3.1</AssemblyVersion>
+    <FileVersion>0.0.3.1</FileVersion>
+    <Version>0.0.3-alpha1</Version>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>First version</PackageReleaseNotes>
+    <PackageReleaseNotes>Added Clingo.Control.Load(string) function</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
@@ -26,19 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="..\..\clingo\build\win\bin\Release\*.dll" PackagePath="runtimes\win\native" />
+    <Content Include="..\..\clingo\build\linux\bin\*.so" PackagePath="runtimes\linux\native" />
     <Content Include="ClingoSharp.CoreServices.targets" PackagePath="build" />
-    <Content Include="..\..\clingo\build\win\x86\bin\Release\clingo.dll" PackagePath="runtimes\win-x86\native">
-      <CopyToOutputDirectory>true</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\clingo\build\win\x64\bin\Release\clingo.dll" PackagePath="runtimes\win-x64\native">
-      <CopyToOutputDirectory>true</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\clingo\build\linux\i386\bin\libclingo.so" PackagePath="runtimes\linux-i386\native">
-      <CopyToOutputDirectory>true</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\clingo\build\linux\amd64\bin\libclingo.so" PackagePath="runtimes\linux-amd64\native">
-      <CopyToOutputDirectory>true</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
 </Project>

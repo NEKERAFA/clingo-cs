@@ -7,6 +7,7 @@ using ClingoSharp.CoreServices.Interfaces.Modules;
 using ClingoSharp.Enums;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -70,10 +71,15 @@ namespace ClingoSharp
         {
             void loggerCallback(WarningCode code, string message, IntPtr data)
             {
+                MessageCode messageCode = Enumeration.GetValue<MessageCode>((int)code);
+
                 if (logger != null)
                 {
-                    MessageCode messageCode = Enumeration.GetValue((int)code) as MessageCode;
                     logger(messageCode, message);
+                }
+                else
+                {
+                    Clingo.HandleClingoWarning(code, message);
                 }
             }
 
@@ -88,7 +94,7 @@ namespace ClingoSharp
 
         ~Control()
         {
-            m_module.Free(m_clingoControl);
+            Dispose(false);
         }
 
         #endregion
@@ -130,6 +136,11 @@ namespace ClingoSharp
         /// <inheritdoc/>
         public void Dispose()
         {
+            Dispose(true);
+        }
+
+        private void Dispose(bool disposing)
+        {
             if (!disposed)
             {
                 m_module.Free(this);
@@ -137,7 +148,8 @@ namespace ClingoSharp
                 disposed = true;
             }
 
-            GC.SuppressFinalize(this);
+            if (disposing)
+                GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -149,6 +161,14 @@ namespace ClingoSharp
         public void Add(string name, List<string> parameters, string program)
         {
             Clingo.HandleClingoError(m_module.Add(this, name, parameters?.ToArray(), program));
+        }
+
+        public void Load(string filename)
+        {
+            if (!File.Exists(filename))
+                throw new FileNotFoundException(filename);
+
+            Clingo.HandleClingoError(m_module.Load(this, filename));
         }
 
         /// <summary>

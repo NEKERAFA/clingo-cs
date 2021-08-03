@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace ClingoSharp.Enums
 {
@@ -14,20 +15,21 @@ namespace ClingoSharp.Enums
         /// <summary>
         /// The value of the enumeration
         /// </summary>
-        public int Value { get; }
+        public int Value { get; private set; }
 
         /// <summary>
         /// The string value of the enumeration
         /// </summary>
-        public string Name => throw new NotImplementedException();
+        public string Name { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        protected Enumeration(int value)
+        protected Enumeration(int value, string name)
         {
             Value = value;
+            Name = name;
         }
 
         #endregion
@@ -35,148 +37,176 @@ namespace ClingoSharp.Enums
         #region Enumeration methods
 
         /// <summary>
-        /// Gets a iterator of the names of the constants in the enumeration 
+        /// Gets a iterator of the constants in the enumeration
         /// </summary>
-        /// <returns>A string iterator with the names of the constants in the enumeration</returns>
-        public static IEnumerable<string> GetNames()
+        /// <param name="typeEnum">An <see cref="IEnumeration"/> value</param>
+        /// <returns>A <see cref="IEnumeration"/> iterator with the constants in the enumeration</returns>
+        /// <exception cref="ArgumentException"><paramref name="typeEnum"/> is not a <see cref="IEnumeration"/> subclass</exception>
+        public static IEnumerable<IEnumeration> GetValues(Type typeEnum)
         {
-            throw new NotImplementedException();
+            if (typeEnum.IsSubclassOf(typeof(Enumeration)))
+            {
+                var fields = typeEnum.GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
+                var values = fields.Select(f => f.GetValue(null)).Cast<IEnumeration>();
+                return values;
+            }
+
+            throw new ArgumentException("is not an <IEnumeration> type", "typeEnum");
         }
 
         /// <summary>
         /// Gets a iterator of the constants in the enumeration
         /// </summary>
-        /// <returns>A <see cref="Enumerable"/> iterator with the constants in the enumeration</returns>
-        public static IEnumerable<Enumeration> GetValues()
+        /// <typeparam name="TEnum">An <see cref="IEnumeration"/> value</typeparam>
+        /// <returns>A <see cref="TEnum"/> iterator with the constants in the enumeration</returns>
+        public static IEnumerable<TEnum> GetValues<TEnum>() where TEnum : IEnumeration
         {
-            throw new NotImplementedException();
+            return GetValues(typeof(TEnum)).Cast<TEnum>();
         }
 
         /// <summary>
-        /// Gets the <see cref="Enumerable"/> value that has the specified value
+        /// Gets a iterator of the names of the constants in the enumeration 
         /// </summary>
-        /// <param name="value">The value of a particular enumerated constant in terms</param>
-        /// <returns>The <see cref="Enumerable"/> containing the value of the enumerated constant</returns>
-        public static Enumeration GetValue(int value)
+        /// <param name="typeEnum">An <see cref="IEnumeration"/> value</param>
+        /// <returns>A string iterator with the names of the constants in the enumeration</returns>
+        /// <exception cref="ArgumentException"><paramref name="typeEnum"/> is not a <see cref="IEnumeration"/> subclass</exception>
+        public static IEnumerable<string> GetNames(Type typeEnum)
         {
-            return GetValues().FirstOrDefault(enumeration => enumeration.Value == value);
+            return GetValues(typeEnum).Select(v => v.Name);
+        }
+
+        /// <summary>
+        /// Gets a iterator of the names of the constants in the enumeration 
+        /// </summary>
+        /// <typeparam name="TEnum">An <see cref="IEnumeration"/> value</typeparam>
+        /// <returns>A string iterator with the names of the constants in the enumeration</returns>
+        public static IEnumerable<string> GetNames<TEnum>() where TEnum : IEnumeration
+        {
+            return GetNames(typeof(TEnum));
+        }
+
+        /// <summary>
+        /// Gets the <see cref="IEnumeration"/> value that has the specified value
+        /// </summary>
+        /// <param name="typeEnum">An <see cref="IEnumeration"/> value</param>
+        /// <param name="value">The value of a particular enumerated constant in terms</param>
+        /// <returns>The <see cref="IEnumeration"/> containing the value of the enumerated constant</returns>
+        /// <exception cref="ArgumentException"><paramref name="typeEnum"/> is not a <see cref="IEnumeration"/> subclass</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="typeEnum"/> not contains a instance with the <paramref name="value"/> value</exception>
+        public static IEnumeration GetValue(Type typeEnum, int value)
+        {
+            IEnumeration enumValue = GetValues(typeEnum).FirstOrDefault(enumeration => enumeration.Value == value);
+            if (enumValue == null)
+                throw new ArgumentOutOfRangeException("value");
+
+            return enumValue;
+        }
+
+        /// <summary>
+        /// Gets the <see cref="IEnumeration"/> value that has the specified value
+        /// </summary>
+        /// <typeparam name="TEnum">An <see cref="IEnumeration"/> value</typeparam>
+        /// <param name="value">The value of a particular enumerated constant in terms</param>
+        /// <returns>The <see cref="IEnumeration"/> containing the value of the enumerated constant</returns>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="typeEnum"/> not contains a instance with the <paramref name="value"/> value</exception>
+        public static TEnum GetValue<TEnum>(int value) where TEnum : IEnumeration
+        {
+            return (TEnum) GetValue(typeof(TEnum), value);
         }
 
         /// <summary>
         /// Converts the string representation of the name to an equivalent enumerated object
         /// </summary>
+        /// <param name="typeEnum">An <see cref="IEnumeration"/> value</param>
         /// <param name="name">A string containing the name or value to convert</param>
         /// <param name="ignoreCase"><c>true</c> to ignore case; <c>false</c> to regard case.</param>
-        /// <returns>An <see cref="Enumeration"/> object whose value is represented by <paramref name="name"/></returns>
-        public static Enumeration Parse(string name, bool ignoreCase)
+        /// <param name="result">When this method returns true, an object containing an enumeration constant representing the parsed value.</param>
+        /// <returns><c>true</c> if the conversion succeeded; <c>false</c> otherwise.</returns>
+        /// <exception cref="ArgumentException"><paramref name="typeEnum"/> is not a <see cref="IEnumeration"/> subclass</exception>
+        public static bool TryParse(Type typeEnum, string name, bool ignoreCase, out IEnumeration result)
+        {
+            result = GetValues(typeEnum).FirstOrDefault(symbolType => symbolType.Name.Equals(name, ignoreCase ? StringComparison.InvariantCultureIgnoreCase : StringComparison.InvariantCulture));
+            return result != default;
+        }
+
+        /// <summary>
+        /// Converts the string representation of the name to an equivalent enumerated object
+        /// </summary>
+        /// <param name="typeEnum">An <see cref="IEnumeration"/> value</param>
+        /// <param name="name">A string containing the name or value to convert</param>
+        /// <param name="result">When this method returns true, an object containing an enumeration constant representing the parsed value.</param>
+        /// <returns><c>true</c> if the conversion succeeded; <c>false</c> otherwise.</returns>
+        /// <exception cref="ArgumentException"><paramref name="typeEnum"/> is not a <see cref="IEnumeration"/> subclass</exception>
+        public static bool TryParse(Type typeEnum, string name, out IEnumeration result)
+        {
+            return TryParse(typeEnum, name, false, out result);
+        }
+
+        /// <summary>
+        /// Converts the string representation of the name to an equivalent enumerated object
+        /// </summary>
+        /// <typeparam name="TEnum">An <see cref="IEnumeration"/> value</typeparam>
+        /// <param name="name">A string containing the name or value to convert</param>
+        /// <param name="ignoreCase"><c>true</c> to ignore case; <c>false</c> to regard case.</param>
+        /// <param name="enumeration">When this method returns true, an object containing an enumeration constant representing the parsed value.</param>
+        /// <returns><c>true</c> if the conversion succeeded; <c>false</c> otherwise.</returns>
+        public static bool TryParse<TEnum>(string name, bool ignoreCase, out TEnum enumeration)
+        {
+            bool parsed = TryParse(typeof(TEnum), name, ignoreCase, out IEnumeration result);
+            enumeration = (TEnum)result;
+            return parsed;
+        }
+
+        /// <summary>
+        /// Converts the string representation of the name to an equivalent enumerated object
+        /// </summary>
+        /// <typeparam name="TEnum">An <see cref="IEnumeration"/> value</typeparam>
+        /// <param name="name">A string containing the name or value to convert</param>
+        /// <param name="enumeration">When this method returns true, an object containing an enumeration constant representing the parsed value.</param>
+        /// <returns><c>true</c> if the conversion succeeded; <c>false</c> otherwise.</returns>
+        public static bool TryParse<TEnum>(string name, out TEnum enumeration)
+        {
+            return TryParse(name, false, out enumeration);
+        }
+
+        /// <summary>
+        /// Converts the string representation of the name to an equivalent enumerated object
+        /// </summary>
+        /// <param name="typeEnum">An <see cref="IEnumeration"/> value</param>
+        /// <param name="name">A string containing the name or value to convert</param>
+        /// <param name="ignoreCase"><c>true</c> to ignore case; <c>false</c> to regard case.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is <c>null</c></exception>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is empty</exception>
+        /// <exception cref="ArgumentException"><paramref name="typeEnum"/> is not a <see cref="IEnumeration"/> subclass</exception>
+        /// <exception cref="ArgumentException"><paramref name="typeEnum"/> not contains a instance with the name <paramref name="name"/> value</exception>
+        public static IEnumeration Parse(Type typeEnum, string name, bool ignoreCase = false)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
                 if (name == null)
-                {
-                    throw new ArgumentNullException();
-                }
-                else
-                {
-                    throw new ArgumentException();
-                }
+                    throw new ArgumentNullException("name");
+
+                throw new ArgumentException("cannot be empty", "name");
             }
 
-            if (!TryParse(name, ignoreCase, out Enumeration enumeration))
-            {
-                throw new ArgumentException();
-            }
+            if (!TryParse(typeEnum, name, ignoreCase, out IEnumeration result))
+                throw new ArgumentException($"<{typeEnum.Name}> not contains a instance with the name {name}");
 
-            return enumeration;
+            return result;
         }
 
         /// <summary>
         /// Converts the string representation of the name to an equivalent enumerated object
         /// </summary>
-        /// <param name="name">A string containing the name or value to convert</param>
-        /// <returns>An <see cref="Enumeration"/> object whose value is represented by <paramref name="name"/></returns>
-        public static Enumeration Parse(string name)
-        {
-            return Parse(name, false);
-        }
-
-        /// <summary>
-        /// Converts the string representation of the name to an equivalent enumerated object
-        /// </summary>
-        /// <typeparam name="TEnum">The enumeration type to which to convert <paramref name="name"/></typeparam>
+        /// <typeparam name="TEnum">An <see cref="IEnumeration"/> value</typeparam>
         /// <param name="name">A string containing the name or value to convert</param>
         /// <param name="ignoreCase"><c>true</c> to ignore case; <c>false</c> to regard case.</param>
-        /// <returns>An <see cref="Enumeration"/> object whose value is represented by <paramref name="name"/></returns>
-        public static TEnum Parse<TEnum>(string name, bool ignoreCase) where TEnum : Enumeration
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is <c>null</c></exception>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is empty</exception>
+        /// <exception cref="ArgumentException"><typeparamref name="TEnum"/> not contains a instance with the name <paramref name="name"/> value</exception>
+        public static TEnum Parse<TEnum>(string name, bool ignoreCase = false) where TEnum : IEnumeration
         {
-            return (TEnum)Parse(name, ignoreCase);
-        }
-
-        /// <summary>
-        /// Converts the string representation of the name to an equivalent enumerated object
-        /// </summary>
-        /// <typeparam name="TEnum">The enumeration type to which to convert <paramref name="name"/></typeparam>
-        /// <param name="name">A string containing the name or value to convert</param>
-        /// <returns>An <see cref="Enumeration"/> object whose value is represented by <paramref name="name"/></returns>
-        public static TEnum Parse<TEnum>(string name) where TEnum : Enumeration
-        {
-            return (TEnum)Parse(name, false);
-        }
-
-        /// <summary>
-        /// Converts the string representation of the name to an equivalent enumerated object
-        /// </summary>
-        /// <param name="name">A string containing the name or value to convert</param>
-        /// <param name="ignoreCase"><c>true</c> to ignore case; <c>false</c> to regard case.</param>
-        /// <param name="result">When this method returns true, an object containing an enumeration constant representing the parsed value.</param>
-        /// <returns><c>true</c> if the conversion succeeded; <c>false</c> otherwise.</returns>
-        public static bool TryParse(string name, bool ignoreCase, out Enumeration result)
-        {
-            result = GetValues().FirstOrDefault(symbolType => symbolType.Name.Equals(name, ignoreCase ? StringComparison.InvariantCultureIgnoreCase : StringComparison.InvariantCulture));
-            return result == default;
-        }
-
-        /// <summary>
-        /// Converts the string representation of the name to an equivalent enumerated object
-        /// </summary>
-        /// <param name="name">A string containing the name or value to convert</param>
-        /// <param name="result">When this method returns true, an object containing an enumeration constant representing the parsed value.</param>
-        /// <returns><c>true</c> if the conversion succeeded; <c>false</c> otherwise.</returns>
-        public static bool TryParse(string name, out Enumeration result)
-        {
-            return TryParse(name, false, out result);
-        }
-
-        /// <summary>
-        /// Converts the string representation of the name to an equivalent enumerated object
-        /// </summary>
-        /// <typeparam name="TEnum">The enumeration type to which to convert <paramref name="name"/></typeparam>
-        /// <param name="name">A string containing the name or value to convert</param>
-        /// <param name="ignoreCase"><c>true</c> to ignore case; <c>false</c> to regard case.</param>
-        /// <param name="result">When this method returns true, an object containing an enumeration constant representing the parsed value.</param>
-        /// <returns></returns>
-        public static bool TryParse<TEnum>(string name, bool ignoreCase, out TEnum result) where TEnum : Enumeration
-        {
-            if (TryParse(name, ignoreCase, out Enumeration enumeration))
-            {
-                result = (TEnum)enumeration;
-                return true;
-            }
-
-            result = default;
-            return false;
-        }
-
-        /// <summary>
-        /// Converts the string representation of the name to an equivalent enumerated object
-        /// </summary>
-        /// <typeparam name="TEnum">The enumeration type to which to convert <paramref name="name"/></typeparam>
-        /// <param name="name">A string containing the name or value to convert</param>
-        /// <param name="result">When this method returns true, an object containing an enumeration constant representing the parsed value.</param>
-        /// <returns></returns>
-        public static bool TryParse<TEnum>(string name, out TEnum result) where TEnum : Enumeration
-        {
-            return TryParse(name, false, out result);
+            return (TEnum)Parse(typeof(TEnum), name, ignoreCase);
         }
 
         #endregion
@@ -213,6 +243,12 @@ namespace ClingoSharp.Enums
         public override int GetHashCode()
         {
             return Value.GetHashCode() ^ Name.GetHashCode();
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"{GetType().FullName}.{Name}";
         }
 
         #endregion
