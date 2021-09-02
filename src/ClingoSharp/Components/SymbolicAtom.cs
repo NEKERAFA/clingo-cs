@@ -1,5 +1,4 @@
-﻿using ClingoSharp.NativeWrapper.Interfaces.Modules;
-using System;
+﻿using System;
 
 namespace ClingoSharp
 {

@@ -2,7 +2,6 @@
 using ClingoSharp.NativeWrapper.Callbacks;
 using ClingoSharp.NativeWrapper.Enums;
 using ClingoSharp.NativeWrapper.Interfaces.Modules;
-using ClingoSharp.NativeWrapper.Managers;
 using ClingoSharp.NativeWrapper.Types;
 using System;
 using System.Collections.Generic;

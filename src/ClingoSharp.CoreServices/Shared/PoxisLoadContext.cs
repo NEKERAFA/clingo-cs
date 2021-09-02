@@ -1,7 +1,6 @@
 ﻿using ClingoSharp.CoreServices.Interfaces;
 using System;
 using System.IO;
-using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace ClingoSharp.CoreServices.Shared
