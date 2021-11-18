@@ -8,7 +8,7 @@ namespace ClingoSharp.Enums
     /// <summary>
     /// Represents a Enumeration class
     /// </summary>
-    public abstract class Enumeration : IEnumeration, IComparable<Enumeration>, IEquatable<Enumeration>
+    public abstract class Enumeration : IEnumeration, IComparable, IComparable<Enumeration>, IEquatable<Enumeration>
     {
         #region Properties
 
@@ -220,7 +220,28 @@ namespace ClingoSharp.Enums
 
         #region Comparable interface methods
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
+        /// </summary>
+        /// <param name="other">An object to compare with this instance.</param>
+        /// <returns>A value that indicates the relative order of the objects being compared.</returns>
+        /// <exception cref="ArgumentException"><c>obj</c> is not the same type as this instance.</exception>
+        public int CompareTo(object obj)
+        {
+            if (obj == null || !(obj is Enumeration))
+            {
+                throw new ArgumentException($"{obj.GetType().Name} object is null or not {this.GetType().Name} type");
+            }
+
+            return CompareTo(obj as Enumeration);
+        }
+
+        /// <summary>
+        /// Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
+        /// </summary>
+        /// <param name="other">An object to compare with this instance.</param>
+        /// <returns>A value that indicates the relative order of the objects being compared.</returns>
+        /// <exception cref="ArgumentException"><c>obj</c> is not the same type as this instance.</exception>
         public abstract int CompareTo(Enumeration other);
 
         #endregion

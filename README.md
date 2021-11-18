@@ -1,8 +1,7 @@
 # Clingo# (ClingoSharp)
 
-[![.NET Core v3.0](https://img.shields.io/badge/.NET%20Core-3.0-7014e8)](https://dotnet.microsoft.com/download/dotnet-core/3.0)
-[![.NET Framework v4.8](https://img.shields.io/badge/.NET%20Framework-4.8-7014e8)](https://dotnet.microsoft.com/download/dotnet-framework/net48)
-[![Clingo 5.4.0](https://img.shields.io/badge/Clingo-5.4.0-blue)](https://github.com/potassco/clingo)
+[![.NET 5.0](https://img.shields.io/badge/.NET-5.0-7014e8)](https://dotnet.microsoft.com/download/dotnet/5.0)
+[![Clingo 5.5.0](https://img.shields.io/badge/Clingo-5.5.0-blue)](https://github.com/potassco/clingo)
 ![ClingoSharp Workflow](https://github.com/NEKERAFA/ClingoSharp/workflows/ClingoSharp%20Workflow/badge.svg?branch=master&event=push)
 [![Coverage Status](https://coveralls.io/repos/github/NEKERAFA/ClingoSharp/badge.svg?branch=master)](https://coveralls.io/github/NEKERAFA/ClingoSharp?branch=master)
 
@@ -11,7 +10,7 @@ A C# bindings to the [clingo](https://github.com/potassco/clingo) library.
 ## Requirements
 
 * Windows 10 or Ubuntu 18.04
-* [.NET Core v3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1) or [.NET Framework v4.8](https://dotnet.microsoft.com/download/dotnet-framework/net48)
+* [.NET 5](https://dotnet.microsoft.com/download/dotnet/5.0)
 * Visual Studio 19 or GCC, and CMake
 
 ## Development
@@ -24,11 +23,7 @@ Clingo# uses the clingo Python API as reference. You can see the Clingo# API ref
 
 *Working in progress...*
 
-#### ClingoSharp.CoreServices
-
-*Working in progress...*
-
-#### ClingoSharp.NativeWrapper
+#### ClingoSharp.Native
 
 *Working in progress...*
 
