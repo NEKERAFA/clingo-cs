@@ -24,12 +24,12 @@ namespace ClingoSharp.Native
         /// <summary>
         /// Revision number.
         /// </summary>
-        public const int CLINGO_VERSION_REVISION = 0;
+        public const int CLINGO_VERSION_REVISION = 1;
 
         /// <summary>
         /// String representation of version.
         /// </summary>
-        public const string CLINGO_VERSION = "5.5.0";
+        public const string CLINGO_VERSION = "5.5.1";
 
         /// <summary>
         /// Signed integer type used for aspif and solver literals.
