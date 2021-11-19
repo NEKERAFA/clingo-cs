@@ -1,6 +1,6 @@
 # Clingo# (ClingoSharp)
 
-[![.NET 5.0](https://img.shields.io/badge/.NET-5.0-7014e8)](https://dotnet.microsoft.com/download/dotnet/5.0)
+[![.NET 6.0](https://img.shields.io/badge/.NET-6.0-7014e8)](https://dotnet.microsoft.com/download/dotnet/6.0)
 [![Clingo 5.5.1](https://img.shields.io/badge/Clingo-5.5.1-blue)](https://github.com/potassco/clingo/tree/v5.5.1)
 ![ClingoSharp Workflow](https://github.com/NEKERAFA/ClingoSharp/workflows/ClingoSharp%20Workflow/badge.svg?branch=master&event=push)
 [![Coverage Status](https://coveralls.io/repos/github/NEKERAFA/ClingoSharp/badge.svg?branch=master)](https://coveralls.io/github/NEKERAFA/ClingoSharp?branch=master)

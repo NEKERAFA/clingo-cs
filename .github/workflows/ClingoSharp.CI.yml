@@ -23,7 +23,7 @@ jobs:
       - name: Building dependecies
         run: .\build.ps1
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: clingo-windows
           path: .\clingo\build\win
@@ -42,7 +42,7 @@ jobs:
       - name: Building dependecies
         run: ./build.sh
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: clingo-linux
           path: ./clingo/build/linux
@@ -58,7 +58,7 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 3.1.100
+          dotnet-version: '6.0.x'
       - name: Download Windows Artifacts
         uses: actions/download-artifact@v1
         with:
