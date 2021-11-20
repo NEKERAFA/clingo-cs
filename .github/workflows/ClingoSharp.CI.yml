@@ -6,7 +6,7 @@ on:
       - develop 
 
 jobs:
-  build-windows:
+  build-clingo-windows:
     runs-on: windows-latest
     steps:
       - name: Checkout repository
@@ -17,15 +17,15 @@ jobs:
         run: |
           git submodule init
           git submodule update
-      - name: Building dependencies
+      - name: Build clingo.dll
         run: .\build.ps1
-      - name: Upload Artifacts
+      - name: Upload clingo.dll
         uses: actions/upload-artifact@v2
         with:
           name: clingo.dll
           path: clingo\build\win\bin\Release\clingo.dll
 
-  build-linux:
+  build-clingo-linux:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -36,9 +36,9 @@ jobs:
         run: |
           git submodule init
           git submodule update
-      - name: Building dependencies
+      - name: Build libclingo.so
         run:  ./build.sh
-      - name: Upload Artifacts
+      - name: Upload libclingo.so
         uses: actions/upload-artifact@v2
         with:
           name: libclingo.so
@@ -69,7 +69,7 @@ jobs:
       - name: Installing clingo dependencies
         run: |
           mkdir -p 'clingo/build/linux/bin' && mv 'libclingo.so' 'clingo/build/linux/bin'
-          mkdir -p 'clingo/build/win/bin/Released' && mv 'clingo.dll' 'clingo/build/win/bin/Released'
+          mkdir -p 'clingo/build/win/bin/Release' && mv 'clingo.dll' 'clingo/build/win/bin/Release'
       # - name: Test
       #   run: .\test.ps1
       # - name: Reporting coverage result
@@ -82,3 +82,8 @@ jobs:
         with:
           name: ClingoSharp.debug.nupkg
           path: src/ClingoSharp/bin/Release/ClingoSharp.*.nupkg
+      - name: Uploading ClingoSharp.Native package
+        uses: actions/upload-artifact@v2
+        with:
+          name: ClingoSharp.Native.debug.nupkg
+          path: src/ClingoSharp.Native/bin/Release/ClingoSharp.Native.*.nupkg

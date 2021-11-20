@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="docs\README.md"/>
-    <None Include="..\..\clingo\build\linux\bin\libclingo.so" Pack="true" PackagePath="runtimes\linux-x64\libclingo.so" /><None Include="..\..\clingo\build\linux\bin\libclingo.so" Pack="true" PackagePath="runtimes\linux-x64\libclingo.so" /><None Include="..\..\clingo\build\linux\bin\libclingo.so" Pack="true" PackagePath="runtimes\linux-x64\libclingo.so" />
+    <None Include="..\..\clingo\build\linux\bin\libclingo.so" Pack="true" PackagePath="runtimes\linux-x64\libclingo.so" />
     <None Include="..\..\clingo\build\win\bin\Release\clingo.dll" Pack="true" PackagePath="runtimes\win-x64\clingo.dll" />
   </ItemGroup>
 
