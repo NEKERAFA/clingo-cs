@@ -56,8 +56,6 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '6.0.x'
-      - name: Build
-        run: dotnet build --configuration Release
       - name: Download clingo.dll
         uses: actions/download-artifact@v2
         with:
@@ -70,6 +68,8 @@ jobs:
         run: |
           mkdir -p 'clingo/build/linux/bin' && mv 'libclingo.so' 'clingo/build/linux/bin/libclingo.so'
           mkdir -p 'clingo/build/win/bin/Release' && mv 'clingo.dll' 'clingo/build/win/bin/Release/clingo.dll'
+      - name: Build
+        run: dotnet build --configuration Release
       # - name: Test
       #   run: .\test.ps1
       # - name: Reporting coverage result
