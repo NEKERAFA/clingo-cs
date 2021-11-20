@@ -3,10 +3,7 @@ name: ClingoSharp Test
 on:
   pull_request:
     branches:
-      - develop
-      - release/*
-      - feature/*
-      - bugfix/*  
+      - develop 
 
 jobs:
   build-windows:
@@ -20,13 +17,13 @@ jobs:
         run: |
           git submodule init
           git submodule update
-      - name: Building dependecies
+      - name: Building dependencies
         run: .\build.ps1
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: clingo-windows
-          path: .\clingo\build\win
+          path: clingo\build\win\bin\Release\clingo.dll
 
   build-linux:
     runs-on: ubuntu-latest
@@ -39,17 +36,17 @@ jobs:
         run: |
           git submodule init
           git submodule update
-      - name: Building dependecies
-        run: ./build.sh
+      - name: Building dependencies
+        run:  ./build.sh
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: clingo-linux
-          path: ./clingo/build/linux
+          name: libclingo.so
+          path: clingo/build/linux/bin/libclingo.so
 
   build:
     needs: [build-windows, build-linux]
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -59,24 +56,29 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '6.0.x'
-      - name: Download Windows Artifacts
-        uses: actions/download-artifact@v1
-        with:
-          name: clingo-windows
-      - name: Download Linux Artifacts
-        uses: actions/download-artifact@v1
-        with:
-          name: clingo-linux
-      - name: Installing Artifacts
-        run: |
-          Copy-Item -Path '.\clingo-windows' -Destination '.\clingo\build\win\' -Recurse
-          Copy-Item -Path '.\clingo-linux' -Destination '.\clingo\build\linux\' -Recurse
       - name: Build
         run: dotnet build --configuration Release
-      - name: Test
-        run: .\test.ps1
-      - name: Reporting coverage result
-        uses: coverallsapp/github-action@master
+      - name: Download clingo.dll
+        uses: actions/download-artifact@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: .\coverage.info
+          name: clingo.dll
+      - name: Download libclingo.so
+        uses: actions/download-artifact@v2
+        with:
+          name: libclingo.so
+      - name: Installing clingo dependencies
+        run: |
+          mkdir -p 'clingo/build/linux/bin' && mv 'libclingo.so' 'clingo/build/linux/bin'
+          mkdir -p 'clingo/build/win/bin/Released' && mv 'libclingo.so' 'clingo/build/win/bin/Released'
+      # - name: Test
+      #   run: .\test.ps1
+      # - name: Reporting coverage result
+      #   uses: coverallsapp/github-action@master
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     path-to-lcov: .\coverage.info
+      - name: Uploading ClingoSharp package
+        uses: actions/upload-artifact@v2
+        with:
+          name: ClingoSharp.debug.nupkg
+          path: src/ClingoSharp/bin/Release/ClingoSharp.*.nupkg

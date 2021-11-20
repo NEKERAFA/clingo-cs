@@ -1,11 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>ClingoSharp</PackageId>
+    <Description>A C# bindings to the C clingo library.</Description>
+    <Authors>Rafael Alcalde Azpiazu &lt;rafael.alcalde.azpiazu@udc.es&gt;</Authors>
+    <Company>University of A Coruña</Company>
+    <Copyright>Copyright© Rafael Alcalde Azpiazu - 2019</Copyright>
+    <TargetFramework>net6.0</TargetFramework>
+    <RepositoryUrl>https://github.com/NEKERAFA/ClingoSharp</RepositoryUrl>
+    <PackageProjectUrl>https://nekerafa.github.io/ClingoSharp.git</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>clingo bindings logic-programing answer-set-programming</PackageTags>
+    <OutputType>Library</OutputType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <AssemblyVersion>0.1.0.0</AssemblyVersion>
+    <FileVersion>0.1.0.0</FileVersion>
+    <Version>0.1.0</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReadmeFile>docs\README.md</PackageReadmeFile>
+  </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ClingoSharp.Native\ClingoSharp.Native.csproj" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="docs\README.md"/>
   </ItemGroup>
-
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-  </PropertyGroup>
 
 </Project>
