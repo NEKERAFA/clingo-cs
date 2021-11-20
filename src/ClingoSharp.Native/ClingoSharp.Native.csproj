@@ -1,7 +1,29 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <PackageId>ClingoSharp.Native</PackageId>
+    <Description>A C# wrapper to the native C clingo library.</Description>
+    <Authors>Rafael Alcalde Azpiazu &lt;rafael.alcalde.azpiazu@udc.es&gt;</Authors>
+    <Company>University of A Coruña</Company>
+    <Copyright>Copyright© Rafael Alcalde Azpiazu - 2019</Copyright>
     <TargetFramework>net6.0</TargetFramework>
+    <RepositoryUrl>https://github.com/NEKERAFA/ClingoSharp</RepositoryUrl>
+    <PackageProjectUrl>https://nekerafa.github.io/ClingoSharp.git</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>clingo bindings logic-programing answer-set-programming</PackageTags>
+    <OutputType>Library</OutputType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <AssemblyVersion>0.1.0.0</AssemblyVersion>
+    <FileVersion>0.1.0.0</FileVersion>
+    <Version>0.1.0</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReadmeFile>docs\README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="docs\README.md"/>
+    <None Include="..\..\clingo\build\linux\bin\libclingo.so" Pack="true" PackagePath="runtimes\linux-x64\libclingo.so" /><None Include="..\..\clingo\build\linux\bin\libclingo.so" Pack="true" PackagePath="runtimes\linux-x64\libclingo.so" /><None Include="..\..\clingo\build\linux\bin\libclingo.so" Pack="true" PackagePath="runtimes\linux-x64\libclingo.so" />
+    <None Include="..\..\clingo\build\win\bin\Release\clingo.dll" Pack="true" PackagePath="runtimes\win-x64\clingo.dll" />
+  </ItemGroup>
 
 </Project>

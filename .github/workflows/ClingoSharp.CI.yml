@@ -69,7 +69,7 @@ jobs:
       - name: Installing clingo dependencies
         run: |
           mkdir -p 'clingo/build/linux/bin' && mv 'libclingo.so' 'clingo/build/linux/bin'
-          mkdir -p 'clingo/build/win/bin/Released' && mv 'libclingo.so' 'clingo/build/win/bin/Released'
+          mkdir -p 'clingo/build/win/bin/Released' && mv 'clingo.dll' 'clingo/build/win/bin/Released'
       # - name: Test
       #   run: .\test.ps1
       # - name: Reporting coverage result
