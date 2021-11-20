@@ -67,7 +67,7 @@ jobs:
       - name: Installing clingo dependencies
         run: |
           ls
-          mkdir -p 'clingo/build/linux/bin' && mv 'libclingo.so' 'clingo/build/linux/bin/libclingo.so'
+          mkdir -p 'clingo/build/linux/bin' && mv 'libclingo.so.4.0' 'clingo/build/linux/bin/libclingo.so'
           mkdir -p 'clingo/build/win/bin/Release' && mv 'clingo.dll' 'clingo/build/win/bin/Release/clingo.dll'
       - name: Build
         run: dotnet build --configuration Release
