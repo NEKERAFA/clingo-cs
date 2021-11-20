@@ -42,7 +42,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: libclingo.so
-          path: clingo/build/linux/bin/libclingo.so
+          path: clingo/build/linux/bin/libclingo.so.4.0
 
   build:
     needs: [build-windows, build-linux]
@@ -68,8 +68,8 @@ jobs:
           name: libclingo.so
       - name: Installing clingo dependencies
         run: |
-          mkdir -p 'clingo/build/linux/bin' && mv 'libclingo.so' 'clingo/build/linux/bin'
-          mkdir -p 'clingo/build/win/bin/Release' && mv 'clingo.dll' 'clingo/build/win/bin/Release'
+          mkdir -p 'clingo/build/linux/bin' && mv 'libclingo.so' 'clingo/build/linux/bin/libclingo.so'
+          mkdir -p 'clingo/build/win/bin/Release' && mv 'clingo.dll' 'clingo/build/win/bin/Release/clingo.dll'
       # - name: Test
       #   run: .\test.ps1
       # - name: Reporting coverage result
