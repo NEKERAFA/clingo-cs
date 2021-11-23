@@ -1,7 +1,7 @@
 using ClingoSharp.Enums;
 using static ClingoSharp.Native.Clingo_c;
 
-namespace ClingoSharp.Symbol
+namespace ClingoSharp.Symbols
 {
     /// <summary>
     /// Enumeration of symbols types.
@@ -13,27 +13,27 @@ namespace ClingoSharp.Symbol
         /// <summary>
         /// A function symbol, e.g., <c>c</c>, <c>(1,"a")</c>, or <c>f(1,"a")</c>.
         /// </summary>
-        public static SymbolType Function => new SymbolType((int)clingo_symbol_type_e.clingo_symbol_type_function, "Function");
+        public static SymbolType Function => new SymbolType((int)clingo_symbol_type_t.clingo_symbol_type_function, "Function");
 
         /// <summary>
         /// The <c>#inf symbol</c>
         /// </summary>
-        public static SymbolType Infimum => new SymbolType((int)clingo_symbol_type_e.clingo_symbol_type_infimum, "Infimum");
+        public static SymbolType Infimum => new SymbolType((int)clingo_symbol_type_t.clingo_symbol_type_infimum, "Infimum");
 
         /// <summary>
         /// A numeric symbol, e.g., <c>1</c>.
         /// </summary>
-        public static SymbolType Number => new SymbolType((int)clingo_symbol_type_e.clingo_symbol_type_number, "Number");
+        public static SymbolType Number => new SymbolType((int)clingo_symbol_type_t.clingo_symbol_type_number, "Number");
 
         /// <summary>
         /// A string symbol, e.g., <c>"a"</c>
         /// </summary>
-        public static SymbolType String => new SymbolType((int)clingo_symbol_type_e.clingo_symbol_type_string, "String");
+        public static SymbolType String => new SymbolType((int)clingo_symbol_type_t.clingo_symbol_type_string, "String");
 
         /// <summary>
         /// The <c>#sup symbol</c>
         /// </summary>
-        public static SymbolType Supremum => new SymbolType((int)clingo_symbol_type_e.clingo_symbol_type_supremum, "Supremum");
+        public static SymbolType Supremum => new SymbolType((int)clingo_symbol_type_t.clingo_symbol_type_supremum, "Supremum");
 
         #endregion
 

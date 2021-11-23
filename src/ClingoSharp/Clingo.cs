@@ -16,21 +16,13 @@ namespace ClingoSharp
         /// <returns></returns>
         public static (int, int, int) Version()
         {
-            IntPtr majorRef = Marshal.AllocHGlobal(sizeof(int));
-            IntPtr minorRef = Marshal.AllocHGlobal(sizeof(int));
-            IntPtr revisionRef = Marshal.AllocHGlobal(sizeof(int));
+            int[] major_c = new int[1];
+            int[] minor_c = new int[1];
+            int[] revision_c = new int[1];
 
-            clingo_version(majorRef, minorRef, revisionRef);
+            clingo_version(major_c, minor_c, revision_c);
 
-            int major = Marshal.ReadInt32(majorRef);
-            int minor = Marshal.ReadInt32(minorRef);
-            int revision = Marshal.ReadInt32(revisionRef);
-
-            Marshal.FreeHGlobal(majorRef);
-            Marshal.FreeHGlobal(minorRef);
-            Marshal.FreeHGlobal(revisionRef);
-
-            return (major, minor, revision);
+            return (major_c[0], minor_c[0], revision_c[0]);
         }
 
         /// <summary>
@@ -49,45 +41,31 @@ namespace ClingoSharp
                 string message = clingo_error_message();
                 if (message == null) { message = ""; }
 
-                switch (clingo_error_code())
+                throw clingo_error_code() switch
                 {
-                    case (int)clingo_error_e.clingo_error_runtime:
-                        throw new RuntimeException(message);
-                    case (int)clingo_error_e.clingo_error_logic:
-                        throw new InvalidOperationException(message);
-                    case (int)clingo_error_e.clingo_error_bad_alloc:
-                        throw new OutOfMemoryException(message);
-                    case (int)clingo_error_e.clingo_error_unknown:
-                        throw new UnknownException(message);
-                    case (int)clingo_error_e.clingo_error_success:
-                        throw new Exception(message);
-                    default:
-                        throw new Exception(message);
-                }
+                    clingo_error_t.clingo_error_runtime => new RuntimeException(message),
+                    clingo_error_t.clingo_error_logic => new InvalidOperationException(message),
+                    clingo_error_t.clingo_error_bad_alloc => new OutOfMemoryException(message),
+                    clingo_error_t.clingo_error_unknown => new UnknownException(message),
+                    clingo_error_t.clingo_error_success => new Exception(message),
+                    _ => new Exception(message),
+                };
             }
         }
 
         internal static void HandleWarning(clingo_warning_t code, string message)
         {
-            switch (code)
+            throw code switch
             {
-                case (int)clingo_warning_e.clingo_warning_operation_undefined:
-                    throw new InvalidOperationException(message);
-                case (int)clingo_warning_e.clingo_warning_runtime_error:
-                    throw new RuntimeException(message);
-                case (int)clingo_warning_e.clingo_warning_atom_undefined:
-                    throw new AtomUndefinedException(message);
-                case (int)clingo_warning_e.clingo_warning_file_included:
-                    throw new CircularFileIncludedException(message);
-                case (int)clingo_warning_e.clingo_warning_variable_unbounded:
-                    throw new VariableUnboundedException(message);
-                case (int)clingo_warning_e.clingo_warning_global_variable:
-                    throw new GlobalVariableException(message);
-                case (int)clingo_warning_e.clingo_warning_other:
-                    throw new UnknownException(message);
-                default:
-                    throw new Exception(message);
-            }
+                clingo_warning_t.clingo_warning_operation_undefined => new InvalidOperationException(message),
+                clingo_warning_t.clingo_warning_runtime_error => new RuntimeException(message),
+                clingo_warning_t.clingo_warning_atom_undefined => new AtomUndefinedException(message),
+                clingo_warning_t.clingo_warning_file_included => new CircularFileIncludedException(message),
+                clingo_warning_t.clingo_warning_variable_unbounded => new VariableUnboundedException(message),
+                clingo_warning_t.clingo_warning_global_variable => new GlobalVariableException(message),
+                clingo_warning_t.clingo_warning_other => new UnknownException(message),
+                _ => new Exception(message),
+            };
         }
     }
 }

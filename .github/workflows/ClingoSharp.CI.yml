@@ -71,13 +71,13 @@ jobs:
           mkdir -p 'clingo/build/win/bin/Release' && mv 'clingo.dll' 'clingo/build/win/bin/Release/clingo.dll'
       - name: Build
         run: dotnet build --configuration Release
-      # - name: Test
-      #   run: .\test.ps1
-      # - name: Reporting coverage result
-      #   uses: coverallsapp/github-action@master
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     path-to-lcov: .\coverage.info
+      - name: Test
+        run: .\test.ps1
+      - name: Reporting coverage result
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: .\coverage.info
       - name: Uploading ClingoSharp package
         uses: actions/upload-artifact@v2
         with:
@@ -88,3 +88,9 @@ jobs:
         with:
           name: ClingoSharp.Native.debug.nupkg
           path: src/ClingoSharp.Native/bin/Release/ClingoSharp.Native.*.nupkg
+      - name: Clean Artifacts
+        uses: geekyeggo/delete-artifact@v1
+        with:
+          name: |
+            libclingo.so
+            clingo.dll

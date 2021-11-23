@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace ClingoSharp.Native
 {
@@ -32,20 +33,66 @@ namespace ClingoSharp.Native
         public const string CLINGO_VERSION = "5.5.1";
 
         /// <summary>
+        /// This struct represents the size_t C/C++ type, that it size depends on the machine architecture
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct size_t
+        {
+            private readonly unsafe void* m_value;
+
+            public unsafe size_t(uint value)
+            {
+                m_value = (void*)value;
+            }
+
+            public unsafe size_t(ulong value)
+            {
+                if (Environment.Is64BitProcess)
+                {
+                    m_value = (void*)value;
+                }
+                else
+                {
+                    m_value = (void*)(uint)value;
+                }
+            }
+
+            public static int Size {
+                get
+                {
+                    if (Environment.Is64BitProcess)
+                    {
+                        return 8;
+                    }
+
+                    return 4;
+                }
+            }
+
+            public unsafe static implicit operator uint(size_t type) => (uint)type.m_value;
+
+            public unsafe static implicit operator size_t(uint value) => new(value);
+        
+            public unsafe static implicit operator ulong(size_t type) => (ulong)type.m_value;
+
+            public unsafe static implicit operator size_t(ulong value) => new(value);
+        }
+
+        /// <summary>
         /// Signed integer type used for aspif and solver literals.
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         public readonly struct clingo_literal_t
         {
-            private readonly int value;
+            private readonly int m_value;
 
             public clingo_literal_t(int value)
             {
-                this.value = value;
+                m_value = value;
             }
 
-            public static implicit operator int(clingo_literal_t type) => type.value;
-            public static implicit operator clingo_literal_t(int value) => new clingo_literal_t(value);
+            public static implicit operator int(clingo_literal_t type) => type.m_value;
+            public static implicit operator clingo_literal_t(int value) => new(value);
         }
 
         /// <summary>
@@ -54,15 +101,15 @@ namespace ClingoSharp.Native
         [StructLayout(LayoutKind.Sequential)]
         public readonly struct clingo_atom_t
         {
-            private readonly uint value;
+            private readonly uint m_value;
 
             public clingo_atom_t(uint value)
             {
-                this.value = value;
+                m_value = value;
             }
 
-            public static implicit operator uint(clingo_atom_t type) => type.value;
-            public static implicit operator clingo_atom_t(uint value) => new clingo_atom_t(value);
+            public static implicit operator uint(clingo_atom_t type) => type.m_value;
+            public static implicit operator clingo_atom_t(uint value) => new(value);
         }
 
         /// <summary>
@@ -71,15 +118,15 @@ namespace ClingoSharp.Native
         [StructLayout(LayoutKind.Sequential)]
         public readonly struct clingo_id_t
         {
-            private readonly uint value;
+            private readonly uint m_value;
 
             public clingo_id_t(uint value)
             {
-                this.value = value;
+                m_value = value;
             }
 
-            public static implicit operator uint(clingo_id_t type) => type.value;
-            public static implicit operator clingo_id_t(uint value) => new clingo_id_t(value);
+            public static implicit operator uint(clingo_id_t type) => type.m_value;
+            public static implicit operator clingo_id_t(uint value) => new(value);
         }
 
         /// <summary>
@@ -88,15 +135,15 @@ namespace ClingoSharp.Native
         [StructLayout(LayoutKind.Sequential)]
         public readonly struct clingo_weight_t
         {
-            private readonly int value;
+            private readonly int m_value;
 
             public clingo_weight_t(int value)
             {
-                this.value = value;
+                m_value = value;
             }
 
-            public static implicit operator int(clingo_weight_t type) => type.value;
-            public static implicit operator clingo_weight_t(int value) => new clingo_weight_t(value);
+            public static implicit operator int(clingo_weight_t type) => type.m_value;
+            public static implicit operator clingo_weight_t(int value) => new(value);
         }
 
         /// <summary>
@@ -119,7 +166,7 @@ namespace ClingoSharp.Native
         /// object has a free function, this function can and should still be called.
         /// </para>
         /// </summary>
-        public enum clingo_error_e
+        public enum clingo_error_t
         {
             /// <summary>successful API calls</summary>
             clingo_error_success = 0,
@@ -131,23 +178,6 @@ namespace ClingoSharp.Native
             clingo_error_bad_alloc = 3,
             /// <summary>errors unrelated to clingo</summary>
             clingo_error_unknown = 4
-        }
-
-        /// <summary>
-        /// Corresponding type to <see cref="clingo_error_e" />.
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public readonly struct clingo_error_t
-        {
-            private readonly int value;
-
-            public clingo_error_t(int value)
-            {
-                this.value = value;
-            }
-
-            public static implicit operator int(clingo_error_t type) => type.value;
-            public static implicit operator clingo_error_t(int value) => new clingo_error_t(value);
         }
 
         /// <summary>
@@ -187,7 +217,7 @@ namespace ClingoSharp.Native
         /// <summary>
         /// Enumeration of warning codes.
         /// </summary>
-        public enum clingo_warning_e
+        public enum clingo_warning_t
         {
             /// <summary>undefined arithmetic operation or weight of aggregate</summary>
             clingo_warning_operation_undefined = 0,
@@ -206,23 +236,6 @@ namespace ClingoSharp.Native
         }
 
         /// <summary>
-        /// Corresponding to <see cref="Clingo.clingo_warning_e" />
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public readonly struct clingo_warning_t
-        {
-            private readonly int value;
-
-            public clingo_warning_t(int value)
-            {
-                this.value = value;
-            }
-
-            public static implicit operator int(clingo_warning_t type) => type.value;
-            public static implicit operator clingo_warning_t(int value) => new clingo_warning_t(value);
-        }
-
-        /// <summary>
         /// Convert warning code into string.
         /// </summary>
         /// <param name="code">code warning</param>
@@ -236,7 +249,7 @@ namespace ClingoSharp.Native
         /// <param name="code">associated warning code</param>
         /// <param name="message">warning message</param>
         /// <param name="data">user data for callback</param>
-        public delegate void clingo_logger_t(clingo_warning_t code, [MarshalAs(UnmanagedType.LPStr)] string message, IntPtr data);
+        public delegate void clingo_logger_t(clingo_warning_t code, string message, IntPtr data);
 
         /// <summary>
         /// Obtain the clingo version.
@@ -245,13 +258,13 @@ namespace ClingoSharp.Native
         /// <param name="minor">minor version number</param>
         /// <param name="revision">revision number</param>
         /// <see />
-        [DllImport(libName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern void clingo_version([Out] IntPtr major, [Out] IntPtr minor, [Out] IntPtr revision);
+        [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void clingo_version([Out] int[] major, [Out] int[] minor, [Out] int[] revision);
 
         /// <summary>
         /// Represents three-valued truth values.
         /// </summary>
-        public enum clingo_truth_value_e
+        public enum clingo_truth_value_t
         {
             /// <summary>no truth value</summary>
             clingo_truth_value_free = 0,
@@ -259,23 +272,6 @@ namespace ClingoSharp.Native
             clingo_truth_value_true = 1,
             /// <summary>false</summary>
             clingo_truth_value_false = 2
-        }
-
-        /// <summary>
-        /// Corresponding type to <see cref="Clingo.clingo_truth_value_e" />
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public readonly struct clingo_truth_value_t
-        {
-            private readonly int value;
-
-            public clingo_truth_value_t(int value)
-            {
-                this.value = value;
-            }
-
-            public static implicit operator int(clingo_truth_value_t type) => type.value;
-            public static implicit operator clingo_truth_value_t(int value) => new clingo_truth_value_t(value);
         }
 
         /// <summary>
@@ -294,13 +290,13 @@ namespace ClingoSharp.Native
             /// <summary>the file where the location ends</summary>
             public string end_file;
             /// <summary>the line where the location begins</summary>
-            public UIntPtr begin_line;
+            public size_t begin_line;
             /// <summary>the line where the location ends</summary>
-            public UIntPtr end_line;
+            public size_t end_line;
             /// <summary>the column where the location begins</summary>
-            public UIntPtr begin_column;
+            public size_t begin_column;
             /// <summary>the column where the location ends</summary>
-            public UIntPtr end_column;
+            public size_t end_column;
         }
 
         #endregion
@@ -322,15 +318,15 @@ namespace ClingoSharp.Native
         [StructLayout(LayoutKind.Sequential)]
         public readonly struct clingo_signature_t
         {
-            private readonly ulong value;
+            private readonly ulong m_value;
 
             public clingo_signature_t(ulong value)
             {
-                this.value = value;
+                m_value = value;
             }
 
-            public static implicit operator ulong(clingo_signature_t type) => type.value;
-            public static implicit operator clingo_signature_t(ulong value) => new clingo_signature_t(value);
+            public static implicit operator ulong(clingo_signature_t type) => type.m_value;
+            public static implicit operator clingo_signature_t(ulong value) => new(value);
         }
 
         #endregion
@@ -350,8 +346,7 @@ namespace ClingoSharp.Native
         /// </list>
         /// </returns>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool clingo_signature_create(string name, int arity, [MarshalAs(UnmanagedType.Bool)] bool positive, [Out] IntPtr signature);
+        public static extern bool clingo_signature_create(string name, int arity, bool positive, [Out] clingo_signature_t[] signature);
 
         /// <summary>
         /// Get the name of a signature.
@@ -377,7 +372,6 @@ namespace ClingoSharp.Native
         /// <param name="signature">the target signature</param>
         /// <returns>whether the signature has no sign</returns>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool clingo_signature_is_positive(clingo_signature_t signature);
 
         /// <summary>
@@ -386,7 +380,6 @@ namespace ClingoSharp.Native
         /// <param name="signature">the target signature</param>
         /// <returns>whether the signature has a sign</returns>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool clingo_signature_is_negative(clingo_signature_t signature);
 
         /// <summary>
@@ -396,7 +389,6 @@ namespace ClingoSharp.Native
         /// <param name="b">second signature</param>
         /// <returns>whether a == b</returns>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool clingo_signature_is_equal_to(clingo_signature_t a, clingo_signature_t b);
 
         /// <summary>
@@ -411,7 +403,6 @@ namespace ClingoSharp.Native
         /// <param name="b">b second signature</param>
         /// <returns>whether a &lt; b</returns>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool clingo_signature_is_less_than(clingo_signature_t a, clingo_signature_t b);
 
         /// <summary>
@@ -420,14 +411,14 @@ namespace ClingoSharp.Native
         /// <param name="signature">the target signature</param>
         /// <returns>the hash code of the signature</returns>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern UIntPtr clingo_signature_hash(clingo_signature_t signature);
+        public static extern size_t clingo_signature_hash(clingo_signature_t signature);
 
         #endregion
 
         /// <summary>
         /// Enumeration of available symbol types.
         /// </summary>
-        public enum clingo_symbol_type_e
+        public enum clingo_symbol_type_t
         {
             /// <summary>the <c>#inf</c> symbol</summary>
             clingo_symbol_type_infimum = 0,
@@ -442,23 +433,6 @@ namespace ClingoSharp.Native
         };
 
         /// <summary>
-        /// Corresponding type to <see cref="Clingo.clingo_symbol_type_e" />
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public readonly struct clingo_symbol_type_t
-        {
-            private readonly int value;
-
-            public clingo_symbol_type_t(int value)
-            {
-                this.value = value;
-            }
-
-            public static implicit operator int(clingo_symbol_type_t type) => type.value;
-            public static implicit operator clingo_symbol_type_t(int value) => new clingo_symbol_type_t(value);
-        };
-
-        /// <summary>
         /// Represents a symbol.
         /// 
         /// <para>
@@ -469,15 +443,15 @@ namespace ClingoSharp.Native
         [StructLayout(LayoutKind.Sequential)]
         public struct clingo_symbol_t
         {
-            internal ulong value;
+            internal ulong m_value;
 
             public clingo_symbol_t(ulong value)
             {
-                this.value = value;
+                m_value = value;
             }
 
-            public static implicit operator ulong(clingo_symbol_t type) => type.value;
-            public static implicit operator clingo_symbol_t(ulong value) => new clingo_symbol_t(value);
+            public static implicit operator ulong(clingo_symbol_t type) => type.m_value;
+            public static implicit operator clingo_symbol_t(ulong value) => new(value);
         };
 
         #region Symbol Construction Functions
@@ -488,21 +462,21 @@ namespace ClingoSharp.Native
         /// <param name="number">the number</param>
         /// <param name="symbol">the resulting symbol</param>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void clingo_symbol_create_number(int number, [Out] IntPtr symbol);
+        public static extern void clingo_symbol_create_number(int number, [Out] clingo_symbol_t[] symbol);
 
         /// <summary>
         /// Construct a symbol representing <c>#sup</c>.
         /// </summary>
         /// <param name="symbol">the resulting symbol</param>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void clingo_symbol_create_supremum([Out] IntPtr symbol);
+        public static extern void clingo_symbol_create_supremum([Out] clingo_symbol_t[] symbol);
 
         /// <summary>
         /// Construct a symbol representing <c>#inf</c>.
         /// </summary>
         /// <param name="symbol">the resulting symbol</param>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void clingo_symbol_create_infimum([Out] IntPtr symbol);
+        public static extern void clingo_symbol_create_infimum([Out] clingo_symbol_t[] symbol);
 
         /// <summary>
         /// Construct a symbol representing a number.
@@ -515,8 +489,7 @@ namespace ClingoSharp.Native
         /// </list>
         /// </returns>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool clingo_symbol_create_string(string str, [Out] IntPtr symbol);
+        public static extern bool clingo_symbol_create_string(string str, [Out] clingo_symbol_t[] symbol);
 
         /// <summary>
         /// Construct a symbol representing a number.
@@ -530,8 +503,7 @@ namespace ClingoSharp.Native
         /// </list>
         /// </returns>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool clingo_symbol_create_id(string name, [MarshalAs(UnmanagedType.Bool)] bool positive, [Out] IntPtr symbol);
+        public static extern bool clingo_symbol_create_id(string name, bool positive, [Out] clingo_symbol_t[] symbol);
 
         /// <summary>
         /// Construct a symbol representing a function or tuple.
@@ -545,8 +517,7 @@ namespace ClingoSharp.Native
         /// <param name="positive">the symbol has a classical negation sign</param>
         /// <param name="symbol">the resulting symbol</param>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool clingo_symbol_create_function(string name, IntPtr arguments, UIntPtr arguments_size, bool positive, [Out] IntPtr symbol);
+        public static extern bool clingo_symbol_create_function(string name, clingo_symbol_t[] arguments, size_t arguments_size, bool positive, [Out] clingo_symbol_t[] symbol);
 
         #endregion
 
@@ -566,8 +537,7 @@ namespace ClingoSharp.Native
         /// </list>
         /// </returns>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool clingo_symbol_number(clingo_symbol_t symbol, [Out] IntPtr number);
+        public static extern bool clingo_symbol_number(clingo_symbol_t symbol, [Out] int[] number);
 
         /// <summary>
         /// Get the name of a symbol.
@@ -587,7 +557,6 @@ namespace ClingoSharp.Native
         /// </list>
         /// </returns>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool clingo_symbol_name(clingo_symbol_t symbol, [Out] IntPtr name);
 
         /// <summary>
@@ -608,7 +577,6 @@ namespace ClingoSharp.Native
         /// </list>
         /// </returns>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool clingo_symbol_string(clingo_symbol_t symbol, [Out] IntPtr str);
 
         /// <summary>
@@ -625,8 +593,7 @@ namespace ClingoSharp.Native
         /// </list>
         /// </returns>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool clingo_symbol_is_positive(clingo_symbol_t symbol, [Out] IntPtr positive);
+        public static extern bool clingo_symbol_is_positive(clingo_symbol_t symbol, [Out] bool[] positive);
 
         /// <summary>
         /// Check if a function is negative (has a sign).
@@ -642,8 +609,7 @@ namespace ClingoSharp.Native
         /// </list>
         /// </returns>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool clingo_symbol_is_negative(clingo_symbol_t symbol, [Out] IntPtr negative);
+        public static extern bool clingo_symbol_is_negative(clingo_symbol_t symbol, [Out] bool[] negative);
 
         /// <summary>
         /// Get the arguments of a symbol.
@@ -660,8 +626,7 @@ namespace ClingoSharp.Native
         /// </list>
         /// </returns>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool clingo_symbol_arguments(clingo_symbol_t symbol, [Out] IntPtr arguments, [Out] IntPtr arguments_size);
+        public static extern bool clingo_symbol_arguments(clingo_symbol_t symbol, [Out] IntPtr[] arguments, [Out] size_t[] arguments_size);
 
         /// <summary>
         /// Get the type of a symbol.
@@ -684,7 +649,7 @@ namespace ClingoSharp.Native
         /// </returns>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool clingo_symbol_to_string_size(clingo_symbol_t symbol, [Out] IntPtr size);
+        public static extern bool clingo_symbol_to_string_size(clingo_symbol_t symbol, [Out] size_t[] size);
 
         /// <summary>
         /// Get the string representation of a symbol.
@@ -699,7 +664,7 @@ namespace ClingoSharp.Native
         /// </returns>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool clingo_symbol_to_string(clingo_symbol_t symbol, [Out] IntPtr str, UIntPtr size);
+        public static extern bool clingo_symbol_to_string(clingo_symbol_t symbol, [Out] StringBuilder str, size_t size);
 
         #endregion
 
@@ -737,7 +702,7 @@ namespace ClingoSharp.Native
         /// <param name="symbol">the target symbol</param>
         /// <returns>the hash code of the symbol</returns>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern UIntPtr clingo_symbol_hash(clingo_symbol_t symbol);
+        public static extern size_t clingo_symbol_hash(clingo_symbol_t symbol);
 
         #endregion
 
@@ -786,31 +751,8 @@ namespace ClingoSharp.Native
         /// </returns>
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool clingo_parse_term(string str, clingo_logger_t logger, IntPtr logger_data, uint message_limit, [Out] IntPtr symbol);
+        public static extern bool clingo_parse_term(string str, clingo_logger_t logger, IntPtr logger_data, uint message_limit, [Out] clingo_symbol_t[] symbol);
 
         #endregion
-
-        /// <summary>
-        /// Enumeration of different external statements.
-        /// </summary>
-        public enum clingo_external_type_e
-        {
-            /// <summary>
-            /// allow an external to be assigned freely
-            /// </summary>
-            clingo_external_type_free = 0,
-            /// <summary>
-            /// assign an external to true
-            /// </summary>
-            clingo_external_type_true = 1,
-            /// <summary>
-            /// assign an external to false
-            /// </summary>
-            clingo_external_type_false = 2,
-            /// <summary>
-            /// no longer treat an atom as external
-            /// </summary>
-            clingo_external_type_release = 3,
-        };
     }
 }

@@ -51,7 +51,7 @@ namespace ClingoSharp.Enums
                 return values;
             }
 
-            throw new ArgumentException("is not an <IEnumeration> type", "typeEnum");
+            throw new ArgumentException("is not an <IEnumeration> type", nameof(typeEnum));
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace ClingoSharp.Enums
         {
             IEnumeration enumValue = GetValues(typeEnum).FirstOrDefault(enumeration => enumeration.Value == value);
             if (enumValue == null)
-                throw new ArgumentOutOfRangeException("value");
+                throw new ArgumentOutOfRangeException(nameof(value));
 
             return enumValue;
         }
@@ -184,9 +184,9 @@ namespace ClingoSharp.Enums
             if (string.IsNullOrWhiteSpace(name))
             {
                 if (name == null)
-                    throw new ArgumentNullException("name");
+                    throw new ArgumentNullException(nameof(name));
 
-                throw new ArgumentException("cannot be empty", "name");
+                throw new ArgumentException("cannot be empty", nameof(name));
             }
 
             if (!TryParse(typeEnum, name, ignoreCase, out IEnumeration result))
@@ -228,7 +228,7 @@ namespace ClingoSharp.Enums
         /// <exception cref="ArgumentException"><c>obj</c> is not the same type as this instance.</exception>
         public int CompareTo(object obj)
         {
-            if (obj == null || !(obj is Enumeration))
+            if (obj == null || (obj is not Enumeration))
             {
                 throw new ArgumentException($"{obj.GetType().Name} object is null or not {this.GetType().Name} type");
             }
@@ -251,7 +251,7 @@ namespace ClingoSharp.Enums
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
-            if (!(obj is Enumeration))
+            if (obj is not Enumeration)
             {
                 return false;
             }

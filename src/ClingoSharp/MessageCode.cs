@@ -14,43 +14,43 @@ namespace ClingoSharp
         /// <summary>
         /// Informs about an undefined atom in program.
         /// </summary>
-        public static MessageCode AtomUndefined => new MessageCode(clingo_warning_e.clingo_warning_atom_undefined, "AtomUndefined");
+        public static MessageCode AtomUndefined => new(clingo_warning_t.clingo_warning_atom_undefined, "AtomUndefined");
 
         /// <summary>
         /// Indicates that the same file was included multiple times.
         /// </summary>
-        public static MessageCode FileIncluded => new MessageCode(clingo_warning_e.clingo_warning_file_included, "FiledIncluded");
+        public static MessageCode FileIncluded => new(clingo_warning_t.clingo_warning_file_included, "FiledIncluded");
 
         /// <summary>
         /// Informs about a global variable in a tuple of an aggregate element.
         /// </summary>
-        public static MessageCode GlobalVariable => new MessageCode(clingo_warning_e.clingo_warning_global_variable, "GlobalVariable");
+        public static MessageCode GlobalVariable => new(clingo_warning_t.clingo_warning_global_variable, "GlobalVariable");
 
         /// <summary>
         /// Inform about an undefined arithmetic operation or unsupported weight of an aggregate.
         /// </summary>
-        public static MessageCode OperationUndefined => new MessageCode(clingo_warning_e.clingo_warning_operation_undefined, "OperationUndefined");
+        public static MessageCode OperationUndefined => new(clingo_warning_t.clingo_warning_operation_undefined, "OperationUndefined");
 
         /// <summary>
         /// Reports other kinds of messages.
         /// </summary>
-        public static MessageCode Other => new MessageCode(clingo_warning_e.clingo_warning_other, "Other");
+        public static MessageCode Other => new(clingo_warning_t.clingo_warning_other, "Other");
 
         /// <summary>
         /// To report multiple errors; a corresponding runtime error is raised later.
         /// </summary>
-        public static MessageCode RuntimeError => new MessageCode(clingo_warning_e.clingo_warning_runtime_error, "RuntimeError");
+        public static MessageCode RuntimeError => new(clingo_warning_t.clingo_warning_runtime_error, "RuntimeError");
 
         /// <summary>
         /// Informs about a CSP variable with an unbounded domain.
         /// </summary>
-        public static MessageCode VariableUnbounded => new MessageCode(clingo_warning_e.clingo_warning_variable_unbounded, "VariableUnbounded");
+        public static MessageCode VariableUnbounded => new (clingo_warning_t.clingo_warning_variable_unbounded, "VariableUnbounded");
 
         #endregion
 
         #region Constructors
 
-        private MessageCode(clingo_warning_e value, string name) : base((int)value, name) { }
+        private MessageCode(clingo_warning_t value, string name) : base((int)value, name) { }
 
         #endregion
 
@@ -75,7 +75,7 @@ namespace ClingoSharp
         /// <exception cref="ArgumentException"><c>obj</c> is not the same type as this instance.</exception>
         public override int CompareTo(Enumeration other)
         {
-            if ((other == null) || !(other is MessageCode))
+            if ((other == null) || (other is not MessageCode))
             {
                 throw new ArgumentException($"{other.GetType().Name} object is null or not {this.GetType().Name} type");
             }
@@ -98,7 +98,7 @@ namespace ClingoSharp
         /// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
         public override bool Equals(Enumeration other)
         {
-            if ((other == null) || !(other is MessageCode))
+            if ((other == null) || (other is not MessageCode))
             {
                 return false;
             }

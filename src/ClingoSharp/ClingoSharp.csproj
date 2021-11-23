@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ClingoSharp.Native\ClingoSharp.Native.csproj" />
-    <None Include="..\..\README.md" Pack="true" PackagePath="docs\README.md"/>
+    <None Include="..\..\README.md" Pack="true" PackagePath="docs\README.md" />
   </ItemGroup>
 
 </Project>

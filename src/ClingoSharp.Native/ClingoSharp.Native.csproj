@@ -18,12 +18,15 @@
     <Version>0.1.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReadmeFile>docs\README.md</PackageReadmeFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="docs\README.md"/>
     <None Include="..\..\clingo\build\linux\bin\libclingo.so" Pack="true" PackagePath="runtimes\linux-x64\libclingo.so" />
+    <!--
     <None Include="..\..\clingo\build\win\bin\Release\clingo.dll" Pack="true" PackagePath="runtimes\win-x64\clingo.dll" />
+    -->
   </ItemGroup>
 
 </Project>
