@@ -10,7 +10,7 @@ A C# bindings to the [clingo](https://github.com/potassco/clingo) library.
 ## Requirements
 
 * Windows 10 or Ubuntu 18.04
-* [.NET 5](https://dotnet.microsoft.com/download/dotnet/5.0)
+* [.NET 6.0](https://dotnet.microsoft.com/download/dotnet/6.0)
 * Visual Studio 19 or GCC, and CMake
 
 ## Development
