@@ -1,5 +1,6 @@
 echo "\033[92mCopying clingo dependencies...\033[0m"
 
+mkdir -p tests/ClingoSharp.Tests/bin/Debug/net6.0
 cp clingo/build/linux/bin/libclingo.so tests/ClingoSharp.Tests/bin/Debug/net6.0
 
 echo "\033[92mCopying test files dependencies...\033[0m"
