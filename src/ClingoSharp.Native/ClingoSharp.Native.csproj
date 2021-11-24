@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <PackageId>ClingoSharp</PackageId>
-    <Description>A C# bindings to the C clingo library.</Description>
+    <PackageId>ClingoSharp.Native</PackageId>
+    <Description>A C# wrapper to the native C clingo library.</Description>
     <Authors>Rafael Alcalde Azpiazu &lt;rafael.alcalde.azpiazu@udc.es&gt;</Authors>
     <Company>University of A Coruña</Company>
     <Copyright>Copyright© Rafael Alcalde Azpiazu - 2019</Copyright>
@@ -17,11 +18,15 @@
     <Version>0.1.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReadmeFile>docs\README.md</PackageReadmeFile>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ClingoSharp.Native\ClingoSharp.Native.csproj" />
-    <None Include="..\..\README.md" Pack="true" PackagePath="docs\README.md" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="docs\README.md"/>
+    <None Include="..\..\clingo\build\linux\bin\libclingo.so" Pack="true" PackagePath="runtimes\linux-x64\libclingo.so" />
+    <!--
+    <None Include="..\..\clingo\build\win\bin\Release\clingo.dll" Pack="true" PackagePath="runtimes\win-x64\clingo.dll" />
+    -->
   </ItemGroup>
 
 </Project>

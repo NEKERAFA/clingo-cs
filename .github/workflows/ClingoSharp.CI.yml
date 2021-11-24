@@ -3,10 +3,7 @@ name: ClingoSharp Test
 on:
   pull_request:
     branches:
-      - develop
-      - release/*
-      - feature/*
-      - bugfix/*  
+      - develop 
 
 jobs:
   build-windows:
@@ -20,13 +17,13 @@ jobs:
         run: |
           git submodule init
           git submodule update
-      - name: Building dependecies
+      - name: Build clingo.dll
         run: .\build.ps1
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v1
+      - name: Upload clingo.dll
+        uses: actions/upload-artifact@v2
         with:
-          name: clingo-windows
-          path: .\clingo\build\win
+          name: clingo.dll
+          path: clingo\build\win\bin\Release\clingo.dll
 
   build-linux:
     runs-on: ubuntu-latest
@@ -39,17 +36,17 @@ jobs:
         run: |
           git submodule init
           git submodule update
-      - name: Building dependecies
-        run: ./build.sh
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v1
+      - name: Build libclingo.so
+        run:  ./build.sh
+      - name: Upload libclingo.so
+        uses: actions/upload-artifact@v2
         with:
-          name: clingo-linux
-          path: ./clingo/build/linux
+          name: libclingo.so
+          path: clingo/build/linux/bin/libclingo.so.4.0
 
   build:
     needs: [build-windows, build-linux]
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -58,25 +55,41 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 3.1.100
-      - name: Download Windows Artifacts
-        uses: actions/download-artifact@v1
+          dotnet-version: '6.0.x'
+      - name: Download clingo.dll
+        uses: actions/download-artifact@v2
         with:
-          name: clingo-windows
-      - name: Download Linux Artifacts
-        uses: actions/download-artifact@v1
+          name: clingo.dll
+      - name: Download libclingo.so
+        uses: actions/download-artifact@v2
         with:
-          name: clingo-linux
-      - name: Installing Artifacts
+          name: libclingo.so
+      - name: Installing clingo dependencies
         run: |
-          Copy-Item -Path '.\clingo-windows' -Destination '.\clingo\build\win\' -Recurse
-          Copy-Item -Path '.\clingo-linux' -Destination '.\clingo\build\linux\' -Recurse
+          mkdir -p 'clingo/build/linux/bin' && mv 'libclingo.so.4.0' 'clingo/build/linux/bin/libclingo.so'
+          mkdir -p 'clingo/build/win/bin/Release' && mv 'clingo.dll' 'clingo/build/win/bin/Release/clingo.dll'
       - name: Build
         run: dotnet build --configuration Release
       - name: Test
-        run: .\test.ps1
+        run: ./tests.sh
       - name: Reporting coverage result
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: .\coverage.info
+          path-to-lcov: coverage.info
+      - name: Uploading ClingoSharp package
+        uses: actions/upload-artifact@v2
+        with:
+          name: ClingoSharp.debug.nupkg
+          path: src/ClingoSharp/bin/Release/ClingoSharp.*.nupkg
+      - name: Uploading ClingoSharp.Native package
+        uses: actions/upload-artifact@v2
+        with:
+          name: ClingoSharp.Native.debug.nupkg
+          path: src/ClingoSharp.Native/bin/Release/ClingoSharp.Native.*.nupkg
+      - name: Clean Artifacts
+        uses: geekyeggo/delete-artifact@v1
+        with:
+          name: |
+            libclingo.so
+            clingo.dll
