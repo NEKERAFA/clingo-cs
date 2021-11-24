@@ -72,7 +72,7 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release
       - name: Test
-        run: .\tests.sh
+        run: ./tests.sh
       - name: Reporting coverage result
         uses: coverallsapp/github-action@master
         with:
