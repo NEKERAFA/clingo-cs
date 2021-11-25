@@ -3,7 +3,8 @@ name: ClingoSharp Test
 on:
   pull_request:
     branches:
-      - develop 
+      - develop
+      - master
 
 jobs:
   build-windows:
