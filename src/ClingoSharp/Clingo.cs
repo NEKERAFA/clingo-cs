@@ -1,127 +1,71 @@
-﻿using ClingoSharp.CoreServices;
-using ClingoSharp.CoreServices.Enums;
-using ClingoSharp.CoreServices.Interfaces;
-using ClingoSharp.CoreServices.Interfaces.Modules;
-using ClingoSharp.Exceptions;
 using System;
+using System.Runtime.InteropServices;
+using ClingoSharp.Exceptions;
+using static ClingoSharp.Native.Clingo_c;
 
 namespace ClingoSharp
 {
     /// <summary>
-    /// The clingo-5.4.0 module.
-    /// This module provides functions and classes to control the grounding and solving process.
+    /// Core functionality used throught the clingo package.
     /// </summary>
-    public static class Clingo
+    public sealed class Clingo
     {
-        #region Attributes
-
-        private static string m_version = null;
-        private static readonly IMainModule m_module;
-
-        #endregion
-
-        #region Properties
-
         /// <summary>
-        /// Version of the clingo module (<c>'5.4.0'</c>)
+        /// Clingo's version as a tuple <c>(major, minor, revision)</c>
         /// </summary>
-        public static string Version
+        /// <returns></returns>
+        public static (int, int, int) Version()
         {
-            get
-            {
-                if (m_version == null)
-                {
-                    m_version = m_module.GetVersion();
-                }
+            int[] major_c = new int[1];
+            int[] minor_c = new int[1];
+            int[] revision_c = new int[1];
 
-                return m_version;
-            }
+            clingo_version(major_c, minor_c, revision_c);
+
+            return (major_c[0], minor_c[0], revision_c[0]);
         }
 
-        #endregion
-
-        #region Constructors
-
-        static Clingo()
-        {
-            m_module = Repository.GetModule<IMainModule>();
-        }
-
-        #endregion
-
-        #region Class Methods
-
         /// <summary>
-        /// Gets the error message and the code that returns clingo and creates a new exception
+        /// Helper to simplify calling clingo functions and checks if there is some error throw in the execution
         /// </summary>
-        /// <param name="success"><c>false</c> to check clingo error</param>
+        /// <param name="success">The result of the clingo function</param>
         /// <exception cref="RuntimeException"></exception>
-        /// <exception cref="LogicException"></exception>
-        /// <exception cref="BadAllocationException"></exception>
+        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="OutOfMemoryException"></exception>
         /// <exception cref="UnknownException"></exception>
         /// <exception cref="Exception"></exception>
-        internal static void HandleClingoError(bool success)
+        internal static void HandleError(bool success)
         {
             if (!success)
             {
-                string message = m_module.GetErrorMessage();
-                if (message == null) { message = "no message"; }
+                string message = clingo_error_message();
+                if (message == null) { message = ""; }
 
-                switch(m_module.GetErrorCode())
+                throw clingo_error_code() switch
                 {
-                    case ErrorCode.RuntimeError:
-                        throw new RuntimeException(message);
-                    case ErrorCode.LogicError:
-                        throw new LogicException(message);
-                    case ErrorCode.BadAlloc:
-                        throw new BadAllocationException(message);
-                    case ErrorCode.Unknown:
-                        throw new UnknownException(message);
-                    case ErrorCode.Success:
-                        throw new Exception(message);
-                }
+                    clingo_error_t.clingo_error_runtime => new RuntimeException(message),
+                    clingo_error_t.clingo_error_logic => new InvalidOperationException(message),
+                    clingo_error_t.clingo_error_bad_alloc => new OutOfMemoryException(message),
+                    clingo_error_t.clingo_error_unknown => new UnknownException(message),
+                    clingo_error_t.clingo_error_success => new Exception(message),
+                    _ => new Exception(message),
+                };
             }
         }
 
-        internal static void HandleClingoWarning(WarningCode code, string message)
+        internal static void HandleWarning(clingo_warning_t code, string message)
         {
-            switch(code)
+            throw code switch
             {
-                case WarningCode.OperationUndefined:
-                    throw new OperationUndefinedException(message);
-                case WarningCode.RuntimeError:
-                    throw new RuntimeException(message);
-                case WarningCode.AtomUndefined:
-                    throw new AtomUndefinedException(message);
-                case WarningCode.FileIncluded:
-                    throw new FileIncludedException(message);
-                case WarningCode.VariableUnbounded:
-                    throw new VariableUnboundedException(message);
-                case WarningCode.GlobalVariable:
-                    throw new GlobalVariableException(message);
-                case WarningCode.Other:
-                    throw new UnknownException(message);
-            }
+                clingo_warning_t.clingo_warning_operation_undefined => new InvalidOperationException(message),
+                clingo_warning_t.clingo_warning_runtime_error => new RuntimeException(message),
+                clingo_warning_t.clingo_warning_atom_undefined => new AtomUndefinedException(message),
+                clingo_warning_t.clingo_warning_file_included => new CircularFileIncludedException(message),
+                clingo_warning_t.clingo_warning_variable_unbounded => new VariableUnboundedException(message),
+                clingo_warning_t.clingo_warning_global_variable => new GlobalVariableException(message),
+                clingo_warning_t.clingo_warning_other => new UnknownException(message),
+                _ => new Exception(message),
+            };
         }
-
-        /// <summary>
-        /// Gets the asociated API module in clingo
-        /// </summary>
-        /// <returns>The asociated module</returns>
-        public static IClingoModule GetModule()
-        {
-            return m_module;
-        }
-
-        /// <summary>
-        /// Gets the main module in clingo
-        /// </summary>
-        /// <returns>The the main module</returns>
-        public static IMainModule GetMainModule()
-        {
-            return m_module;
-        }
-
-        #endregion
     }
 }

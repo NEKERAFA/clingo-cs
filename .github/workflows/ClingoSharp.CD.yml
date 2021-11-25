@@ -17,13 +17,13 @@ jobs:
         run: |
           git submodule init
           git submodule update
-      - name: Building dependecies
+      - name: Build clingo.dll
         run: .\build.ps1
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v1
+      - name: Upload clingo.dll
+        uses: actions/upload-artifact@v2
         with:
-          name: clingo-windows
-          path: .\clingo\build\win
+          name: clingo.dll
+          path: clingo\build\win\bin\Release\clingo.dll
 
   build-linux:
     runs-on: ubuntu-latest
@@ -36,13 +36,13 @@ jobs:
         run: |
           git submodule init
           git submodule update
-      - name: Building dependecies
-        run: ./build.sh
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v1
+      - name: Build libclingo.so
+        run:  ./build.sh
+      - name: Upload libclingo.so
+        uses: actions/upload-artifact@v2
         with:
-          name: clingo-linux
-          path: ./clingo/build/linux
+          name: libclingo.so
+          path: clingo/build/linux/bin/libclingo.so.4.0
 
   build:
     needs: [build-windows, build-linux]
@@ -55,19 +55,21 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 3.1.100
-      - name: Download Windows Artifacts
-        uses: actions/download-artifact@v1
+          dotnet-version: '6.0.x'
+      - name: Download clingo.dll
+        uses: actions/download-artifact@v2
         with:
-          name: clingo-windows
-      - name: Download Linux Artifacts
-        uses: actions/download-artifact@v1
+          name: clingo.dll
+      - name: Download libclingo.so
+        uses: actions/download-artifact@v2
         with:
-          name: clingo-linux
-      - name: Installing Artifacts
+          name: libclingo.so
+      - name: Installing clingo dependencies
         run: |
-          Copy-Item -Path '.\clingo-windows\*' -Destination '.\clingo\build\win' -Recurse
-          Copy-Item -Path '.\clingo-linux\*' -Destination '.\clingo\build\linux' -Recurse
+          New-Item 'clingo\build\win\bin\Release' -ItemType directory
+          Copy-Item -Path 'clingo.dll' -Destination 'clingo\build\win\bin\Release\clingo.dll' -Recurse
+          New-Item 'clingo\build\linux\bin' -ItemType directory
+          Copy-Item -Path 'libclingo.so.4.0' -Destination 'clingo\build\linux\bin' -Recurse
       - name: Build
         run: dotnet build --configuration Release
       - name: Test
@@ -84,12 +86,28 @@ jobs:
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: .\coverage.info
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v1
+          path-to-lcov: coverage.info
+      - name: Upload documentation
+        uses: actions/upload-artifact@v2
         with:
           name: site
           path: _site
+      - name: Uploading ClingoSharp package
+        uses: actions/upload-artifact@v2
+        with:
+          name: ClingoSharp.debug.nupkg
+          path: src/ClingoSharp/bin/Release/ClingoSharp.*.nupkg
+      - name: Uploading ClingoSharp.Native package
+        uses: actions/upload-artifact@v2
+        with:
+          name: ClingoSharp.Native.debug.nupkg
+          path: src/ClingoSharp.Native/bin/Release/ClingoSharp.Native.*.nupkg
+      - name: Clean Artifacts
+        uses: geekyeggo/delete-artifact@v1
+        with:
+          name: |
+            libclingo.so
+            clingo.dll
 
   deploy:
     needs: [build]
@@ -100,12 +118,16 @@ jobs:
         with:
           persist-credentials: false
       - name: Download Artifacts # The built project is downloaded into the 'site' folder.
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: site
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+        uses: JamesIves/github-pages-deploy-action@4.1.6
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages
           FOLDER: "site" # The deployment folder should match the name of the artifact. Even though our project builds into the 'build' folder the artifact name of 'site' must be placed here.
+      - name: Clean Artifacts
+        uses: geekyeggo/delete-artifact@v1
+        with:
+          name: site

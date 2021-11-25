@@ -1,95 +1,121 @@
-﻿using ClingoSharp.Enums;
+using System;
+using ClingoSharp.Enums;
+using static ClingoSharp.Native.Clingo_c;
 
 namespace ClingoSharp
 {
     /// <summary>
-    /// Enumeration of the different types of messages.
+    /// Enumeration of messages codes
     /// </summary>
-    public sealed class MessageCode : Enumeration
+    public sealed class MessageCode : Enumeration, IEquatable<MessageCode>, IComparable, IComparable<MessageCode>
     {
-        #region Class attributes
-
-        private static readonly string[] MessageCodeNames = new string[] 
-        { 
-            "OperationUndefined",
-            "RuntimeError",
-            "AtomUndefined",
-            "FileIncluded",
-            "VariableUnbounded",
-            "GlobalVariable",
-            "Other"
-        };
-
-        #endregion
-
         #region Class Properties
-
-        /// <summary>
-        /// Inform about an undefined arithmetic operation or unsupported weight of an aggregate.
-        /// </summary>
-        public static MessageCode OperationUndefined => new MessageCode(0);
-
-        /// <summary>
-        /// To report multiple errors; a corresponding runtime error is raised later.
-        /// </summary>
-        public static MessageCode RuntimeError => new MessageCode(1);
 
         /// <summary>
         /// Informs about an undefined atom in program.
         /// </summary>
-        public static MessageCode AtomUndefined => new MessageCode(2);
+        public static MessageCode AtomUndefined => new(clingo_warning_t.clingo_warning_atom_undefined, "AtomUndefined");
 
         /// <summary>
         /// Indicates that the same file was included multiple times.
         /// </summary>
-        public static MessageCode FileIncluded => new MessageCode(3);
-
-        /// <summary>
-        /// Informs about a CSP variable with an unbounded domain.
-        /// </summary>
-        public static MessageCode VariableUnbounded => new MessageCode(4);
+        public static MessageCode FileIncluded => new(clingo_warning_t.clingo_warning_file_included, "FiledIncluded");
 
         /// <summary>
         /// Informs about a global variable in a tuple of an aggregate element.
         /// </summary>
-        public static MessageCode GlobalVariable => new MessageCode(5);
+        public static MessageCode GlobalVariable => new(clingo_warning_t.clingo_warning_global_variable, "GlobalVariable");
+
+        /// <summary>
+        /// Inform about an undefined arithmetic operation or unsupported weight of an aggregate.
+        /// </summary>
+        public static MessageCode OperationUndefined => new(clingo_warning_t.clingo_warning_operation_undefined, "OperationUndefined");
 
         /// <summary>
         /// Reports other kinds of messages.
         /// </summary>
-        public static MessageCode Other => new MessageCode(6);
+        public static MessageCode Other => new(clingo_warning_t.clingo_warning_other, "Other");
+
+        /// <summary>
+        /// To report multiple errors; a corresponding runtime error is raised later.
+        /// </summary>
+        public static MessageCode RuntimeError => new(clingo_warning_t.clingo_warning_runtime_error, "RuntimeError");
+
+        /// <summary>
+        /// Informs about a CSP variable with an unbounded domain.
+        /// </summary>
+        public static MessageCode VariableUnbounded => new (clingo_warning_t.clingo_warning_variable_unbounded, "VariableUnbounded");
 
         #endregion
 
         #region Constructors
 
-        private MessageCode(int value) : base(value, MessageCodeNames[value]) { }
+        private MessageCode(clingo_warning_t value, string name) : base((int)value, name) { }
+
+        #endregion
+
+        #region Class methods
+
+        public static bool operator <(MessageCode a, MessageCode b) => a.Value < b.Value;
+        public static bool operator <=(MessageCode a, MessageCode b) => a.Value <= b.Value;
+        public static bool operator >(MessageCode a, MessageCode b) => a.Value > b.Value;
+        public static bool operator >=(MessageCode a, MessageCode b) => a.Value >= b.Value;
+        public static bool operator ==(MessageCode a, MessageCode b) => a.Value == b.Value;
+        public static bool operator !=(MessageCode a, MessageCode b) => a.Value != b.Value;
 
         #endregion
 
         #region Instance methods
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
+        /// </summary>
+        /// <param name="other">An object to compare with this instance.</param>
+        /// <returns>A value that indicates the relative order of the objects being compared.</returns>
+        /// <exception cref="ArgumentException"><c>obj</c> is not the same type as this instance.</exception>
         public override int CompareTo(Enumeration other)
         {
-            if ((other == null) || !(other is MessageCode))
+            if ((other == null) || (other is not MessageCode))
             {
-                return 1;
+                throw new ArgumentException($"{other.GetType().Name} object is null or not {this.GetType().Name} type");
             }
 
-            return Value.CompareTo(other.Value);
+            return CompareTo(other as MessageCode);
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
+        /// </summary>
+        /// <param name="other">An object to compare with this instance.</param>
+        /// <returns>A value that indicates the relative order of the objects being compared.</returns>
+        /// <exception cref="ArgumentException"><c>obj</c> is not the same type as this instance.</exception>
+        public int CompareTo(MessageCode other) => Value.CompareTo(other.Value);
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="other">The object to compare with the current object.</param>
+        /// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
         public override bool Equals(Enumeration other)
         {
-            if ((other == null) || !(other is MessageCode))
+            if ((other == null) || (other is not MessageCode))
             {
                 return false;
             }
 
-            return Value.Equals(other.Value);
+            return Equals(other as MessageCode);
         }
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="other">The object to compare with the current object.</param>
+        /// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
+        public bool Equals(MessageCode other) => this.Value.Equals(other.Value);
+
+        public override int GetHashCode() => base.GetHashCode();
+
+        public override bool Equals(object obj) => base.Equals(obj);
 
         #endregion
     }

@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 
 namespace ClingoSharp.Exceptions
 {
-    class GlobalVariableException : Exception
+    public class GlobalVariableException : Exception
     {
         public GlobalVariableException() : base() { }
-        public GlobalVariableException(string message) : base(message) { }
+        public GlobalVariableException(string msg) : base(msg) { }
     }
 }
