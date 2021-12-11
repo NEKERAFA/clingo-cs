@@ -90,6 +90,25 @@ jobs:
         with:
           name: site
           path: _site
+<<<<<<< Updated upstream:.github/workflows/ClingoSharp.CD.yml
+=======
+      - name: Uploading Clingo_cs package
+        uses: actions/upload-artifact@v2
+        with:
+          name: Clingo_cs.release.nupkg
+          path: src/Clingo_cs/bin/Release/Clingo_cs.*.nupkg
+      - name: Uploading Clingo_c package
+        uses: actions/upload-artifact@v2
+        with:
+          name: Clingo_c.release.nupkg
+          path: src/Clingo_c/bin/Release/Clingo_c.*.nupkg
+      - name: Clean Artifacts
+        uses: geekyeggo/delete-artifact@v1
+        with:
+          name: |
+            libclingo.so
+            clingo.dll
+>>>>>>> Stashed changes:.github/workflows/clingo_cs.yml
 
   deploy:
     needs: [build]
@@ -108,8 +127,13 @@ jobs:
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages
+<<<<<<< Updated upstream:.github/workflows/ClingoSharp.CD.yml
+          FOLDER: "site" # The deployment folder should match the name of the artifact. Even though our project builds into the 'build' folder the artifact name of 'site' must be placed here.
+=======
           FOLDER: "site" # The deployment folder should match the name of the artifact. Even though our project builds into the 'build' folder the artifact name of 'site' must be placed here.
       - name: Clean Artifacts
         uses: geekyeggo/delete-artifact@v1
         with:
           name: site
+
+>>>>>>> Stashed changes:.github/workflows/clingo_cs.yml

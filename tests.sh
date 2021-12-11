@@ -11,6 +11,6 @@ echo "\033[92mExecuting tests...\033[0m"
 
 dotnet test --collect:"XPlat Code Coverage" --settings tests/coverlet.runsettings
 cp tests/TestResults/*/coverage.info coverage.info
-sed -i "s/\$PSScroptRoot\\//g" coverage.info
+sed "s/\$PSScriptRoot\\//g" -i coverage.info
 
 echo "\n\033[92mDone...\033[0m"

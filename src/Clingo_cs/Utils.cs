@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using static Clingo_c.Clingo_c;
 
-namespace Clingo_cs
+namespace ClingoSharp
 {
     public static class Utils
     {
