@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace ClingoSharp.Native
+namespace Clingo_c
 {
     public static class Clingo_c
     {

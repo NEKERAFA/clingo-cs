@@ -5,13 +5,13 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0BC6C9A7-6845-4DA5-AD31-74C03AF98801}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClingoSharp.Native", "src\ClingoSharp.Native\ClingoSharp.Native.csproj", "{532AEB7B-59F4-4C9B-AE62-A1A8C00BF76B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clingo_c", "src\Clingo_c\Clingo_c.csproj", "{532AEB7B-59F4-4C9B-AE62-A1A8C00BF76B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClingoSharp", "src\ClingoSharp\ClingoSharp.csproj", "{6E24CA99-180C-4CDB-9526-78ADD5F61C7D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clingo_cs", "src\Clingo_cs\Clingo_cs.csproj", "{6E24CA99-180C-4CDB-9526-78ADD5F61C7D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B4DAC7A1-865B-47AD-A16F-FBFAFB5F3C91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClingoSharp.Tests", "tests\ClingoSharp.Tests\ClingoSharp.Tests.csproj", "{4692E889-0285-4E71-A7B2-CC96AA6DFF1D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clingo_cs.Tests", "tests\Clingo_cs.Tests.csproj", "{4692E889-0285-4E71-A7B2-CC96AA6DFF1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,7 +1,7 @@
-using ClingoSharp.Enums;
-using static ClingoSharp.Native.Clingo_c;
+using Clingo_cs.Enums;
+using static Clingo_c.Clingo_c;
 
-namespace ClingoSharp.Symbols
+namespace Clingo_cs.Symbols
 {
     /// <summary>
     /// Enumeration of symbols types.

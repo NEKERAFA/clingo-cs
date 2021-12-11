@@ -1,29 +1,29 @@
-# Clingo# (ClingoSharp)
+# clingo-cs
 
 [![.NET 6.0](https://img.shields.io/badge/.NET-6.0-7014e8)](https://dotnet.microsoft.com/download/dotnet/6.0)
-[![Clingo 5.5.1](https://img.shields.io/badge/Clingo-5.5.1-blue)](https://github.com/potassco/clingo/tree/v5.5.1)
-![ClingoSharp Workflow](https://github.com/NEKERAFA/ClingoSharp/workflows/ClingoSharp%20Workflow/badge.svg?branch=master&event=push)
-[![Coverage Status](https://coveralls.io/repos/github/NEKERAFA/ClingoSharp/badge.svg?branch=master)](https://coveralls.io/github/NEKERAFA/ClingoSharp?branch=master)
+[![clingo 5.5.1](https://img.shields.io/badge/clingo-5.5.1-blue)](https://github.com/potassco/clingo/tree/v5.5.1)
+![clingo-cs build](https://github.com/nekerafa/clingo-cs/workflows/clingo_cs/badge.svg?branch=master&event=push)
+[![Coverage Status](https://coveralls.io/repos/github/nekerafa/clingo-cs/badge.svg?branch=master)](https://coveralls.io/github/NEKERAFA/ClingoSharp?branch=master)
 
-A C# bindings to the [clingo](https://github.com/potassco/clingo) library.
+C# bindings of [clingo](https://github.com/potassco/clingo) 5.5.1, an ASP system to ground and solve logic programs.
 
 ## Requirements
 
-* Windows 10 or Ubuntu 18.04
+* Windows 10 or Ubuntu 20.04
 * [.NET 6.0](https://dotnet.microsoft.com/download/dotnet/6.0)
 * Visual Studio 19 or GCC, and CMake
 
 ## Development
 
-Clingo# uses the clingo Python API as reference. You can see the Clingo# API reference is hosted on https://nekerafa.github.io/ClingoSharp/api/index.html
+`Clingo_cs` uses the clingo Python API as reference. Instead, `Clingo_c` refers to the clingo C API. You can see all the clingo-cs API reference in https://nekerafa.github.io/clingo_cs.
 
 ### Packages
 
-#### ClingoSharp
+#### Clingo_cs
 
 *Working in progress...*
 
-#### ClingoSharp.Native
+#### Clingo_c
 
 *Working in progress...*
 
@@ -32,7 +32,7 @@ Clingo# uses the clingo Python API as reference. You can see the Clingo# API ref
 Clone the repository and the submodules:
 
 ```
-$ git clone --recurse-submodules -j8 git://github.com/NEKERAFA/ClingoSharp.git
+$ git clone --recurse-submodules -j8 git://github.com/nekerafa/clingo-cs.git
 ```
 
 Execute the build script (*.ps1* in Windows or *.sh* in GNU/Linux) to build clingo:
@@ -44,7 +44,7 @@ $ .\build.ps1
 Compile the .NET project
 
 ```
-$ donet --configuration Debug .\ClingoSharp.sln
+$ dotnet build --configuration Debug
 ```
 
 ## Test
