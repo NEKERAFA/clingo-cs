@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\ClingoSharp\ClingoSharp.csproj" />
+    <ProjectReference Include="..\src\Clingo_cs\Clingo_cs.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace ClingoSharp.Tests
+namespace Clingo_cs.Tests
 {
     public class ClingoTests
     {

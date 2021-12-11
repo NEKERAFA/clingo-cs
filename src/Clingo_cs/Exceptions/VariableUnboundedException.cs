@@ -1,6 +1,6 @@
 using System;
 
-namespace ClingoSharp.Exceptions
+namespace Clingo_cs.Exceptions
 {
     public class VariableUnboundedException : Exception
     {

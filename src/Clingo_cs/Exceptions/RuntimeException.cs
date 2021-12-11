@@ -1,6 +1,6 @@
 using System;
 
-namespace ClingoSharp.Exceptions
+namespace Clingo_cs.Exceptions
 {
     /// <summary>
     /// From <c>c++</c>: This class defines the type of objects thrown as exceptions to report errors that can only be detected during runtime.

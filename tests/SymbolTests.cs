@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using ClingoSharp.Symbols;
+using Clingo_cs.Symbols;
 using FluentAssertions;
 using Xunit;
 
-namespace ClingoSharp.Tests
+namespace Clingo_cs.Tests
 {
     public class SymbolTests
     {

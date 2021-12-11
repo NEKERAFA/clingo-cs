@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace ClingoSharp.Enums
+namespace Clingo_cs.Enums
 {
     /// <summary>
     /// Represents a Enumeration class

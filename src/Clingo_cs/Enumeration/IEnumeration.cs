@@ -1,4 +1,4 @@
-﻿namespace ClingoSharp.Enums
+﻿namespace Clingo_cs.Enums
 {
     public interface IEnumeration
     {
