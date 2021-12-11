@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace ClingoSharp.Native
+namespace Clingo_c
 {
     public static class Clingo_c
     {
@@ -38,22 +38,22 @@ namespace ClingoSharp.Native
         [StructLayout(LayoutKind.Sequential)]
         public struct size_t
         {
-            private readonly unsafe void* m_value;
+            private readonly unsafe void* value;
 
             public unsafe size_t(uint value)
             {
-                m_value = (void*)value;
+                this.value = (void*)value;
             }
 
             public unsafe size_t(ulong value)
             {
                 if (Environment.Is64BitProcess)
                 {
-                    m_value = (void*)value;
+                    this.value = (void*)value;
                 }
                 else
                 {
-                    m_value = (void*)(uint)value;
+                    this.value = (void*)(uint)value;
                 }
             }
 
@@ -69,11 +69,11 @@ namespace ClingoSharp.Native
                 }
             }
 
-            public unsafe static implicit operator uint(size_t type) => (uint)type.m_value;
+            public unsafe static implicit operator uint(size_t type) => (uint)type.value;
 
             public unsafe static implicit operator size_t(uint value) => new(value);
         
-            public unsafe static implicit operator ulong(size_t type) => (ulong)type.m_value;
+            public unsafe static implicit operator ulong(size_t type) => (ulong)type.value;
 
             public unsafe static implicit operator size_t(ulong value) => new(value);
         }
@@ -84,14 +84,14 @@ namespace ClingoSharp.Native
         [StructLayout(LayoutKind.Sequential)]
         public readonly struct clingo_literal_t
         {
-            private readonly int m_value;
+            private readonly int value;
 
             public clingo_literal_t(int value)
             {
-                m_value = value;
+                this.value = value;
             }
 
-            public static implicit operator int(clingo_literal_t type) => type.m_value;
+            public static implicit operator int(clingo_literal_t type) => type.value;
             public static implicit operator clingo_literal_t(int value) => new(value);
         }
 
@@ -101,14 +101,14 @@ namespace ClingoSharp.Native
         [StructLayout(LayoutKind.Sequential)]
         public readonly struct clingo_atom_t
         {
-            private readonly uint m_value;
+            private readonly uint value;
 
             public clingo_atom_t(uint value)
             {
-                m_value = value;
+                this.value = value;
             }
 
-            public static implicit operator uint(clingo_atom_t type) => type.m_value;
+            public static implicit operator uint(clingo_atom_t type) => type.value;
             public static implicit operator clingo_atom_t(uint value) => new(value);
         }
 
@@ -118,14 +118,14 @@ namespace ClingoSharp.Native
         [StructLayout(LayoutKind.Sequential)]
         public readonly struct clingo_id_t
         {
-            private readonly uint m_value;
+            private readonly uint value;
 
             public clingo_id_t(uint value)
             {
-                m_value = value;
+                this.value = value;
             }
 
-            public static implicit operator uint(clingo_id_t type) => type.m_value;
+            public static implicit operator uint(clingo_id_t type) => type.value;
             public static implicit operator clingo_id_t(uint value) => new(value);
         }
 
@@ -135,14 +135,14 @@ namespace ClingoSharp.Native
         [StructLayout(LayoutKind.Sequential)]
         public readonly struct clingo_weight_t
         {
-            private readonly int m_value;
+            private readonly int value;
 
             public clingo_weight_t(int value)
             {
-                m_value = value;
+                this.value = value;
             }
 
-            public static implicit operator int(clingo_weight_t type) => type.m_value;
+            public static implicit operator int(clingo_weight_t type) => type.value;
             public static implicit operator clingo_weight_t(int value) => new(value);
         }
 
@@ -318,14 +318,14 @@ namespace ClingoSharp.Native
         [StructLayout(LayoutKind.Sequential)]
         public readonly struct clingo_signature_t
         {
-            private readonly ulong m_value;
+            private readonly ulong value;
 
             public clingo_signature_t(ulong value)
             {
-                m_value = value;
+                this.value = value;
             }
 
-            public static implicit operator ulong(clingo_signature_t type) => type.m_value;
+            public static implicit operator ulong(clingo_signature_t type) => type.value;
             public static implicit operator clingo_signature_t(ulong value) => new(value);
         }
 
@@ -443,14 +443,14 @@ namespace ClingoSharp.Native
         [StructLayout(LayoutKind.Sequential)]
         public struct clingo_symbol_t
         {
-            internal ulong m_value;
+            internal ulong value;
 
             public clingo_symbol_t(ulong value)
             {
-                m_value = value;
+                this.value = value;
             }
 
-            public static implicit operator ulong(clingo_symbol_t type) => type.m_value;
+            public static implicit operator ulong(clingo_symbol_t type) => type.value;
             public static implicit operator clingo_symbol_t(ulong value) => new(value);
         };
 
@@ -752,6 +752,71 @@ namespace ClingoSharp.Native
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool clingo_parse_term(string str, clingo_logger_t logger, IntPtr logger_data, uint message_limit, [Out] clingo_symbol_t[] symbol);
+
+        #endregion
+
+        #region Symbolic Atoms
+        
+        /// <summary>
+        /// Object to inspect symbolic atoms in a program-the relevant Herbrand base
+        /// gringo uses to instantiate programs.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct clingo_symbolic_atoms_t {
+            internal IntPtr value;
+
+            public clingo_symbolic_atoms_t(IntPtr value)  {
+                this.value = value;
+            }
+
+            public static implicit operator IntPtr(clingo_symbolic_atoms_t type) => type.value;
+            public static implicit operator clingo_symbolic_atoms_t(IntPtr value) => new(value);
+        }
+
+        /// <summary>
+        /// Object to iterate over symbolic atoms.
+        /// 
+        /// <para>
+        /// Such an iterator either points to a symbolic atom within a sequence of
+        /// symbolic atoms or to the end of the sequence.
+        /// </para>
+        /// 
+        /// <para>
+        /// Note: Iterators are valid as long as the underlying sequence is not modified.
+        /// Operations that can change this sequence.
+        /// </para>
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct clingo_symbolic_atom_iterator_t {
+            internal ulong value;
+
+            public clingo_symbolic_atom_iterator_t(ulong value) {
+                this.value = value;
+            }
+
+            public static implicit operator ulong(clingo_symbolic_atom_iterator_t type) => type.value;
+            public static implicit operator clingo_symbolic_atom_iterator_t(ulong value) => new(value);
+        }
+
+        /// <summary>
+        /// Get the number of different atoms occurring in a logic program.
+        /// </summary>
+        /// <param name="atoms">the target</param>
+        /// <param name="size">the number of atoms</param>
+        /// <returns>whether the call was successful</returns>
+        [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool clingo_symbolic_atoms_size(clingo_symbolic_atoms_t atoms, [Out] size_t[] size);
+
+        /// <summary>
+        /// Get a forward iterator to the beginning of the sequence of all symbolic
+        /// atoms optionally restricted to a given signature.
+        /// </summary>
+        /// <param name="atoms">the target</param>
+        /// <param name="signature">optional signature</param>
+        /// <param name="iterator">the resulting iterator</param>
+        /// <returns>whether the call was successful</returns>
+        [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool clingo_symbolic_atoms_begin(clingo_symbolic_atoms_t atoms, clingo_signature_t[] signature, [Out] clingo_symbolic_atom_iterator_t[] iterator);
 
         #endregion
     }

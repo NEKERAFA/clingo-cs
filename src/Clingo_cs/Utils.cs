@@ -1,6 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
-using static ClingoSharp.Native.Clingo_c;
+using static Clingo_c.Clingo_c;
 
 namespace ClingoSharp
 {

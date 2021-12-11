@@ -1,4 +1,4 @@
-name: ClingoSharp Publish
+name: clingo-cs Publish
 
 on:
   push:
@@ -17,13 +17,13 @@ jobs:
         run: |
           git submodule init
           git submodule update
-      - name: Build clingo.dll
+      - name: Building dependecies
         run: .\build.ps1
-      - name: Upload clingo.dll
-        uses: actions/upload-artifact@v2
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v1
         with:
-          name: clingo.dll
-          path: clingo\build\win\bin\Release\clingo.dll
+          name: clingo-windows
+          path: .\clingo\build\win
 
   build-linux:
     runs-on: ubuntu-latest
@@ -36,13 +36,13 @@ jobs:
         run: |
           git submodule init
           git submodule update
-      - name: Build libclingo.so
-        run:  ./build.sh
-      - name: Upload libclingo.so
-        uses: actions/upload-artifact@v2
+      - name: Building dependecies
+        run: ./build.sh
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v1
         with:
-          name: libclingo.so
-          path: clingo/build/linux/bin/libclingo.so.4.0
+          name: clingo-linux
+          path: ./clingo/build/linux
 
   build:
     needs: [build-windows, build-linux]
@@ -55,21 +55,19 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0.x'
-      - name: Download clingo.dll
-        uses: actions/download-artifact@v2
+          dotnet-version: 3.1.100
+      - name: Download Windows Artifacts
+        uses: actions/download-artifact@v1
         with:
-          name: clingo.dll
-      - name: Download libclingo.so
-        uses: actions/download-artifact@v2
+          name: clingo-windows
+      - name: Download Linux Artifacts
+        uses: actions/download-artifact@v1
         with:
-          name: libclingo.so
-      - name: Installing clingo dependencies
+          name: clingo-linux
+      - name: Installing Artifacts
         run: |
-          New-Item 'clingo\build\win\bin\Release' -ItemType directory
-          Copy-Item -Path 'clingo.dll' -Destination 'clingo\build\win\bin\Release\clingo.dll' -Recurse
-          New-Item 'clingo\build\linux\bin' -ItemType directory
-          Copy-Item -Path 'libclingo.so.4.0' -Destination 'clingo\build\linux\bin' -Recurse
+          Copy-Item -Path '.\clingo-windows\*' -Destination '.\clingo\build\win' -Recurse
+          Copy-Item -Path '.\clingo-linux\*' -Destination '.\clingo\build\linux' -Recurse
       - name: Build
         run: dotnet build --configuration Release
       - name: Test
@@ -86,22 +84,22 @@ jobs:
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: coverage.info
-      - name: Upload documentation
-        uses: actions/upload-artifact@v2
+          path-to-lcov: .\coverage.info
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v1
         with:
           name: site
           path: _site
-      - name: Uploading ClingoSharp package
+      - name: Uploading Clingo_cs package
         uses: actions/upload-artifact@v2
         with:
-          name: ClingoSharp.debug.nupkg
-          path: src/ClingoSharp/bin/Release/ClingoSharp.*.nupkg
-      - name: Uploading ClingoSharp.Native package
+          name: Clingo_cs.release.nupkg
+          path: src/Clingo_cs/bin/Release/Clingo_cs.*.nupkg
+      - name: Uploading Clingo_c package
         uses: actions/upload-artifact@v2
         with:
-          name: ClingoSharp.Native.debug.nupkg
-          path: src/ClingoSharp.Native/bin/Release/ClingoSharp.Native.*.nupkg
+          name: Clingo_c.release.nupkg
+          path: src/Clingo_c/bin/Release/Clingo_c.*.nupkg
       - name: Clean Artifacts
         uses: geekyeggo/delete-artifact@v1
         with:
@@ -118,11 +116,11 @@ jobs:
         with:
           persist-credentials: false
       - name: Download Artifacts # The built project is downloaded into the 'site' folder.
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v1
         with:
           name: site
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@4.1.6
+        uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages
@@ -131,3 +129,4 @@ jobs:
         uses: geekyeggo/delete-artifact@v1
         with:
           name: site
+

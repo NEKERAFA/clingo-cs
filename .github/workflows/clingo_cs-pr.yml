@@ -1,10 +1,9 @@
-name: ClingoSharp Test
+name: clingo-cs Pull Request
 
 on:
   pull_request:
     branches:
-      - develop
-      - master
+      - develop 
 
 jobs:
   build-windows:
@@ -78,19 +77,20 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: coverage.info
-      - name: Uploading ClingoSharp package
+      - name: Uploading Clingo_cs package
         uses: actions/upload-artifact@v2
         with:
-          name: ClingoSharp.debug.nupkg
-          path: src/ClingoSharp/bin/Release/ClingoSharp.*.nupkg
-      - name: Uploading ClingoSharp.Native package
+          name: Clingo_cs.debug.nupkg
+          path: src/Clingo_cs/bin/Release/Clingo_cs.*.nupkg
+      - name: Uploading Clingo_c package
         uses: actions/upload-artifact@v2
         with:
-          name: ClingoSharp.Native.debug.nupkg
-          path: src/ClingoSharp.Native/bin/Release/ClingoSharp.Native.*.nupkg
+          name: Clingo_c.debug.nupkg
+          path: src/Clingo_c/bin/Release/Clingo_c.*.nupkg
       - name: Clean Artifacts
         uses: geekyeggo/delete-artifact@v1
         with:
           name: |
             libclingo.so
             clingo.dll
+

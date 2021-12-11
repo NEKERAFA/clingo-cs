@@ -1,9 +1,8 @@
 using System;
-using System.Runtime.InteropServices;
-using ClingoSharp.Exceptions;
-using static ClingoSharp.Native.Clingo_c;
+using Clingo_cs.Exceptions;
+using static Clingo_c.Clingo_c;
 
-namespace ClingoSharp
+namespace Clingo_cs
 {
     /// <summary>
     /// Core functionality used throught the clingo package.

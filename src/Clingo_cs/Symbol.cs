@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using ClingoSharp.Enums;
-using static ClingoSharp.Clingo;
-using static ClingoSharp.Native.Clingo_c;
+using Clingo_cs.Enums;
+using static Clingo_cs.Clingo;
+using static Clingo_c.Clingo_c;
 
-namespace ClingoSharp.Symbols
+namespace Clingo_cs.Symbols
 {
     /// <summary>
     /// Represents a gringo symbol.
@@ -44,7 +44,7 @@ namespace ClingoSharp.Symbols
         /// <summary>
         /// The clingo symbol
         /// </summary>
-        private readonly clingo_symbol_t m_symbol;
+        private readonly clingo_symbol_t symbol_c;
 
         #endregion
 
@@ -73,7 +73,7 @@ namespace ClingoSharp.Symbols
             {
                 IntPtr[] args_ptr_c = new IntPtr[1];
                 size_t[] args_size_c = new size_t[1];
-                HandleError(clingo_symbol_arguments(m_symbol, args_ptr_c, args_size_c));
+                HandleError(clingo_symbol_arguments(this.symbol_c, args_ptr_c, args_size_c));
                 clingo_symbol_t[] args_c = new clingo_symbol_t[args_size_c[0]];
                 CopySymbols(args_ptr_c[0], args_c, 0, (int)(uint)args_size_c[0]);
                 return args_c.Select(symbol => new Symbol(symbol)).ToList();
@@ -88,7 +88,7 @@ namespace ClingoSharp.Symbols
             get
             {
                 bool[] negative_c = new bool[1];
-                HandleError(clingo_symbol_is_negative(m_symbol, negative_c));
+                HandleError(clingo_symbol_is_negative(this.symbol_c, negative_c));
                 return negative_c[0];
             }
         }
@@ -101,7 +101,7 @@ namespace ClingoSharp.Symbols
             get
             {
                 bool[] positive_c = new bool[1];
-                HandleError(clingo_symbol_is_positive(m_symbol, positive_c));
+                HandleError(clingo_symbol_is_positive(this.symbol_c, positive_c));
                 return positive_c[0];
             }
         }
@@ -114,7 +114,7 @@ namespace ClingoSharp.Symbols
             get
             {
                 IntPtr name_ptr_c = Marshal.AllocHGlobal(IntPtr.Size);
-                HandleError(clingo_symbol_name(m_symbol, name_ptr_c));
+                HandleError(clingo_symbol_name(this.symbol_c, name_ptr_c));
                 string name_c = Marshal.PtrToStringAnsi(Marshal.ReadIntPtr(name_ptr_c));
                 Marshal.FreeHGlobal(name_ptr_c);
                 return name_c;
@@ -129,7 +129,7 @@ namespace ClingoSharp.Symbols
             get
             {
                 int[] number_c = new int[1];
-                HandleError(clingo_symbol_number(m_symbol, number_c));
+                HandleError(clingo_symbol_number(this.symbol_c, number_c));
                 return number_c[0];
             }
         }
@@ -142,7 +142,7 @@ namespace ClingoSharp.Symbols
             get
             {
                 IntPtr str_ptr_c = Marshal.AllocHGlobal(IntPtr.Size);
-                HandleError(clingo_symbol_string(m_symbol, str_ptr_c));
+                HandleError(clingo_symbol_string(this.symbol_c, str_ptr_c));
                 string str_c = Marshal.PtrToStringAnsi(Marshal.ReadIntPtr(str_ptr_c));
                 Marshal.FreeHGlobal(str_ptr_c);
                 return str_c;
@@ -153,7 +153,7 @@ namespace ClingoSharp.Symbols
         {
             get
             {
-                clingo_symbol_type_t type = clingo_symbol_type(m_symbol);
+                clingo_symbol_type_t type = clingo_symbol_type(this.symbol_c);
                 return Enumeration.GetValue<SymbolType>((int)type);
             }
         }
@@ -162,9 +162,9 @@ namespace ClingoSharp.Symbols
 
         #region Constructors
 
-        internal Symbol(clingo_symbol_t symbol)
+        internal Symbol(clingo_symbol_t symbol_c)
         {
-            m_symbol = symbol;
+            this.symbol_c = symbol_c;
         }
 
         /// <summary>
@@ -182,10 +182,10 @@ namespace ClingoSharp.Symbols
         public Symbol(string name, List<Symbol> arguments, bool isPositive = true)
         {
             size_t args_size_c = new(arguments != null ? (uint)arguments.Count : 0u);
-            clingo_symbol_t[] args_c = arguments != null ? arguments.Select(symbol => symbol.m_symbol).ToArray() : Array.Empty<clingo_symbol_t>();
+            clingo_symbol_t[] args_c = arguments != null ? arguments.Select(symbol => symbol.symbol_c).ToArray() : Array.Empty<clingo_symbol_t>();
             clingo_symbol_t[] symbol_c = new clingo_symbol_t[1];
             HandleError(clingo_symbol_create_function(name, args_c, args_size_c, isPositive, symbol_c));
-            m_symbol = symbol_c[0];
+            this.symbol_c = symbol_c[0];
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace ClingoSharp.Symbols
         {
             clingo_symbol_t[] symbol_c = new clingo_symbol_t[1];
             clingo_symbol_create_number(number, symbol_c);
-            m_symbol = symbol_c[0];
+            this.symbol_c = symbol_c[0];
         }
 
         /// <summary>
@@ -207,14 +207,14 @@ namespace ClingoSharp.Symbols
         {
             clingo_symbol_t[] symbol_c = new clingo_symbol_t[1];
             HandleError(clingo_symbol_create_string(str, symbol_c));
-            m_symbol = symbol_c[0];
+            this.symbol_c = symbol_c[0];
         }
 
         public Symbol(string name, bool isPositive)
         {
             clingo_symbol_t[] symbol_c = new clingo_symbol_t[1];
             HandleError(clingo_symbol_create_id(name, isPositive, symbol_c));
-            m_symbol = symbol_c[0];
+            this.symbol_c = symbol_c[0];
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace ClingoSharp.Symbols
             return new(symbol_c[0]);
         }
 
-        public static implicit operator clingo_symbol_t(Symbol type) => type.m_symbol;
+        public static implicit operator clingo_symbol_t(Symbol type) => type.symbol_c;
 
         public static implicit operator Symbol(int value) => new(value);
 
@@ -310,7 +310,7 @@ namespace ClingoSharp.Symbols
         /// </summary>
         /// <param name="other">The object to compare with the current object.</param>
         /// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
-        public bool Equals(Symbol other) => clingo_symbol_is_equal_to(this, other);
+        public bool Equals(Symbol other) => clingo_symbol_is_equal_to(this.symbol_c, other);
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
@@ -350,12 +350,12 @@ namespace ClingoSharp.Symbols
         /// <returns>A value that indicates the relative order of the objects being compared.</returns>
         public int CompareTo(Symbol other)
         {
-            if (clingo_symbol_is_less_than(this, other))
+            if (clingo_symbol_is_less_than(this.symbol_c, other.symbol_c))
             {
                 return -1;
             }
 
-            if (clingo_symbol_is_less_than(other, this))
+            if (clingo_symbol_is_less_than(other.symbol_c, this.symbol_c))
             {
                 return 1;
             }
@@ -367,7 +367,7 @@ namespace ClingoSharp.Symbols
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
-        public override int GetHashCode() => (int)(uint)clingo_symbol_hash(this);
+        public override int GetHashCode() => (int)(uint)clingo_symbol_hash(this.symbol_c);
 
         /// <summary>
         /// Returns a string that represents the current object.
@@ -376,9 +376,9 @@ namespace ClingoSharp.Symbols
         public override string ToString()
         {
             size_t[] str_size_c = new size_t[1];
-            HandleError(clingo_symbol_to_string_size(m_symbol, str_size_c));
+            HandleError(clingo_symbol_to_string_size(this.symbol_c, str_size_c));
             StringBuilder str_c = new((int)(uint)str_size_c[0]);
-            HandleError(clingo_symbol_to_string(m_symbol, str_c, str_size_c[0]));
+            HandleError(clingo_symbol_to_string(this.symbol_c, str_c, str_size_c[0]));
             return str_c.ToString();
         }
 

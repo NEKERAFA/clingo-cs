@@ -1,8 +1,8 @@
 using System;
-using ClingoSharp.Enums;
-using static ClingoSharp.Native.Clingo_c;
+using Clingo_cs.Enums;
+using static Clingo_c.Clingo_c;
 
-namespace ClingoSharp
+namespace Clingo_cs
 {
     /// <summary>
     /// Enumeration of messages codes
