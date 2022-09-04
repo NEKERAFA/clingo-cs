@@ -10,7 +10,7 @@ namespace Clingo_cs.Tests
             (int, int, int) result = Clingo.Version();
             Assert.Equal(5, result.Item1);
             Assert.Equal(5, result.Item2);
-            Assert.Equal(1, result.Item3);
+            Assert.Equal(2, result.Item3);
         }
     }
 }
