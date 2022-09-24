@@ -1,15 +1,15 @@
 # clingo-cs
 
 [![.NET 6.0](https://img.shields.io/badge/.NET-6.0-7014e8)](https://dotnet.microsoft.com/download/dotnet/6.0)
-[![clingo 5.5.1](https://img.shields.io/badge/clingo-5.5.1-blue)](https://github.com/potassco/clingo/tree/v5.5.1)
-![clingo-cs build](https://github.com/nekerafa/clingo-cs/workflows/clingo_cs/badge.svg?branch=master&event=push)
-[![Coverage Status](https://coveralls.io/repos/github/nekerafa/clingo-cs/badge.svg?branch=master)](https://coveralls.io/github/NEKERAFA/ClingoSharp?branch=master)
+[![Clingo 5.5.2](https://img.shields.io/badge/Clingo-5.5.2-blue)](https://github.com/potassco/clingo/tree/v5.5.2)
+![ClingoSharp Workflow](https://github.com/NEKERAFA/ClingoSharp/workflows/ClingoSharp%20Workflow/badge.svg?branch=master&event=push)
+[![Coverage Status](https://coveralls.io/repos/github/NEKERAFA/ClingoSharp/badge.svg?branch=master)](https://coveralls.io/github/NEKERAFA/ClingoSharp?branch=master)
 
 C# bindings of [clingo](https://github.com/potassco/clingo) 5.5.1, an ASP system to ground and solve logic programs.
 
 ## Requirements
 
-* Windows 10 or Ubuntu 20.04
+* Windows 10 or Ubuntu 22.04
 * [.NET 6.0](https://dotnet.microsoft.com/download/dotnet/6.0)
 * Visual Studio 19 or GCC, and CMake
 

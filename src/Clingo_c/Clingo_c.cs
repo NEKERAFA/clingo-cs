@@ -25,12 +25,12 @@ namespace Clingo_c
         /// <summary>
         /// Revision number.
         /// </summary>
-        public const int CLINGO_VERSION_REVISION = 1;
+        public const int CLINGO_VERSION_REVISION = 2;
 
         /// <summary>
         /// String representation of version.
         /// </summary>
-        public const string CLINGO_VERSION = "5.5.1";
+        public const string CLINGO_VERSION = "5.5.2";
 
         /// <summary>
         /// This struct represents the size_t C/C++ type, that it size depends on the machine architecture
@@ -818,6 +818,15 @@ namespace Clingo_c
         [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool clingo_symbolic_atoms_begin(clingo_symbolic_atoms_t atoms, clingo_signature_t[] signature, [Out] clingo_symbolic_atom_iterator_t[] iterator);
 
+        /// <summary>
+        /// Iterator pointing to the end of the sequence of symbolic atoms.
+        /// </summary>
+        /// <param name="atoms">the target</param>
+        /// <param name="iterator">the resulting iterator</param>
+        /// <returns>whether the call was successful</returns>
+        [DllImport(libName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool clingo_symbolic_atom_end(clingo_symbolic_atoms_t atoms, [Out] clingo_symbolic_atom_iterator_t[] iterator);
+        
         #endregion
     }
 }
