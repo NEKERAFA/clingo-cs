@@ -57,11 +57,11 @@ jobs:
         with:
           dotnet-version: 3.1.100
       - name: Download Windows Artifacts
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v4.1.7
         with:
           name: clingo-windows
       - name: Download Linux Artifacts
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v4.1.7
         with:
           name: clingo-linux
       - name: Installing Artifacts
@@ -116,7 +116,7 @@ jobs:
         with:
           persist-credentials: false
       - name: Download Artifacts # The built project is downloaded into the 'site' folder.
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v4.1.7
         with:
           name: site
       - name: Deploy

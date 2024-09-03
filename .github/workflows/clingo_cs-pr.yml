@@ -57,11 +57,11 @@ jobs:
         with:
           dotnet-version: '6.0.x'
       - name: Download clingo.dll
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: clingo.dll
       - name: Download libclingo.so
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: libclingo.so
       - name: Installing clingo dependencies
